@@ -7,6 +7,9 @@
 </head>
 <body>
     @include('components.navbar')
+<br>
+<br><br><br><br><br><br>
+    @include('components.footer')
     
 </body>
 </html>
