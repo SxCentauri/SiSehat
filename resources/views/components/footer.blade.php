@@ -3,49 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-    * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --accent-color: #60a5fa;
-            --light-blue: #dbeafe;
-            --extra-light-blue: #eff6ff;
-            --text-color: #1f2937;
-            --text-light: #6b7280;
-            --white: #ffffff;
-            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            --gradient-light: linear-gradient(135deg, var(--light-blue), var(--extra-light-blue));
-            --shadow: 0 20px 50px rgba(37, 99, 235, 0.1);
-            --shadow-hover: 0 30px 70px rgba(37, 99, 235, 0.15);
+            --accent-color: #3b82f6;
+            --gradient: linear-gradient(135deg, #3b82f6, #1d4ed8);
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            overflow-x: hidden;
-            background: var(--white);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
+        /* Footer Styling - Posisi Presisi */
         .footer {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
             color: white;
             position: relative;
             overflow: hidden;
+            margin-top: auto;
+            width: 100%;
         }
 
         .footer::before {
@@ -67,7 +39,7 @@
             left: 0;
             width: 100%;
             height: 120px;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="white"/></svg>') no-repeat center;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%23f8fafc"/></svg>') no-repeat center;
             background-size: cover;
         }
 
@@ -75,13 +47,15 @@
             padding: 8rem 0 4rem;
             position: relative;
             z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .footer-main {
+        .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 4rem;
-            margin-bottom: 4rem;
+            align-items: start;
         }
 
         .footer-brand {
@@ -161,80 +135,40 @@
             border-radius: 8px;
         }
 
-        .footer-section h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 2.5rem;
-            color: white;
-            position: relative;
-            padding-bottom: 0.8rem;
-        }
-
-        .footer-section h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--gradient);
-            border-radius: 3px;
-        }
-
-        .footer-section ul {
-            list-style: none;
+        .footer-side-content {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-        }
-
-        .footer-section a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.6rem 0;
-            font-weight: 500;
-            font-size: 1rem;
-        }
-
-        .footer-section a::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .footer-section a:hover::before {
-            opacity: 1;
-        }
-
-        .footer-section a:hover {
-            color: var(--accent-color);
-            transform: translateX(10px);
+            gap: 3rem;
         }
 
         .footer-social {
-            margin-top: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(96, 165, 250, 0.1);
+            backdrop-filter: blur(20px);
+        }
+
+        .footer-social h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
         }
 
         .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
         }
 
         .social-link {
-            width: 55px;
+            width: 100%;
             height: 55px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(96, 165, 250, 0.2);
-            border-radius: 18px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -242,23 +176,23 @@
             font-size: 1.4rem;
             transition: all 0.3s ease;
             backdrop-filter: blur(20px);
+            text-decoration: none;
         }
 
         .social-link:hover {
             background: var(--gradient);
             color: white;
-            transform: translateY(-8px) scale(1.1);
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.3);
             border-color: transparent;
         }
 
         .footer-newsletter {
             background: rgba(255, 255, 255, 0.05);
             padding: 2.5rem;
-            border-radius: 25px;
+            border-radius: 20px;
             border: 1px solid rgba(96, 165, 250, 0.1);
             backdrop-filter: blur(20px);
-            margin-top: 3rem;
         }
 
         .footer-newsletter h4 {
@@ -266,6 +200,7 @@
             font-size: 1.3rem;
             margin-bottom: 1.2rem;
             font-weight: 700;
+            text-align: center;
         }
 
         .footer-newsletter p {
@@ -273,15 +208,16 @@
             margin-bottom: 2rem;
             font-size: 1rem;
             line-height: 1.6;
+            text-align: center;
         }
 
         .newsletter-form {
             display: flex;
+            flex-direction: column;
             gap: 1rem;
         }
 
         .newsletter-input {
-            flex: 1;
             padding: 1rem 1.5rem;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -318,24 +254,31 @@
             text-align: center;
             position: relative;
             z-index: 2;
+            grid-column: 1 / -1;
         }
 
         .footer-bottom-content {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            flex-wrap: wrap;
             gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .footer-bottom p {
             color: #94a3b8;
             font-size: 1rem;
+            margin: 0;
+            text-align: center;
         }
 
         .footer-bottom-links {
             display: flex;
             gap: 2.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .footer-bottom-links a {
@@ -349,193 +292,161 @@
             color: var(--accent-color);
         }
 
-        @media (max-width: 1024px) {
-            .footer-main {
-                grid-template-columns: 1fr 1fr;
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
                 gap: 3rem;
+            }
+            
+            .footer-side-content {
+                gap: 2rem;
             }
         }
 
         @media (max-width: 768px) {
-            .footer-main {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
+            .footer-content-wrapper {
+                padding: 6rem 1.5rem 3rem;
             }
-
-            .footer-bottom-content {
+            
+            .footer-logo {
                 flex-direction: column;
                 text-align: center;
-                gap: 1rem;
             }
-
-            .newsletter-form {
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-
+            
             .social-links {
-                justify-content: center;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-bottom-links {
+                gap: 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
+            .footer-newsletter,
+            .footer-social {
+                padding: 1.5rem;
+            }
+            
             .footer-contact-item {
                 padding: 0.8rem 1rem;
             }
-
-            .footer-newsletter {
-                padding: 2rem 1.5rem;
+            
+            .social-links {
+                grid-template-columns: 1fr;
             }
-
+            
+            .social-link {
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
             .footer-bottom-links {
                 flex-direction: column;
-                gap: 0.8rem;
+                gap: 1rem;
             }
         }
-</style>
+    </style>
 </head>
 <body>
+    <!-- Footer dengan posisi yang presisi -->
     <footer class="footer" id="contact">
         <div class="footer-wave"></div>
         
-        <div class="container">
-            <div class="footer-content-wrapper">
-                <div class="footer-main">
-                    <div class="footer-brand">
-                        <div class="footer-logo">
-                            <div class="footer-logo-icon">
-                                <i class="fas fa-hospital"></i>
-                            </div>
-                            <h3>MediCare Hospital</h3>
+        <div class="footer-content-wrapper">
+            <div class="footer-grid">
+                <!-- Kolom Kiri: Brand, Deskripsi, Kontak -->
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-hospital"></i>
                         </div>
-                        <p>Pelayanan kesehatan terdepan dengan teknologi modern untuk memberikan perawatan terbaik bagi semua pasien. Komitmen kami adalah menjadi partner kesehatan terpercaya untuk setiap keluarga Indonesia dengan inovasi digital yang mengutamakan kualitas dan keamanan.</p>
-                        
-                        <div class="footer-contact-info">
-                            <div class="footer-contact-item">
-                                <i class="fas fa-phone"></i>
-                                <span>+62 21 1234 5678</span>
-                            </div>
-                            <div class="footer-contact-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>info@medicare.hospital</span>
-                            </div>
-                            <div class="footer-contact-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Jl. Sehat Sejahtera No. 123, Jakarta Pusat 10110</span>
-                            </div>
-                            <div class="footer-contact-item">
-                                <i class="fas fa-globe"></i>
-                                <span>www.medicare.hospital</span>
-                            </div>
-                        </div>
-
-                        <div class="footer-social">
-                            <h4 style="color: white; margin-bottom: 1.5rem; font-size: 1.2rem; font-weight: 700;">Ikuti Kami</h4>
-                            <div class="social-links">
-                                <a href="#" class="social-link hover-lift" title="Facebook">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a href="#" class="social-link hover-lift" title="Twitter">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a href="#" class="social-link hover-lift" title="Instagram">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <a href="#" class="social-link hover-lift" title="LinkedIn">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <a href="#" class="social-link hover-lift" title="YouTube">
-                                    <i class="fab fa-youtube"></i>
-                                </a>
-                                <a href="#" class="social-link hover-lift" title="TikTok">
-                                    <i class="fab fa-tiktok"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="footer-newsletter">
-                            <h4>Newsletter & Updates</h4>
-                            <p>Dapatkan informasi terbaru tentang layanan kesehatan, tips kesehatan, dan promosi eksklusif langsung di inbox Anda.</p>
-                            <div class="newsletter-form">
-                                <input type="email" class="newsletter-input" placeholder="Masukkan alamat email Anda">
-                                <button class="newsletter-btn hover-lift">Subscribe</button>
-                            </div>
-                        </div>
+                        <h3>MediCare Hospital</h3>
                     </div>
+                    <p>Pelayanan kesehatan terdepan dengan teknologi modern untuk memberikan perawatan terbaik bagi semua pasien. Komitmen kami adalah menjadi partner kesehatan terpercaya untuk setiap keluarga Indonesia dengan inovasi digital yang mengutamakan kualitas dan keamanan.</p>
                     
-                    <div class="footer-section">
-                        <h3>Layanan Unggulan</h3>
-                        <ul>
-                            <li><a href="#">Konsultasi Online 24/7</a></li>
-                            <li><a href="#">Emergency Care</a></li>
-                            <li><a href="#">Rawat Jalan Spesialis</a></li>
-                            <li><a href="#">Rawat Inap Premium</a></li>
-                            <li><a href="#">Medical Check Up</a></li>
-                            <li><a href="#">Farmasi Online</a></li>
-                            <li><a href="#">Laboratorium & Radiologi</a></li>
-                            <li><a href="#">Home Care Services</a></li>
-                            <li><a href="#">Rehabilitation Center</a></li>
-                            <li><a href="#">Mental Health Care</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h3>Spesialisasi Medis</h3>
-                        <ul>
-                            <li><a href="#">Kardiologi & Jantung</a></li>
-                            <li><a href="#">Neurologi & Saraf</a></li>
-                            <li><a href="#">Orthopedi & Tulang</a></li>
-                            <li><a href="#">Pediatri & Anak</a></li>
-                            <li><a href="#">Obstetri & Kandungan</a></li>
-                            <li><a href="#">Ophthalmologi & Mata</a></li>
-                            <li><a href="#">THT & Kepala Leher</a></li>
-                            <li><a href="#">Dermatologi & Kulit</a></li>
-                            <li><a href="#">Psikiatri & Kesehatan Mental</a></li>
-                            <li><a href="#">Onkologi & Kanker</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-section">
-                        <h3>Informasi & Bantuan</h3>
-                        <ul>
-                            <li><a href="#">Tentang MediCare</a></li>
-                            <li><a href="#">Tim Dokter & Staff</a></li>
-                            <li><a href="#">Karir & Lowongan</a></li>
-                            <li><a href="#">Berita & Artikel Kesehatan</a></li>
-                            <li><a href="#">FAQ & Panduan</a></li>
-                            <li><a href="#">Hubungi Customer Service</a></li>
-                            <li><a href="#">Kebijakan Privasi</a></li>
-                            <li><a href="#">Syarat & Ketentuan</a></li>
-                            <li><a href="#">Sertifikasi & Akreditasi</a></li>
-                            <li><a href="#">Program Asuransi</a></li>
-                        </ul>
+                    <div class="footer-contact-info">
+                        <div class="footer-contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+62 21 1234 5678</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@medicare.hospital</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Jl. Sehat Sejahtera No. 123, Jakarta Pusat 10110</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <i class="fas fa-globe"></i>
+                            <span>www.medicare.hospital</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <div class="footer-bottom-content">
-                    <p>&copy; 2024 MediCare Hospital. All rights reserved. Built with ❤️ for better healthcare in Indonesia.</p>
-                    <div class="footer-bottom-links">
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
-                        <a href="#">Cookie Policy</a>
-                        <a href="#">Accessibility Statement</a>
-                        <a href="#">Site Map</a>
+                
+                <!-- Kolom Kanan: Sosial Media dan Newsletter -->
+                <div class="footer-side-content">
+                    <div class="footer-social">
+                        <h4>Ikuti Kami</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link" title="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link" title="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link" title="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-link" title="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="#" class="social-link" title="TikTok">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="footer-newsletter">
+                        <h4>Newsletter & Updates</h4>
+                        <p>Dapatkan informasi terbaru tentang layanan kesehatan, tips kesehatan, dan promosi eksklusif langsung di inbox Anda.</p>
+                        <div class="newsletter-form">
+                            <input type="email" class="newsletter-input" placeholder="Masukkan alamat email Anda">
+                            <button class="newsletter-btn">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Footer Bottom yang membentang penuh -->
+                <div class="footer-bottom">
+                    <div class="footer-bottom-content">
+                        <p>&copy; 2024 MediCare Hospital. All rights reserved. Built with ❤️ for better healthcare in Indonesia.</p>
+                        <div class="footer-bottom-links">
+                            <a href="#">Privacy Policy</a>
+                            <a href="#">Terms of Service</a>
+                            <a href="#">Cookie Policy</a>
+                            <a href="#">Accessibility Statement</a>
+                            <a href="#">Site Map</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
+
     <script>
-    // Enhanced Newsletter functionality - hanya untuk footer
+    // Enhanced Newsletter functionality
     (function() {
-        // Cek jika elemen newsletter ada di halaman ini
-        const newsletterForm = document.querySelector('footer .newsletter-form');
+        const newsletterForm = document.querySelector('.newsletter-form');
         if (!newsletterForm) return;
         
-        const newsletterInput = document.querySelector('footer .newsletter-input');
-        const newsletterBtn = document.querySelector('footer .newsletter-btn');
+        const newsletterInput = document.querySelector('.newsletter-input');
+        const newsletterBtn = document.querySelector('.newsletter-btn');
 
         newsletterBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -563,24 +474,6 @@
             }
         });
 
-        // Smooth scroll hanya untuk link yang ada di footer
-        document.querySelectorAll('footer a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerOffset = 80;
-                    const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
         // Add shake animation for form validation
         if (!document.querySelector('#footer-shake-animation')) {
             const style = document.createElement('style');
@@ -595,6 +488,6 @@
             document.head.appendChild(style);
         }
     })();
-</script>
+    </script>
 </body>
 </html>

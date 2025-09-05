@@ -650,6 +650,10 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
+            .hero-badge {
+                margin-top: 6rem;
+            }
+
             .hero-container {
                 gap: 3rem;
             }
@@ -716,11 +720,19 @@
                 max-width: 200px;
                 text-align: center;
             }
+
+            .hero-badge {
+                margin-top: 6rem;
+            }
         }
 
         @media (max-width: 480px) {
             .hero-title {
                 font-size: 2.2rem;
+            }
+
+            .hero-badge {
+                margin-top: 6rem;
             }
 
             .section-title h2 {
