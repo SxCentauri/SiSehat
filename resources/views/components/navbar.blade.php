@@ -1,5 +1,4 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<style>
+ <style>
 * {
             margin: 0;
             padding: 0;
@@ -282,14 +281,14 @@
 
             <div class="navbar-menu" id="navbar-menu">
                 <ul class="navbar-links">
-                    <li><a href="#home" class="navbar-link active">Beranda</a></li>
+                    <li><a href="#home" class="navbar-link">Beranda</a></li>
                     <li><a href="#features" class="navbar-link">Layanan</a></li>
                     <li><a href="#roles" class="navbar-link">Fitur</a></li>
                     <li><a href="#contact" class="navbar-link">Kontak</a></li>
                 </ul>
 
                 <div class="navbar-auth">
-                    <a href="#" class="navbar-btn navbar-btn-login">
+                    <a href="/login" class="navbar-btn navbar-btn-login">
                         <i class="fas fa-sign-in-alt"></i>
                         <span>Masuk</span>
                     </a>

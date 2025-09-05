@@ -79,6 +79,141 @@
             z-index: -2;
         }
 
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 5px 20px rgba(37, 99, 235, 0.1);
+            padding: 1rem 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .navbar-logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+        }
+
+        .navbar-logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-color) 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar-auth {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .navbar-btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-btn-login {
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            background: transparent;
+        }
+
+        .navbar-btn-login:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+        }
+
+        .navbar-btn-register {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+        }
+
+        .navbar-btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Mobile Navbar */
+        @media (max-width: 768px) {
+            .navbar-container {
+                padding: 0 1.5rem;
+            }
+            
+            .navbar-logo-text {
+                font-size: 1.3rem;
+            }
+
+            .navbar-logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            
+            .navbar-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-logo-text {
+                display: none;
+            }
+            
+            .navbar-btn {
+                padding: 0.6rem 1rem;
+            }
+            
+            .navbar-btn span {
+                display: none;
+            }
+            
+            .navbar-btn i {
+                margin: 0;
+            }
+        }
+
         /* Animated background shapes */
         .bg-shape {
             position: fixed;
@@ -345,7 +480,7 @@
             position: absolute;
             right: 1rem;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-50%) !important;
             color: var(--text-lighter);
             cursor: pointer;
             font-size: 1.125rem;
@@ -386,6 +521,7 @@
 
         .remember-me:hover {
             color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.05);
         }
 
         .forgot-password {
@@ -819,10 +955,31 @@
     </style>
 </head>
 <body>
-    @include('components.navbar')
+    <!-- Navbar untuk halaman login -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="navbar-logo">
+                <div class="navbar-logo-icon">
+                    <i class="fas fa-hospital"></i>
+                </div>
+                <span class="navbar-logo-text">MediCare</span>
+            </a>
+
+            <div class="navbar-auth">
+                <a href="#login" class="navbar-btn navbar-btn-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Masuk</span>
+                </a>
+                <a href="#register" class="navbar-btn navbar-btn-register">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Daftar</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    
     <div class="bg-shape bg-shape-1"></div>
     <div class="bg-shape bg-shape-2"></div>
-    <div class="bg-shape bg-shape-3"></div>
     
     <div class="login-container">
         <div class="login-left">
@@ -938,386 +1095,270 @@
     </div>
 
     <script>
-        // Enhanced form interactions
-        class LoginForm {
-            constructor() {
-                this.form = document.getElementById('loginForm');
-                this.emailInput = document.getElementById('email');
-                this.passwordInput = document.getElementById('password');
-                this.passwordToggle = document.getElementById('passwordToggle');
-                this.loginBtn = document.getElementById('loginBtn');
-                this.rememberCheckbox = document.getElementById('remember');
-                
-                this.init();
-            }
+    // Enhanced form interactions
+    class LoginForm {
+        constructor() {
+            this.form = document.getElementById('loginForm');
+            this.emailInput = document.getElementById('email');
+            this.passwordInput = document.getElementById('password');
+            this.passwordToggle = document.getElementById('passwordToggle');
+            this.loginBtn = document.getElementById('loginBtn');
+            this.rememberCheckbox = document.getElementById('remember');
             
-            init() {
-                this.setupPasswordToggle();
-                this.setupFormValidation();
-                this.setupFormSubmission();
-                this.setupInputAnimations();
-                this.setupSocialLogin();
-            }
-            
-            setupPasswordToggle() {
-                this.passwordToggle.addEventListener('click', () => {
-                    const isPassword = this.passwordInput.type === 'password';
-                    this.passwordInput.type = isPassword ? 'text' : 'password';
-                    
-                    const icon = this.passwordToggle.querySelector('i');
-                    icon.className = isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
-                    
-                    // Add smooth transition
-                    this.passwordToggle.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        this.passwordToggle.style.transform = 'scale(1)';
-                    }, 150);
-                });
-            }
-            
-            setupInputAnimations() {
-                const inputs = [this.emailInput, this.passwordInput];
+            this.init();
+        }
+        
+        init() {
+            this.setupPasswordToggle();
+            this.setupFormValidation();
+            this.setupFormSubmission();
+            this.setupInputAnimations();
+            this.setupSocialLogin();
+            this.checkRememberedUser();
+        }
+        
+        setupPasswordToggle() {
+            this.passwordToggle.addEventListener('click', () => {
+                const isPassword = this.passwordInput.type === 'password';
+                this.passwordInput.type = isPassword ? 'text' : 'password';
                 
-                inputs.forEach(input => {
-                    input.addEventListener('focus', () => {
-                        input.parentElement.style.transform = 'translateY(-2px)';
-                    });
-                    
-                    input.addEventListener('blur', () => {
-                        input.parentElement.style.transform = 'translateY(0)';
-                    });
-                    
-                    // Real-time validation feedback
-                    input.addEventListener('input', () => {
-                        this.validateInput(input);
-                    });
-                });
-            }
-            
-            validateInput(input) {
-                const isValid = input.checkValidity();
-                const inputContainer = input.parentElement;
+                const icon = this.passwordToggle.querySelector('i');
+                icon.className = isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
                 
-                if (input.value.length > 0) {
-                    if (isValid) {
-                        input.style.borderColor = '#10b981';
-                        input.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.1)';
-                    } else {
-                        input.style.borderColor = '#ef4444';
-                        input.style.boxShadow = '0 0 0 4px rgba(239, 68, 68, 0.1)';
-                    }
-                } else {
-                    input.style.borderColor = '';
-                    input.style.boxShadow = '';
-                }
-            }
-            
-            setupFormValidation() {
-                // Email validation with better UX
-                this.emailInput.addEventListener('blur', () => {
-                    if (this.emailInput.value && !this.emailInput.checkValidity()) {
-                        this.showToast('Silakan masukkan alamat email yang valid', 'error');
-                    }
-                });
-                
-                // Password strength indicator (basic)
-                this.passwordInput.addEventListener('input', () => {
-                    const password = this.passwordInput.value;
-                    if (password.length > 0 && password.length < 6) {
-                        this.passwordInput.style.borderColor = '#f59e0b';
-                        this.passwordInput.style.boxShadow = '0 0 0 4px rgba(245, 158, 11, 0.1)';
-                    }
-                });
-            }
-            
-            setupFormSubmission() {
-                this.form.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    await this.handleSubmit();
-                });
-            }
-            
-            setupSocialLogin() {
-                const socialBtns = document.querySelectorAll('.social-btn');
-                socialBtns.forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const platform = btn.classList.contains('google') ? 'Google' : 'Facebook';
-                        this.handleSocialLogin(platform);
-                    });
-                });
-            }
-            
-            async handleSubmit() {
-                if (!this.form.checkValidity()) {
-                    this.showToast('Mohon lengkapi semua field yang diperlukan', 'error');
-                    return;
-                }
-                
-                const email = this.emailInput.value;
-                const password = this.passwordInput.value;
-                const remember = this.rememberCheckbox.checked;
-                
-                // Show loading state
-                this.setLoadingState(true);
-                
-                try {
-                    // Simulate API call
-                    await this.simulateLogin(email, password, remember);
-                    
-                    this.showToast('Login berhasil! Mengalihkan...', 'success');
-                    
-                    // Simulate redirect after success
-                    setTimeout(() => {
-                        // window.location.href = '/dashboard';
-                        console.log('Redirect to dashboard');
-                    }, 1500);
-                    
-                } catch (error) {
-                    this.showToast('Login gagal. Periksa email dan password Anda.', 'error');
-                } finally {
-                    this.setLoadingState(false);
-                }
-            }
-            
-            simulateLogin(email, password, remember) {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        // Simple validation simulation
-                        if (email.includes('@') && password.length >= 6) {
-                            resolve({ success: true });
-                        } else {
-                            reject(new Error('Invalid credentials'));
-                        }
-                    }, 2000);
-                });
-            }
-            
-            handleSocialLogin(platform) {
-                this.showToast(`Mengalihkan ke ${platform}...`, 'info');
-                // Here you would integrate with actual OAuth
-                console.log(`Social login with ${platform}`);
-            }
-            
-            setLoadingState(loading) {
-                const btnText = this.loginBtn.querySelector('span');
-                const btnIcon = this.loginBtn.querySelector('i');
-                
-                if (loading) {
-                    this.loginBtn.disabled = true;
-                    this.loginBtn.style.opacity = '0.8';
-                    btnIcon.className = 'fas fa-spinner fa-spin';
-                    btnText.textContent = 'Memproses...';
-                } else {
-                    this.loginBtn.disabled = false;
-                    this.loginBtn.style.opacity = '1';
-                    btnIcon.className = 'fas fa-sign-in-alt';
-                    btnText.textContent = 'Masuk';
-                }
-            }
-            
-            showToast(message, type = 'info') {
-                // Create toast notification
-                const toast = document.createElement('div');
-                toast.className = `toast toast-${type}`;
-                toast.innerHTML = `
-                    <div class="toast-content">
-                        <i class="fas ${this.getToastIcon(type)}"></i>
-                        <span>${message}</span>
-                    </div>
-                `;
-                
-                // Add toast styles
-                toast.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: ${this.getToastColor(type)};
-                    color: white;
-                    padding: 1rem 1.5rem;
-                    border-radius: 12px;
-                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-                    z-index: 1000;
-                    transform: translateX(400px);
-                    transition: transform 0.3s ease;
-                    max-width: 300px;
-                `;
-                
-                document.body.appendChild(toast);
-                
-                // Animate in
-                requestAnimationFrame(() => {
-                    toast.style.transform = 'translateX(0)';
-                });
-                
-                // Auto remove
+                // Add smooth transition
+                this.passwordToggle.style.transform = 'scale(0.95)';
                 setTimeout(() => {
-                    toast.style.transform = 'translateX(400px)';
-                    setTimeout(() => {
-                        document.body.removeChild(toast);
-                    }, 300);
-                }, 4000);
-            }
-            
-            getToastIcon(type) {
-                const icons = {
-                    success: 'fa-check-circle',
-                    error: 'fa-exclamation-circle',
-                    info: 'fa-info-circle',
-                    warning: 'fa-exclamation-triangle'
-                };
-                return icons[type] || icons.info;
-            }
-            
-            getToastColor(type) {
-                const colors = {
-                    success: '#10b981',
-                    error: '#ef4444',
-                    info: '#3b82f6',
-                    warning: '#f59e0b'
-                };
-                return colors[type] || colors.info;
-            }
-        }
-        
-        // Enhanced animations and interactions
-        class AnimationController {
-            constructor() {
-                this.init();
-            }
-            
-            init() {
-                this.setupIntersectionObserver();
-                this.setupParallaxEffect();
-                this.setupMouseTracker();
-            }
-            
-            setupIntersectionObserver() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.animationPlayState = 'running';
-                        }
-                    });
-                }, { threshold: 0.1 });
-                
-                document.querySelectorAll('.login-feature, .login-form').forEach(el => {
-                    observer.observe(el);
-                });
-            }
-            
-            setupParallaxEffect() {
-                const shapes = document.querySelectorAll('.bg-shape');
-                
-                document.addEventListener('mousemove', (e) => {
-                    const mouseX = e.clientX / window.innerWidth;
-                    const mouseY = e.clientY / window.innerHeight;
-                    
-                    shapes.forEach((shape, index) => {
-                        const speed = (index + 1) * 0.5;
-                        const x = (mouseX - 0.5) * speed * 20;
-                        const y = (mouseY - 0.5) * speed * 20;
-                        
-                        shape.style.transform = `translate(${x}px, ${y}px)`;
-                    });
-                });
-            }
-            
-            setupMouseTracker() {
-                const loginContainer = document.querySelector('.login-container');
-                
-                loginContainer.addEventListener('mousemove', (e) => {
-                    const rect = loginContainer.getBoundingClientRect();
-                    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-                    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-                    
-                    loginContainer.style.transform = `
-                        perspective(1000px) 
-                        rotateY(${x * 2}deg) 
-                        rotateX(${y * 2}deg)
-                        translateZ(0)
-                    `;
-                });
-                
-                loginContainer.addEventListener('mouseleave', () => {
-                    loginContainer.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0)';
-                });
-            }
-        }
-        
-        // Keyboard navigation enhancement
-        class KeyboardNavigation {
-            constructor() {
-                this.setupKeyboardShortcuts();
-            }
-            
-            setupKeyboardShortcuts() {
-                document.addEventListener('keydown', (e) => {
-                    // Enter to submit form
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                        const activeElement = document.activeElement;
-                        if (activeElement.tagName === 'INPUT') {
-                            e.preventDefault();
-                            document.getElementById('loginForm').dispatchEvent(new Event('submit'));
-                        }
-                    }
-                    
-                    // Escape to clear form
-                    if (e.key === 'Escape') {
-                        document.getElementById('email').value = '';
-                        document.getElementById('password').value = '';
-                        document.getElementById('email').focus();
-                    }
-                });
-            }
-        }
-        
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            new LoginForm();
-            new AnimationController();
-            new KeyboardNavigation();
-            
-            // Add some extra interactive elements
-            const registerLink = document.getElementById('registerLink');
-            registerLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Here you would navigate to register page
-                console.log('Navigate to register');
+                    this.passwordToggle.style.transform = 'scale(1)';
+                }, 150);
             });
+        }
+        
+        setupInputAnimations() {
+            const inputs = [this.emailInput, this.passwordInput];
             
-            // Add focus trap for accessibility
-            const focusableElements = document.querySelectorAll(
-                'input, button, a, [tabindex]:not([tabindex="-1"])'
-            );
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', () => {
+                    input.parentElement.style.transform = 'translateY(0)';
+                });
+                
+                // Real-time validation feedback
+                input.addEventListener('input', () => {
+                    this.validateInput(input);
+                });
+            });
+        }
+        
+        validateInput(input) {
+            const isValid = input.checkValidity();
+            const inputContainer = input.parentElement;
             
-            const firstElement = focusableElements[0];
-            const lastElement = focusableElements[focusableElements.length - 1];
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Tab') {
-                    if (e.shiftKey && document.activeElement === firstElement) {
-                        e.preventDefault();
-                        lastElement.focus();
-                    } else if (!e.shiftKey && document.activeElement === lastElement) {
-                        e.preventDefault();
-                        firstElement.focus();
-                    }
+            if (input.value.length > 0) {
+                if (isValid) {
+                    input.style.borderColor = '#10b981';
+                    input.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.1)';
+                } else {
+                    input.style.borderColor = '#ef4444';
+                    input.style.boxShadow = '0 0 0 4px rgba(239, 68, 68, 0.1)';
+                }
+            } else {
+                input.style.borderColor = '#e5e7eb';
+                input.style.boxShadow = 'none';
+            }
+        }
+        
+        setupFormValidation() {
+            this.form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Validate all fields
+                const isEmailValid = this.emailInput.checkValidity();
+                const isPasswordValid = this.passwordInput.checkValidity();
+                
+                if (!isEmailValid) {
+                    this.showError(this.emailInput, 'Please enter a valid email address');
+                }
+                
+                if (!isPasswordValid) {
+                    this.showError(this.passwordInput, 'Password is required');
+                }
+                
+                if (isEmailValid && isPasswordValid) {
+                    this.handleLogin();
                 }
             });
+        }
+        
+        showError(input, message) {
+            // Remove any existing error message
+            this.removeError(input);
+            
+            // Create error element
+            const errorElement = document.createElement('p');
+            errorElement.className = 'error-message';
+            errorElement.style.color = '#ef4444';
+            errorElement.style.fontSize = '0.875rem';
+            errorElement.style.marginTop = '0.5rem';
+            errorElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            
+            // Insert after input container
+            input.parentElement.parentElement.appendChild(errorElement);
+            
+            // Highlight input
+            input.style.borderColor = '#ef4444';
+            input.style.boxShadow = '0 0 0 4px rgba(239, 68, 68, 0.1)';
+            
+            // Add shake animation
+            input.parentElement.style.animation = 'shake 0.5s ease';
+            setTimeout(() => {
+                input.parentElement.style.animation = '';
+            }, 500);
+        }
+        
+        removeError(input) {
+            const errorElement = input.parentElement.parentElement.querySelector('.error-message');
+            if (errorElement) {
+                errorElement.remove();
+            }
+        }
+        
+        handleLogin() {
+            // Show loading state
+            this.loginBtn.classList.add('loading');
+            this.loginBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // For demo purposes - always succeed
+                this.loginBtn.classList.remove('loading');
+                this.loginBtn.disabled = false;
+                
+                // Save to localStorage if "Remember me" is checked
+                if (this.rememberCheckbox.checked) {
+                    localStorage.setItem('rememberedEmail', this.emailInput.value);
+                } else {
+                    localStorage.removeItem('rememberedEmail');
+                }
+                
+                // Show success message
+                this.showSuccess('Login successful! Redirecting...');
+                
+                // Redirect to dashboard (simulated)
+                setTimeout(() => {
+                    window.location.href = '/dashboard'; // Change to your actual dashboard URL
+                }, 1500);
+            }, 2000);
+        }
+        
+        showSuccess(message) {
+            // Create success element
+            const successElement = document.createElement('div');
+            successElement.className = 'success-message';
+            successElement.style.position = 'fixed';
+            successElement.style.top = '20px';
+            successElement.style.right = '20px';
+            successElement.style.padding = '1rem 1.5rem';
+            successElement.style.background = '#10b981';
+            successElement.style.color = 'white';
+            successElement.style.borderRadius = '10px';
+            successElement.style.boxShadow = '0 10px 25px rgba(16, 185, 129, 0.3)';
+            successElement.style.zIndex = '10000';
+            successElement.style.display = 'flex';
+            successElement.style.alignItems = 'center';
+            successElement.style.gap = '0.5rem';
+            successElement.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            
+            document.body.appendChild(successElement);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                successElement.style.opacity = '0';
+                successElement.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    successElement.remove();
+                }, 500);
+            }, 3000);
+        }
+        
+        setupFormSubmission() {
+            this.form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleLogin();
+            });
+        }
+        
+        setupSocialLogin() {
+            const socialButtons = document.querySelectorAll('.social-btn');
+            
+            socialButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.classList.add('loading');
+                    
+                    // Simulate social login process
+                    setTimeout(() => {
+                        button.classList.remove('loading');
+                        this.showSuccess('Social login initiated!');
+                    }, 1500);
+                });
+            });
+        }
+        
+        checkRememberedUser() {
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                this.emailInput.value = rememberedEmail;
+                this.rememberCheckbox.checked = true;
+            }
+        }
+    }
+
+    // Initialize the login form when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        new LoginForm();
+        
+        // Add CSS for shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+            
+            .success-message {
+                animation: slideInRight 0.5s ease;
+            }
+            
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Register link functionality
+        document.getElementById('registerLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Redirecting to registration page...');
+            // window.location.href = '/register'; // Uncomment for actual registration page
         });
         
-        // Service Worker registration for PWA capabilities (optional)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch(registrationError => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-    </script>
-</body>
-</html>
+        // Forgot password functionality
+        document.querySelector('.forgot-password').addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = prompt('Please enter your email address to reset your password:');
+            if (email) {
+                alert(`Password reset instructions have been sent to ${email}`);
+            }
+        });
+    });
+</script>
