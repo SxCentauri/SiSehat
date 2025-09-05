@@ -966,11 +966,11 @@
             </a>
 
             <div class="navbar-auth">
-                <a href="#login" class="navbar-btn navbar-btn-login">
+                <a href="/login" class="navbar-btn navbar-btn-login">
                     <i class="fas fa-sign-in-alt"></i>
                     <span>Masuk</span>
                 </a>
-                <a href="#register" class="navbar-btn navbar-btn-register">
+                <a href="/register" class="navbar-btn navbar-btn-register">
                     <i class="fas fa-user-plus"></i>
                     <span>Daftar</span>
                 </a>
@@ -1089,7 +1089,7 @@
             </div>
             
             <div class="register-link">
-                Belum punya akun?<a href="#" id="registerLink">Daftar Sekarang</a>
+                Belum punya akun?<a href="/register" id="registerLink">Daftar Sekarang</a>
             </div>
         </div>
     </div>
@@ -1344,13 +1344,6 @@
             }
         `;
         document.head.appendChild(style);
-        
-        // Register link functionality
-        document.getElementById('registerLink').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('Redirecting to registration page...');
-            // window.location.href = '/register'; // Uncomment for actual registration page
-        });
         
         // Forgot password functionality
         document.querySelector('.forgot-password').addEventListener('click', (e) => {

@@ -292,7 +292,7 @@
                         <i class="fas fa-sign-in-alt"></i>
                         <span>Masuk</span>
                     </a>
-                    <a href="#" class="navbar-btn navbar-btn-register">
+                    <a href="/register" class="navbar-btn navbar-btn-register">
                         <i class="fas fa-user-plus"></i>
                         <span>Daftar</span>
                     </a>
