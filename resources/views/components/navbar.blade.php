@@ -47,13 +47,14 @@
   .user-caret{color:#64748b;font-size:.85rem}
 
   .dropdown{position:absolute;right:0;top:calc(100% + .6rem);width:220px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;
-            box-shadow:0 20px 50px rgba(2,6,23,.10);padding:.5rem;display:none}
+            box-shadow:0 20px 50px rgba(2,6,23,.10);padding: 1rem;display:none;}
   .dropdown.show{display:block}
   .dd-head{display:flex;align-items:center;gap:.6rem;padding:.5rem .6rem;border-bottom:1px solid #f1f5f9;margin-bottom:.25rem}
   .dd-head .user-avatar{width:34px;height:34px}
-  .dd-item{display:flex;align-items:center;gap:.6rem;padding:.6rem .6rem;border-radius:10px;color:var(--text-color);text-decoration:none;font-weight:600}
+  .dd-item{display:flex;align-items:center;gap:2rem;padding:.6rem .6rem;border-radius:10px;color:var(--text-color);text-decoration:none;font-weight:600;
+           width:100%;background:none;border:none;text-align:left;cursor:pointer;font-size:.95rem;transition:background .3s ease}
   .dd-item:hover{background:#f8fafc}
-  .dd-item i{color:var(--primary-color)}
+  .dd-item i{color:var(--primary-color);font-size:20px;width:16px;text-align:center}
 
   /* MOBILE */
   @media (max-width:968px){
@@ -124,22 +125,50 @@
                 </div>
               </div>
 
-              <a href="{{ $dashboardUrl }}" class="dd-item">
-                <i class="fa-solid fa-table-columns"></i> <span>Dashboard</span>
-              </a>
+              {{-- Dashboard link berdasarkan role --}}
+              @if($role === 'admin')
+                <a href="{{ route('admin.dashboard') }}" class="dd-item">
+                  <i class="fa-solid fa-table-columns"></i> <span>Dashboard Admin</span>
+                </a>
+              @elseif($role === 'doctor')
+                <a href="{{ route('doctor.dashboard') }}" class="dd-item">
+                  <i class="fa-solid fa-table-columns"></i> <span>Dashboard Dokter</span>
+                </a>
+              @elseif($role === 'nurse')
+                <a href="{{ route('nurse.dashboard') }}" class="dd-item">
+                  <i class="fa-solid fa-table-columns"></i> <span>Dashboard Perawat</span>
+                </a>
+              @else
+                <a href="{{ route('dashboard') }}" class="dd-item">
+                  <i class="fa-solid fa-table-columns"></i> <span>Dashboard</span>
+                </a>
+              @endif
 
-              @if (Route::has('profile.edit'))
+              {{-- Profil & Pengaturan berdasarkan role --}}
+              @if($role === 'admin' && Route::has('admin.profile.edit'))
+                <a href="{{ route('admin.profile.edit') }}" class="dd-item">
+                  <i class="fa-solid fa-user-gear"></i> <span>Profil</span>
+                </a>
+              @elseif($role === 'doctor' && Route::has('doctor.profile.edit'))
+                <a href="{{ route('doctor.profile.edit') }}" class="dd-item">
+                  <i class="fa-solid fa-user-gear"></i> <span>Profil</span>
+                </a>
+              @elseif($role === 'nurse' && Route::has('nurse.profile.edit'))
+                <a href="{{ route('nurse.profile.edit') }}" class="dd-item">
+                  <i class="fa-solid fa-user-gear"></i> <span>Profil</span>
+                </a>
+              @elseif(Route::has('profile.edit'))
                 <a href="{{ route('profile.edit') }}" class="dd-item">
-                  <i class="fa-solid fa-user-gear"></i> <span>Profil & Pengaturan</span>
+                  <i class="fa-solid fa-user-gear"></i> <span>Profil</span>
                 </a>
               @endif
 
               <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="dd-item" style="width:100%;background:none;border:none;text-align:left;cursor:pointer">
-                  <i class="fa-solid fa-right-from-bracket"></i> <span>Keluar</span>
-                </button>
-              </form>
+                  @csrf
+                  <button type="submit" class="dd-item" style="width:100%;background:none;border:none;text-align:left;cursor:pointer; font-size: 18px;">
+                    <i class="fa-solid fa-right-from-bracket"></i> <span>Keluar</span>
+                  </button>
+                </form>
             </div>
           </div>
         @endauth
