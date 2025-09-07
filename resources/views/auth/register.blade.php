@@ -26,10 +26,9 @@
             --transition:all .3s cubic-bezier(.4,0,.2,1)
         }
         body{
-            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
             background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 50%,#f0f9ff 100%);
             min-height:100vh;display:flex;align-items:center;justify-content:center;
-            padding:1rem;position:relative;overflow-x:hidden;font-feature-settings:'cv11','ss01'
+            padding:1rem;position:relative;overflow-x:hidden;
         }
         body::before{content:'';position:fixed;top:-50%;right:-20%;width:80%;height:200%;
             background:radial-gradient(ellipse,rgba(96,165,250,.08) 0%,transparent 70%);transform:rotate(-15deg);z-index:-2}
@@ -39,7 +38,7 @@
         /* Navbar */
         .navbar{position:fixed;top:0;left:0;width:100%;background:rgba(255,255,255,.95);
             backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-            box-shadow:0 5px 20px rgba(37,99,235,.1);padding:1rem 0;z-index:1000;transition:all .3s ease}
+            box-shadow:0 5px 20px rgba(37,99,235,.1);padding:12px 0;z-index:1000;transition:all .3s ease}
         .navbar-container{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
         .navbar-logo{display:flex;align-items:center;gap:1rem;text-decoration:none}
         .navbar-logo-icon{width:45px;height:45px;background:var(--gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.3rem;box-shadow:0 10px 25px rgba(37,99,235,.2)}

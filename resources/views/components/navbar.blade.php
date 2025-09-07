@@ -11,7 +11,7 @@
 
   /* NAVBAR */
   .navbar{position:fixed;top:0;left:0;width:100%;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-          box-shadow:0 5px 20px rgba(37,99,235,.1);padding:1rem 0;z-index:1000;transition:all .3s ease}
+          box-shadow:0 5px 20px rgba(37,99,235,.1);padding:15px 0;z-index:1000;transition:all .3s ease}
   .navbar.scrolled{padding:.8rem 0;background:rgba(255,255,255,.98);box-shadow:0 10px 30px rgba(37,99,235,.15)}
   .navbar-container{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
   .navbar-logo{display:flex;align-items:center;gap:1rem;text-decoration:none}
@@ -75,17 +75,17 @@
 
 <nav class="navbar" id="navbar">
   <div class="navbar-container">
-    <a href="{{ url('/#home') }}" class="navbar-logo">
+    <a href="{{ url('/') }}" class="navbar-logo">
       <div class="navbar-logo-icon"><i class="fas fa-hospital"></i></div>
       <span class="navbar-logo-text">MediCare</span>
     </a>
 
     <div class="navbar-menu" id="navbar-menu">
       <ul class="navbar-links">
-        <li><a href="{{ url('/#home') }}" class="navbar-link">Beranda</a></li>
-        <li><a href="{{ url('/#features') }}" class="navbar-link">Layanan</a></li>
-        <li><a href="{{ url('/#roles') }}" class="navbar-link">Fitur</a></li>
-        <li><a href="{{ url('/#contact') }}" class="navbar-link">Kontak</a></li>
+        <li><a href="{{ url('#home') }}" class="navbar-link">Beranda</a></li>
+        <li><a href="{{ url('#features') }}" class="navbar-link">Layanan</a></li>
+        <li><a href="{{ url('#roles') }}" class="navbar-link">Fitur</a></li>
+        <li><a href="{{ url('#contact') }}" class="navbar-link">Kontak</a></li>
       </ul>
 
       <div class="navbar-auth">

@@ -19,7 +19,7 @@
             --gradient-light:linear-gradient(135deg,var(--light-blue),var(--extra-light-blue));
             --gradient-vibrant:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
             --shadow-sm:0 1px 2px 0 rgba(0,0,0,.05);
-            --shadow:0 10px 25px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);
+           --shadow:0 20px 50px rgba(37,99,235,.1); --shadow-hover:0 30px 70px rgba(37,99,235,.15);
             --shadow-lg:0 25px 50px -12px rgba(0,0,0,.25);
             --shadow-blue:0 20px 50px rgba(37,99,235,.1);
             --shadow-hover:0 30px 70px rgba(37,99,235,.15);
@@ -28,11 +28,9 @@
         }
 
         body{
-            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
             background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 50%,#f0f9ff 100%);
             min-height:100vh; display:flex; align-items:center; justify-content:center;
             padding:1rem; position:relative; overflow-x:hidden;
-            font-feature-settings:'cv11','ss01'; font-optical-sizing:auto;
         }
         body::before{
             content:''; position:fixed; top:-50%; right:-20%; width:80%; height:200%;
@@ -43,6 +41,38 @@
             content:''; position:fixed; bottom:-30%; left:-10%; width:60%; height:120%;
             background:radial-gradient(ellipse,rgba(37,99,235,.06) 0%,transparent 70%);
             transform:rotate(10deg); z-index:-2;
+        }
+
+        /* ====== NAVBAR ====== */
+        .navbar{position:fixed;top:0;left:0;width:100%;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+          box-shadow:0 5px 20px rgba(37,99,235,.1);padding:12px 0;z-index:1000;transition:all .3s ease}
+        .navbar-container{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
+        .navbar-logo{display:flex;align-items:center;gap:1rem;text-decoration:none}
+        .navbar-logo-icon{width:45px;height:45px;background:var(--gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.3rem;box-shadow:0 10px 25px rgba(37,99,235,.2)}
+        .navbar-logo-text{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,var(--text-color) 0%,var(--primary-color) 100%);
+                    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .navbar-auth{
+            display:flex; gap:1rem; align-items:center;
+        }
+        .navbar-btn{
+            padding:.8rem 1.5rem; font-size:.9rem; font-weight:600; border-radius:10px;
+            text-decoration:none; transition:all .3s ease;
+            display:inline-flex; align-items:center; gap:.5rem;
+        }
+        .navbar-btn-login{
+            color:var(--primary-color); border:2px solid var(--primary-color);
+            background:transparent;
+        }
+        .navbar-btn-login:hover{
+            background:var(--primary-color); color:#fff; transform:translateY(-2px);
+            box-shadow:0 10px 25px rgba(37,99,235,.2);
+        }
+        .navbar-btn-register{
+            background:var(--gradient); color:#fff;
+            box-shadow:0 10px 25px rgba(37,99,235,.2);
+        }
+        .navbar-btn-register:hover{
+            transform:translateY(-2px); box-shadow:0 15px 35px rgba(37,99,235,.3);
         }
 
         /* ====== CARD WRAPPER ====== */
@@ -199,8 +229,23 @@
 </head>
 <body>
 
-    {{-- ✅ Navbar pakai komponen agar tombol Masuk/Daftar otomatis jadi menu user saat sudah login --}}
-    @include('components.navbar')
+    <!-- NAVBAR (sama persis dengan halaman register) -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{{ route('home') }}" class="navbar-logo">
+                <div class="navbar-logo-icon"><i class="fas fa-hospital"></i></div>
+                <span class="navbar-logo-text">MediCare</span>
+            </a>
+            <div class="navbar-auth">
+                <a href="{{ route('login') }}" class="navbar-btn navbar-btn-login">
+                    <i class="fas fa-sign-in-alt"></i><span>Masuk</span>
+                </a>
+                <a href="{{ route('register') }}" class="navbar-btn navbar-btn-register">
+                    <i class="fas fa-user-plus"></i><span>Daftar</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
     <div class="bg-shape bg-shape-1"></div>
     <div class="bg-shape bg-shape-2"></div>
