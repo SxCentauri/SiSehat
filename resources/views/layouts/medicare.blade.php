@@ -45,22 +45,41 @@
     .navbar-toggle.active span:nth-child(2){opacity:0}
     .navbar-toggle.active span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
 
-    /* USER MENU (saat login) */
+    /* USER MENU (saat login) - DIPERBAIKI */
     .user-menu{position:relative}
-    .user-btn{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:.45rem .7rem;cursor:pointer}
-    .user-avatar{width:28px;height:28px;border-radius:999px;object-fit:cover;background:#e5e7eb}
+    .user-btn{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:.45rem .7rem;cursor:pointer;
+              transition:all 0.3s ease;}
+    .user-btn:hover{box-shadow:0 5px 15px rgba(37,99,235,.1);border-color:var(--accent-color);}
+    .user-avatar{width:28px;height:28px;border-radius:999px;object-fit:cover;background:#e5e7eb;transition:transform 0.3s ease;}
     .user-name{font-weight:700;font-size:.92rem;color:var(--text-color)}
-    .user-role{font-size:.75rem;color:var(--text-light);font-weight:600;padding:.1rem .5rem;border-radius:999px;background:var(--extra-light-blue)}
-    .user-caret{color:#64748b;font-size:.85rem}
+    .user-role{font-size:.75rem;color:var(--text-light);font-weight:600;padding:.1rem .5rem;border-radius:999px;background:var(--extra-light-blue);
+               transition:all 0.3s ease;}
+    .user-caret{color:#64748b;font-size:.85rem;transition:transform 0.3s ease;}
+
+    .user-btn:hover .user-avatar {
+      transform: scale(1.1);
+    }
+    
+    .user-btn:hover .user-role {
+      background: var(--light-blue);
+      color: var(--secondary-color);
+    }
+    
+    .user-btn.active .user-caret {
+      transform: rotate(180deg);
+    }
 
     .dropdown{position:absolute;right:0;top:calc(100% + .6rem);width:220px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;
-              box-shadow:0 20px 50px rgba(2,6,23,.10);padding:.5rem;display:none; }
-    .dropdown.show{display:block}
+              box-shadow:0 20px 50px rgba(2,6,23,.10);padding:.5rem;opacity:0;visibility:hidden;transform:translateY(-10px);
+              transition:all 0.3s ease;z-index:1001;}
+    .dropdown.show{opacity:1;visibility:visible;transform:translateY(0);}
     .dd-head{display:flex;align-items:center;gap:.6rem;padding:.5rem .6rem;border-bottom:1px solid #f1f5f9;margin-bottom:.25rem}
     .dd-head .user-avatar{width:34px;height:34px}
-    .dd-item{display:flex;align-items:center;gap:.6rem;padding:.6rem .6rem;border-radius:10px;color:var(--text-color);text-decoration:none;font-weight:600}
-    .dd-item:hover{background:#f8fafc}
-    .dd-item i{color:var(--primary-color)}
+    .dd-item{display:flex;align-items:center;gap:.6rem;padding:.6rem .6rem;border-radius:10px;color:var(--text-color);text-decoration:none;font-weight:600;
+             transition:all 0.2s ease;}
+    .dd-item:hover{background:#f1f5f9;transform:translateX(5px);}
+    .dd-item i{color:var(--primary-color);transition:transform 0.2s ease;}
+    .dd-item:hover i{transform:scale(1.2);}
 
     /* MOBILE */
     @media (max-width:968px){
@@ -72,11 +91,20 @@
       .navbar-link{font-size:1.2rem;padding:.8rem 0}
       .navbar-auth{flex-direction:column;width:100%;max-width:300px}
       .navbar-btn{width:100%;justify-content:center;padding:1rem 2rem;font-size:1.1rem}
-      .dropdown{position:static;width:100%;box-shadow:none;border:1px dashed #e5e7eb}
+      
+      /* Dropdown untuk mobile */
+      .dropdown{position:static;width:100%;box-shadow:none;border:1px dashed #e5e7eb;margin-top:1rem;transform:none;display:none;}
+      .dropdown.show{display:block;opacity:1;visibility:visible;transform:none;animation:fadeIn 0.3s ease;}
     }
     @media (max-width:480px){
       .navbar-logo-text{font-size:1.3rem}
       .navbar-logo-icon{width:40px;height:40px;font-size:1.1rem}
+    }
+
+    /* Animasi keyframes */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* STYLE UTAMA (dari kode kedua) */
@@ -115,14 +143,6 @@
     .msg.doctor{justify-content:flex-end}
     .msg.doctor .bubble{background:var(--primary-color);color:#fff;border-top-right-radius:4px}
     .msg.patient .bubble{background:#fff;border:1px solid #e5e7eb;border-top-left-radius:4px}
-
-    /* FOOTER */
-    .footer{margin-top:48px;background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#334155 100%);color:#fff;padding:22px 0}
-    .footer-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-
-    @media (max-width:768px) {
-      .footer-inner { flex-direction: column; text-align: center; }
-    }
   </style>
   @yield('head')
 </head>
@@ -180,10 +200,7 @@
                   <a href="{{ route('doctor.appointments.index') }}" class="dd-item">
                     <i class="fa-solid fa-clipboard-list"></i> <span>Booking</span>
                   </a>
-                @endif
-
-                @if (Route::has('profile.edit'))
-                  <a href="{{ route('profile.edit') }}" class="dd-item">
+                  <a href="{{ route('doctor.profile.edit') }}" class="dd-item">
                     <i class="fa-solid fa-user-gear"></i> <span>Profil</span>
                   </a>
                 @endif
@@ -233,22 +250,7 @@
       else navbar.classList.remove('scrolled');
     });
 
-    // Active link highlight
-    const sections = document.querySelectorAll('section[id]');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(sec => {
-        const top = sec.offsetTop, h = sec.clientHeight;
-        if (window.scrollY >= (top - 100)) current = sec.getAttribute('id');
-      });
-      navbarLinks.forEach(a => {
-        a.classList.remove('active');
-        if (a.getAttribute('href') === `#${current}`)
-          a.classList.add('active');
-      });
-    });
-
-    // User dropdown
+    // User dropdown dengan animasi yang diperbaiki
     const userMenuBtn = document.getElementById('userMenuBtn');
     const userDropdown = document.getElementById('userDropdown');
 
@@ -256,13 +258,29 @@
       userMenuBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         userDropdown.classList.toggle('show');
+        userMenuBtn.classList.toggle('active');
         userMenuBtn.setAttribute('aria-expanded', userDropdown.classList.contains('show'));
       });
+      
       document.addEventListener('click', (e) => {
         if (!userDropdown.contains(e.target) && !userMenuBtn.contains(e.target)) {
           userDropdown.classList.remove('show');
+          userMenuBtn.classList.remove('active');
           userMenuBtn.setAttribute('aria-expanded', 'false');
         }
+      });
+      
+      // Untuk perangkat mobile, tutup dropdown saat item diklik
+      const dropdownItems = userDropdown.querySelectorAll('.dd-item');
+      dropdownItems.forEach(item => {
+        item.addEventListener('click', () => {
+          // Hanya tutup di mobile
+          if (window.innerWidth <= 968) {
+            userDropdown.classList.remove('show');
+            userMenuBtn.classList.remove('active');
+            userMenuBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
       });
     }
   </script>

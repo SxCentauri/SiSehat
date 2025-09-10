@@ -537,8 +537,8 @@
           <p class="stat-description text-center">Total rekam medis yang kamu buat</p>
         </div>
         <div class="actions">
-          <a class="btn btn-outline btn-sm" href="{{ route('doctor.appointments.index') }}">
-            <i class="fa-solid fa-plus"></i> Buat dari Booking
+          <a class="btn btn-outline btn-sm" href="{{ route('doctor.records.index') }}">
+            <i class="fa-solid fa-list"></i> Lihat Rekam Medis
           </a>
         </div>
       </div>

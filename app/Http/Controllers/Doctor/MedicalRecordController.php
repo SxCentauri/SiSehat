@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 
 class MedicalRecordController extends Controller
 {
+    public function index(Request $request)
+    {
+        $records = MedicalRecord::where('doctor_id', $request->user()->id)
+        ->with(['patient', 'appointment', 'treatments'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+    
+    return view('doctor.records.index', compact('records'));
+    }
+
     public function create(Appointment $appointment, Request $request)
     {
         abort_unless($appointment->doctor_id === $request->user()->id, 403);
@@ -40,7 +50,15 @@ class MedicalRecordController extends Controller
     public function show(MedicalRecord $record, Request $request)
     {
         abort_unless($record->doctor_id === $request->user()->id || $record->patient_id === $request->user()->id, 403);
-        $record->load('treatments');
+        
+        // Load relationships dengan eager loading
+        $record->load([
+            'treatments', 
+            'patient', 
+            'doctor', 
+            'appointment'
+        ]);
+        
         return view('doctor.records.show', compact('record'));
     }
 }

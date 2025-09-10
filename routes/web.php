@@ -75,9 +75,10 @@ Route::middleware(['auth', 'role:doctor'])
         Route::post('/chat/{patient}', [ChatController::class, 'send'])->name('chat.send');
 
         // Rekam Medis
+        Route::get('/records', [MedicalRecordController::class, 'index'])->name('records.index');
         Route::get('/records/create/{appointment}', [MedicalRecordController::class, 'create'])->name('records.create');
         Route::post('/records/store/{appointment}', [MedicalRecordController::class, 'store'])->name('records.store');
-        Route::get('/records/{record}',             [MedicalRecordController::class, 'show'])->name('records.show');
+        Route::get('/records/{record}', [MedicalRecordController::class, 'show'])->name('records.show');
 
         // Perawatan
         Route::post('/records/{record}/treatments', [TreatmentController::class, 'store'])->name('treatments.store');
