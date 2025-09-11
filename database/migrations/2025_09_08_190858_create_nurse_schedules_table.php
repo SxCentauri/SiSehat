@@ -1,0 +1,21 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        Schema::create('nurse_schedules', function (Blueprint $table) {
+            $table->id();
+            $table->string('nurse_name');
+            $table->string('task');
+            $table->date('schedule_date');
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void {
+        Schema::dropIfExists('nurse_schedules');
+    }
+};
