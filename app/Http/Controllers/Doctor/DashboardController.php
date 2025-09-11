@@ -8,6 +8,7 @@ use App\Models\ChatMessage;
 use App\Models\DoctorProfile;
 use App\Models\MedicalRecord;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 
 
@@ -16,7 +17,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $doctorId = $request->user()->id;
-        $today    = now()->toDateString();
+        $today = Carbon::now('Asia/Jakarta')->toDateString();
 
         // Kartu statistik
         $pendingCount   = Appointment::where('doctor_id', $doctorId)

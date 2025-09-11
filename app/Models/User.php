@@ -11,10 +11,6 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
-    /**
-     * Kolom yang boleh di-mass assign (sesuaikan dengan kolom tabel users kamu).
-     * Kalau di tabelmu tidak ada 'phone' atau 'role', hapus dari array ini.
-     */
     protected $fillable = [
         'name',
         'email',
@@ -23,24 +19,17 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone',
     ];
 
-    /**
-     * Sembunyikan saat serialisasi.
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Casting atribut.
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        // Laravel 10+ bisa pakai 'hashed' agar otomatis di-hash saat set password
         'password' => 'hashed',
     ];
 
-    // ======= Relasi Dokter/Patient =======
+    // ======= Relasi Dokter =======
     public function doctorProfile()
     {
         return $this->hasOne(DoctorProfile::class, 'user_id');
@@ -56,11 +45,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Appointment::class, 'doctor_id');
     }
 
+    // ======= Relasi Pasien =======
     public function patientAppointments()
     {
         return $this->hasMany(Appointment::class, 'patient_id');
     }
 
+    // ======= Relasi Chat =======
     public function messagesAsDoctor()
     {
         return $this->hasMany(ChatMessage::class, 'doctor_id');
@@ -71,6 +62,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(ChatMessage::class, 'patient_id');
     }
 
+    /**
+     * Relasi untuk mengambil pesan terakhir antara dokter dan pasien
+     */
+    public function latestMessage()
+    {
+        return $this->hasOne(ChatMessage::class, 'patient_id')->latestOfMany();
+    }
+
+    // ======= Relasi Rekam Medis =======
     public function medicalRecordsAsDoctor()
     {
         return $this->hasMany(MedicalRecord::class, 'doctor_id');
