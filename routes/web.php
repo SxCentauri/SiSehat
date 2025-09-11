@@ -70,10 +70,10 @@ Route::middleware(['auth', 'role:doctor'])
         Route::post('/appointments/{appointment}/reject',  [AppointmentController::class, 'reject'])->name('appointments.reject');
         Route::post('/appointments/{appointment}/complete', [AppointmentController::class, 'complete'])->name('appointments.complete');
 
-        // Chat
-        Route::get('/chat/{patient}',  [ChatController::class, 'thread'])->name('chat.thread');
-        Route::post('/chat/{patient}', [ChatController::class, 'send'])->name('chat.send');
-
+        Route::get('/chats', [ChatController::class, 'index'])->name('chat.index'); // Daftar pasien chat
+        Route::get('/chat/{patient}', [ChatController::class, 'thread'])->name('chat.thread'); // Lihat percakapan
+        Route::post('/chat/{patient}', [ChatController::class, 'send'])->name('chat.send');   // Kirim pesan
+        
         // Rekam Medis
         Route::get('/records', [MedicalRecordController::class, 'index'])->name('records.index');
         Route::get('/records/create/{appointment}', [MedicalRecordController::class, 'create'])->name('records.create');

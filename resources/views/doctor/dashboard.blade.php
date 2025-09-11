@@ -553,7 +553,7 @@
           <p class="stat-description text-center">Dari pasien (chat)</p>
         </div>
         <div class="actions">
-          <a class="btn btn-outline btn-sm" href="{{ route('doctor.appointments.index') }}">
+          <a class="btn btn-outline btn-sm" href="{{ route('doctor.chat.index') }}">
             <i class="fa-solid fa-comment-dots"></i> Buka Chat
           </a>
         </div>
