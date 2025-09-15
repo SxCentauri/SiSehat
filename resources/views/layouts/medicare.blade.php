@@ -59,12 +59,12 @@
     .user-btn:hover .user-avatar {
       transform: scale(1.1);
     }
-    
+
     .user-btn:hover .user-role {
       background: var(--light-blue);
       color: var(--secondary-color);
     }
-    
+
     .user-btn.active .user-caret {
       transform: rotate(180deg);
     }
@@ -91,7 +91,7 @@
       .navbar-link{font-size:1.2rem;padding:.8rem 0}
       .navbar-auth{flex-direction:column;width:100%;max-width:300px}
       .navbar-btn{width:100%;justify-content:center;padding:1rem 2rem;font-size:1.1rem}
-      
+
       /* Dropdown untuk mobile */
       .dropdown{position:static;width:100%;box-shadow:none;border:1px dashed #e5e7eb;margin-top:1rem;transform:none;display:none;}
       .dropdown.show{display:block;opacity:1;visibility:visible;transform:none;animation:fadeIn 0.3s ease;}
@@ -113,7 +113,7 @@
 
     /* Container & main content */
     .container{max-width:1200px;margin:0 auto;padding:24px 20px}
-    
+
     /* Kartu & tabel yang dipakai halaman dokter */
     .card{background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:18px;margin-bottom:20px}
     .grid{display:grid;gap:18px}
@@ -174,7 +174,7 @@
 
             <div class="user-menu" id="userMenu">
               <button type="button" class="user-btn" id="userMenuBtn" aria-haspopup="true" aria-expanded="false">
-                <img class="user-avatar" src="{{ $avatar }}" alt="Avatar">
+                <img class="user-avatar" src="{{ asset('storage/'.$profile->avatar_path) }}" alt="Avatar">
                 <span class="user-name">{{ $user->name ?? 'Pengguna' }}</span>
                 <span class="user-role">{{ ucfirst($role) }}</span>
                 <i class="fa-solid fa-chevron-down user-caret"></i>
@@ -182,7 +182,7 @@
 
               <div class="dropdown" id="userDropdown" role="menu">
                 <div class="dd-head">
-                  <img class="user-avatar" src="{{ $avatar }}" alt="Avatar">
+                  <img class="user-avatar" src="{{ asset('storage/'.$profile->avatar_path) }}" alt="Avatar">
                   <div>
                     <div class="user-name">{{ $user->name ?? 'Pengguna' }}</div>
                     <div class="user-role">{{ ucfirst($role) }}</div>
@@ -261,7 +261,7 @@
         userMenuBtn.classList.toggle('active');
         userMenuBtn.setAttribute('aria-expanded', userDropdown.classList.contains('show'));
       });
-      
+
       document.addEventListener('click', (e) => {
         if (!userDropdown.contains(e.target) && !userMenuBtn.contains(e.target)) {
           userDropdown.classList.remove('show');
@@ -269,7 +269,7 @@
           userMenuBtn.setAttribute('aria-expanded', 'false');
         }
       });
-      
+
       // Untuk perangkat mobile, tutup dropdown saat item diklik
       const dropdownItems = userDropdown.querySelectorAll('.dd-item');
       dropdownItems.forEach(item => {

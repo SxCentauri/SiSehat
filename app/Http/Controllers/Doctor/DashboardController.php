@@ -58,7 +58,8 @@ class DashboardController extends Controller
             'recordsCount',
             'unreadMessages',
             'upcoming',
-            'profileScore'
+            'profileScore',
+            'profile'
         ));
     }
 }

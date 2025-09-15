@@ -21,7 +21,7 @@ class ProfileController extends Controller
             'bio' => 'nullable|string',
             'clinic_address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:50',
-            'avatar' => 'nullable|image|max:2048',
+            'avatar' => 'nullable|image|max:10240',
         ]);
 
         $profile = DoctorProfile::firstOrCreate(['user_id' => $request->user()->id]);

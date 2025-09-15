@@ -9,7 +9,7 @@
       --shadow:0 20px 50px rgba(37,99,235,.1); --shadow-hover:0 30px 70px rgba(37,99,235,.15);
     }
 
-    body{line-height:1.6;color:var(--text-color);background:var(--white);padding-top:80px;font-family: 'Inter', sans-serif;}
+    body{line-height:1.6;color:var(--text-color);background:var(--white);padding-top:80px;}
     a{text-decoration:none;color:inherit}
 
     /* NAVBAR */
