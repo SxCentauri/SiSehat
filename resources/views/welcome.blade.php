@@ -28,6 +28,7 @@
         }
 
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
             color: var(--text-color);
             overflow-x: hidden;
@@ -800,7 +801,7 @@
                 </div>
                 <h1 class="hero-title">Pelayanan Kesehatan Digital Terdepan</h1>
                 <p class="hero-subtitle">
-                    Akses layanan medis berkualitas tinggi dengan teknologi modern. 
+                    Akses layanan medis berkualitas tinggi dengan teknologi modern.
                     Konsultasi online, booking janji temu, dan manajemen kesehatan dalam satu platform terintegrasi.
                 </p>
                 <div class="hero-cta">
@@ -814,7 +815,7 @@
                     </a>
                 </div>
             </div>
-            
+
             <div class="hero-image">
                 <div class="floating-element floating-element-1">
                     <div style="display: flex; align-items: center; gap: 0.8rem;">
@@ -825,7 +826,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="floating-element floating-element-2">
                     <div style="display: flex; align-items: center; gap: 0.8rem;">
                         <i class="fas fa-shield-alt" style="color: var(--primary-color); font-size: 1.2rem;"></i>
@@ -845,7 +846,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="hero-visual">
                     <i class="fas fa-hospital"></i>
                 </div>
@@ -861,7 +862,7 @@
                 <h2>Solusi Kesehatan Modern & Terintegrasi</h2>
                 <p>Platform kesehatan digital terdepan yang menggabungkan teknologi canggih dengan pelayanan medis berkualitas tinggi untuk memberikan pengalaman perawatan kesehatan terbaik.</p>
             </div>
-            
+
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -870,7 +871,7 @@
                     <h3>Konsultasi Online 24/7</h3>
                     <p>Chat langsung dengan dokter berpengalaman kapan saja, di mana saja. Dapatkan diagnosis akurat dan resep digital dalam hitungan menit.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-bed"></i>
@@ -878,7 +879,7 @@
                     <h3>Real-Time Room Monitoring</h3>
                     <p>Pantau ketersediaan ruang rawat inap, ICU, dan ruang perawatan khusus secara real-time dengan sistem update otomatis.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-calendar-check"></i>
@@ -886,7 +887,7 @@
                     <h3>Smart Appointment Booking</h3>
                     <p>Sistem booking cerdas yang memungkinkan Anda memilih dokter spesialis, waktu yang tepat, dan mendapat konfirmasi instant.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-clock"></i>
@@ -894,7 +895,7 @@
                     <h3>Live Queue Tracking</h3>
                     <p>Pantau posisi antrian Anda secara real-time dengan notifikasi push saat giliran Anda hampir tiba.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-file-medical"></i>
@@ -902,7 +903,7 @@
                     <h3>Digital Health Records</h3>
                     <p>Akses lengkap riwayat kesehatan, hasil laboratorium, dan rekam medis digital yang tersimpan aman dan terorganisir.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-pills"></i>
@@ -910,7 +911,7 @@
                     <h3>Online Pharmacy & Delivery</h3>
                     <p>Tebus resep online dari farmasi terpercaya dengan sistem pengiriman obat langsung ke rumah Anda.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-qrcode"></i>
@@ -918,7 +919,7 @@
                     <h3>Contactless Payment</h3>
                     <p>Bayar tagihan medis dengan mudah menggunakan QR Code, e-wallet, atau berbagai metode pembayaran digital lainnya.</p>
                 </div>
-                
+
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-exclamation-triangle"></i>
@@ -976,14 +977,14 @@
                 <h2>Fitur Khusus untuk Setiap Peran</h2>
                 <p>Platform yang dirancang khusus dengan fitur-fitur canggih untuk memenuhi kebutuhan berbagai jenis pengguna dalam ekosistem kesehatan digital.</p>
             </div>
-            
+
             <div class="roles-tabs">
                 <button class="tab-btn active" data-tab="user"><span>👤 Pasien</span></button>
                 <button class="tab-btn" data-tab="doctor"><span>👨‍⚕️ Dokter</span></button>
                 <button class="tab-btn" data-tab="admin"><span>👨‍💼 Admin</span></button>
                 <button class="tab-btn" data-tab="nurse"><span>👩‍⚕️ Perawat</span></button>
             </div>
-            
+
             <div id="user" class="tab-content active">
                 <div class="role-features">
                     <div class="role-feature">
@@ -1024,7 +1025,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div id="doctor" class="tab-content">
                 <div class="role-features">
                     <div class="role-feature">
@@ -1053,7 +1054,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div id="admin" class="tab-content">
                 <div class="role-features">
                     <div class="role-feature">
@@ -1086,7 +1087,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div id="nurse" class="tab-content">
                 <div class="role-features">
                     <div class="role-feature">
@@ -1130,11 +1131,11 @@
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const targetTab = btn.getAttribute('data-tab');
-                
+
                 // Remove active class from all tabs and contents
                 tabBtns.forEach(b => b.classList.remove('active'));
                 tabContents.forEach(content => content.classList.remove('active'));
-                
+
                 // Add active class to clicked tab and corresponding content
                 btn.classList.add('active');
                 document.getElementById(targetTab).classList.add('active');
@@ -1169,40 +1170,40 @@
         // Enhanced counter animation for stats with easing - FIXED
         const animateCounters = () => {
             const counters = document.querySelectorAll('.stat-item h3');
-            
+
             counters.forEach((counter, index) => {
                 const originalText = counter.textContent;
-                
+
                 // Handle special case for "24/7"
                 if (originalText.includes('/')) {
                     // For "24/7", we'll just display it directly without animation
                     counter.textContent = originalText;
                     return;
                 }
-                
+
                 const target = parseInt(originalText.replace(/\D/g, ''));
                 const suffix = originalText.replace(/\d/g, '');
                 let current = 0;
                 const duration = 2000;
                 const startTime = performance.now();
-                
+
                 const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-                
+
                 const updateCounter = (currentTime) => {
                     const elapsed = currentTime - startTime;
                     const progress = Math.min(elapsed / duration, 1);
                     const easedProgress = easeOutCubic(progress);
-                    
+
                     current = Math.floor(target * easedProgress);
                     counter.textContent = current + suffix;
-                    
+
                     if (progress < 1) {
                         requestAnimationFrame(updateCounter);
                     } else {
                         counter.textContent = target + suffix;
                     }
                 };
-                
+
                 setTimeout(() => {
                     requestAnimationFrame(updateCounter);
                 }, index * 200);
@@ -1252,7 +1253,7 @@
         // Loading animation
         window.addEventListener('load', () => {
             document.body.style.opacity = '1';
-            
+
             // Trigger hero animations
             const heroElements = document.querySelectorAll('.hero-content, .hero-image');
             heroElements.forEach((el, index) => {
@@ -1280,13 +1281,13 @@
                 if (currentActiveContent && currentActiveContent !== targetContent) {
                     currentActiveContent.style.opacity = '0';
                     currentActiveContent.style.transform = 'translateY(10px)';
-                    
+
                     setTimeout(() => {
                         currentActiveContent.classList.remove('active');
                         targetContent.classList.add('active');
                         targetContent.style.opacity = '0';
                         targetContent.style.transform = 'translateY(10px)';
-                        
+
                         // Fade in new content - faster timing
                         setTimeout(() => {
                             targetContent.style.opacity = '1';
