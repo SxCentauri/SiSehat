@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -60,6 +62,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function messagesAsPatient()
     {
         return $this->hasMany(ChatMessage::class, 'patient_id');
+    }
+
+    public function latestMessageForDoctor(): HasOne
+    {
+        return $this->hasOne(ChatMessage::class, 'patient_id')
+                    ->where('doctor_id', Auth::id())
+                    ->latestOfMany();
     }
 
     /**

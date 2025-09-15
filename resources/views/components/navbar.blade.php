@@ -56,10 +56,6 @@
       color:#fff;
       font-size:1.3rem;
       box-shadow:0 10px 25px rgba(37,99,235,.2);
-      transition: transform 0.3s ease;
-    }
-    .navbar-logo:hover .navbar-logo-icon {
-      transform: rotate(10deg);
     }
     .navbar-logo-text{
       font-size:1.5rem;
@@ -218,12 +214,12 @@
     .user-btn:hover .user-avatar {
       transform: scale(1.1);
     }
-    
+
     .user-btn:hover .user-role {
       background: var(--light-blue);
       color: var(--secondary-color);
     }
-    
+
     .user-btn.active .user-caret {
       transform: rotate(180deg);
     }
@@ -252,7 +248,7 @@
       transform:translateY(0) scale(1);
       animation: dropdownAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    
+
     @keyframes dropdownAppear {
       0% {
         opacity: 0;
@@ -263,7 +259,7 @@
         transform: translateY(0) scale(1);
       }
     }
-    
+
     .dd-head{
       display:flex;
       align-items:center;
@@ -293,14 +289,14 @@
       transform: translateX(-10px);
       animation: slideInItem 0.4s ease forwards;
     }
-    
+
     .dd-item:nth-child(2) { animation-delay: 0.05s; }
     .dd-item:nth-child(3) { animation-delay: 0.1s; }
     .dd-item:nth-child(4) { animation-delay: 0.15s; }
     .dd-item:nth-child(5) { animation-delay: 0.2s; }
     .dd-item:nth-child(6) { animation-delay: 0.25s; }
     .dd-item:nth-child(7) { animation-delay: 0.3s; }
-    
+
     @keyframes slideInItem {
       0% {
         opacity: 0;
@@ -311,7 +307,7 @@
         transform: translateX(0);
       }
     }
-    
+
     .dd-item:hover{
       background:#f1f5f9;
       transform:translateX(5px) !important;
@@ -369,7 +365,7 @@
         padding:1rem 2rem;
         font-size:1.1rem;
       }
-      
+
       /* Dropdown untuk mobile */
       .dropdown{
         position:static;
@@ -387,7 +383,7 @@
         display:block;
         animation:mobileDropdownAppear 0.4s ease forwards;
       }
-      
+
       @keyframes mobileDropdownAppear {
         from {
           opacity: 0;
@@ -399,7 +395,7 @@
           max-height: 500px;
         }
       }
-      
+
       .dd-item {
         animation: none !important;
         opacity: 1;
@@ -419,13 +415,13 @@
 
     /* Animasi keyframes */
     @keyframes fadeIn {
-      from { 
-        opacity: 0; 
-        transform: translateY(-10px); 
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
       }
-      to { 
-        opacity: 1; 
-        transform: translateY(0); 
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
@@ -435,7 +431,7 @@
       margin:0 auto;
       padding:24px 20px;
     }
-    
+
     /* Konten contoh */
     .content {
       text-align: center;
@@ -444,12 +440,12 @@
       border-radius: 18px;
       margin-top: 2rem;
     }
-    
+
     .content h1 {
       color: var(--primary-color);
       margin-bottom: 1rem;
     }
-    
+
     .content p {
       color: var(--text-light);
       font-size: 1.1rem;
@@ -603,7 +599,7 @@
         userMenuBtn.classList.toggle('active');
         userMenuBtn.setAttribute('aria-expanded', userDropdown.classList.contains('show'));
       });
-      
+
       document.addEventListener('click', (e) => {
         if (!userDropdown.contains(e.target) && !userMenuBtn.contains(e.target)) {
           userDropdown.classList.remove('show');
@@ -611,7 +607,7 @@
           userMenuBtn.setAttribute('aria-expanded', 'false');
         }
       });
-      
+
       // Untuk perangkat mobile, tutup dropdown saat item diklik
       const dropdownItems = userDropdown.querySelectorAll('.dd-item');
       dropdownItems.forEach(item => {
