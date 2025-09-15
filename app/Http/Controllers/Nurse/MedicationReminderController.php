@@ -10,7 +10,7 @@ class MedicationReminderController extends Controller
 {
     public function index()
     {
-        $reminders = MedicationReminder::all();
+        $reminders = MedicationReminder::paginate(10);
         return view('nurse.reminders.index', compact('reminders'));
     }
 

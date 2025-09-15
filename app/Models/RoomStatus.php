@@ -12,10 +12,7 @@ class RoomStatus extends Model
     protected $fillable = [
         'name',
         'status',
+        'capacity',
+        'occupied',
     ];
-
-    public function patients()
-    {
-        return $this->hasMany(PatientMonitoring::class, 'room_id');
-    }
 }

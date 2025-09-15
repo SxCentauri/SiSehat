@@ -10,8 +10,10 @@ return new class extends Migration
     {
         Schema::create('room_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');          // Nama ruangan
-            $table->enum('status', ['kosong','terisi','maintenance'])->default('kosong');
+            $table->string('name'); // Room name
+            $table->enum('status', ['available','occupied','maintenance'])->default('available');
+            $table->integer('capacity')->default(value: 0);
+            $table->integer('occupied')->default(value: 0);
             $table->timestamps();
         });
     }
