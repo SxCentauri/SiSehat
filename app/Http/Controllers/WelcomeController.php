@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // <-- 1. Impor class Auth
 use App\Models\DoctorProfile;
+use App\Models\NurseProfile;
 
 class WelcomeController extends Controller
 {
@@ -19,9 +20,8 @@ class WelcomeController extends Controller
             // 5. Ambil profil berdasarkan peran pengguna
             if ($user->role === 'doctor') {
                 $profile = DoctorProfile::firstOrCreate(['user_id' => $user->id]);
-            } elseif ($user->role === 'nurse') {
-                // Tambahkan ini jika perawat juga punya profil
-                // $profile = NurseProfile::firstOrCreate(['user_id' => $user->id]);
+            } elseif ($user->role === 'perawat') {
+                $profile = NurseProfile::firstOrCreate(['user_id' => $user->id]);
             }
             // Tambahkan peran lain jika perlu
         }

@@ -25,7 +25,8 @@ use App\Http\Controllers\Nurse\{
     RoomStatusController,
     MedicationReminderController,
     DoctorSupportController,
-    EmergencyResponseController
+    EmergencyResponseController,
+    ProfileController as NurseProfileController,
 };
 
 /*
@@ -141,4 +142,8 @@ Route::middleware(['auth', 'role:perawat'])
 
         // Emergency respon
         Route::resource('/emergencies', EmergencyResponseController::class);
+
+        // Profile
+        Route::get('/profile', [NurseProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [NurseProfileController::class, 'update'])->name('profile.update');
     });

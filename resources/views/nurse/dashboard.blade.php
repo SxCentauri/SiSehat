@@ -143,6 +143,40 @@
             align-items: center; justify-content: center;
         }
 
+        .progress-container {
+        margin: 1.5rem 0;
+        width: 100%;
+    }
+
+        .progress-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-light);
+        width: 100%;
+    }
+
+    .progress-bar {
+        height: 8px;
+        background: #eef2ff;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: var(--gradient);
+        border-radius: 10px;
+        transition: width 0.5s ease;
+    }
+
+    .progress-value {
+        font-weight: 700;
+        color: var(--secondary-color);
+    }
+
         /* Buttons */
         .btn {
             padding: 0.9rem 1.8rem; font-size: 0.95rem; font-weight: 600;
@@ -290,6 +324,32 @@
                 </div>
                 <div class="actions">
                     <a href="{{ route('nurse.emergencies.index') }}" class="btn btn-outline btn-sm">Respon Darurat</a>
+                </div>
+            </div>
+
+            <div class="grid" style="grid-template-columns: 1fr;">
+            <div class="card">
+                <div class="section-title">
+                    <i class="fa-solid fa-user-nurse"></i> {{-- Icon diubah --}}
+                    <h3>Profil Perawat</h3> {{-- Judul diubah --}}
+                </div>
+                <div class="card-text-content">
+                    <p class="text-muted">Skor kelengkapan profil:</p>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Kelengkapan</span>
+                            <span class="progress-value">{{ $profileScore ?? 0 }}%</span> {{-- Panggil skor --}}
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width:{{ $profileScore ?? 0 }}%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    {{-- Route diubah ke nurse.profile.edit --}}
+                    <a class="btn btn-primary btn-sm w-100" href="{{ route('nurse.profile.edit') }}">
+                        <i class="fa-solid fa-pen"></i> Edit Profil
+                    </a>
                 </div>
             </div>
         </div>
