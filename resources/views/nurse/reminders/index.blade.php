@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+@include('layouts.medicare')
 <div class="container">
     <h2>📋 Daftar Reminder Obat</h2>
 
@@ -51,4 +49,3 @@
         {{ $reminders->links() }}
     </div>
 </div>
-@endsection

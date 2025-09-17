@@ -490,7 +490,12 @@
 
           <div class="user-menu" id="userMenu">
             <button type="button" class="user-btn" id="userMenuBtn" aria-haspopup="true" aria-expanded="false">
-              <img class="user-avatar" src="{{ $avatar }}" alt="Avatar">
+              @if(isset($profile) && $profile->avatar_path)
+    <img class="user-avatar" src="{{ asset('storage/' . $profile->avatar_path) }}" alt="Avatar">
+@else
+    {{-- Gambar default jika tidak ada foto profil --}}
+    <img class="user-avatar" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=2563eb&color=fff" alt="Avatar">
+@endif
               <span class="user-name">{{ $user->name ?? 'Pengguna' }}</span>
               <span class="user-role">{{ ucfirst($role) }}</span>
               <i class="fa-solid fa-chevron-down user-caret"></i>
@@ -498,7 +503,12 @@
 
             <div class="dropdown" id="userDropdown" role="menu">
               <div class="dd-head">
-                <img class="user-avatar" src="{{ $avatar }}" alt="Avatar">
+                @if(isset($profile) && $profile->avatar_path)
+    <img class="user-avatar" src="{{ asset('storage/' . $profile->avatar_path) }}" alt="Avatar">
+@else
+    {{-- Gambar default jika tidak ada foto profil --}}
+    <img class="user-avatar" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=2563eb&color=fff" alt="Avatar">
+@endif
                 <div>
                   <div class="user-name">{{ $user->name ?? 'Pengguna' }}</div>
                   <div class="user-role">{{ ucfirst($role) }}</div>

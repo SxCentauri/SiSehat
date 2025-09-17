@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 // === Breeze / Profile bawaan ===
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Doctor\ProfileController;
+use App\Http\Controllers\WelcomeController;
 
 // === Dokter Controllers ===
 use App\Http\Controllers\Doctor\{
@@ -33,7 +34,7 @@ use App\Http\Controllers\Nurse\{
 |--------------------------------------------------------------------------
 */
 
-Route::view('/', 'welcome')->name('home');
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -124,20 +125,20 @@ Route::middleware(['auth', 'role:perawat'])
         Route::get('/dashboard', fn() => redirect()->route('nurse.dashboard'));
 
         // Jadwal & Tugas Harian
-        Route::resource('schedules', NurseScheduleController::class);
+        Route::resource('/schedules', NurseScheduleController::class);
 
         // Pantau pasien rawat inap
-        Route::resource('monitorings', PatientMonitoringController::class);
+        Route::resource('/monitorings', PatientMonitoringController::class);
 
         // Update status ruangan
-        Route::resource('rooms', RoomStatusController::class);
+        Route::resource('/rooms', RoomStatusController::class);
 
         // Reminder obat pasien
-        Route::resource('reminders', MedicationReminderController::class);
+        Route::resource('/reminders', MedicationReminderController::class);
 
         // Support dokter
-        Route::resource('supports', DoctorSupportController::class);
+        Route::resource('/supports', DoctorSupportController::class);
 
         // Emergency respon
-        Route::resource('emergencies', EmergencyResponseController::class);
+        Route::resource('/emergencies', EmergencyResponseController::class);
     });
