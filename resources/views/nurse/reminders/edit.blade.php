@@ -1,6 +1,6 @@
-@extends('layouts.app')
 
-@section('content')
+
+
 <div class="container">
     <h2>✏️ Edit Reminder Obat</h2>
 
@@ -27,4 +27,4 @@
         <a href="{{ route('nurse.reminders.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 </div>
-@endsection
+
