@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class NurseSchedule extends Model
 {
-    protected $fillable = ['nurse_name', 'task', 'schedule_date'];
+    protected $fillable = ['nurse_id','nurse_name', 'task', 'schedule_date'];
 }

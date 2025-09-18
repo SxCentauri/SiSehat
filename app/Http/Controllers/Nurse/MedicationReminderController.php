@@ -38,6 +38,12 @@ class MedicationReminderController extends Controller
         return view('nurse.reminders.edit', compact('reminder'));
     }
 
+    public function show(MedicationReminder $reminder)
+    {
+        // Anda perlu membuat view untuk ini, contoh: 'nurse.reminders.show'
+        return view('nurse.reminders.show', compact('reminder'));
+    }
+
     public function update(Request $request, MedicationReminder $reminder)
     {
         $request->validate([

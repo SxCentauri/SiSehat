@@ -8,6 +8,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('nurse_schedules', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('nurse_id')->constrained('users')->onDelete('cascade');
             $table->string('nurse_name');
             $table->string('task');
             $table->date('schedule_date');
