@@ -16,6 +16,19 @@ use App\Http\Controllers\Doctor\{
     MedicalRecordController,
     TreatmentController
 };
+// === user Controllers ===
+use App\Http\Controllers\Patient\{
+    DashboardController as PatientDashboardController,
+    ChatController      as PatientChatController,
+    RoomController      as PatientRoomController,
+    AppointmentController as PatientAppointmentController,
+    QueueController     as PatientQueueController,
+    MedicalRecordController as PatientMedicalRecordController,
+    PrescriptionController  as PatientPrescriptionController,
+    PaymentController       as PatientPaymentController,
+    EmergencyController     as PatientEmergencyController,
+};
+
 
 // === Nurse Controllers ===
 use App\Http\Controllers\Nurse\{
@@ -28,6 +41,7 @@ use App\Http\Controllers\Nurse\{
     EmergencyResponseController,
     ProfileController as NurseProfileController,
 };
+// === patent Controllers ===
 
 /*
 |--------------------------------------------------------------------------
@@ -44,14 +58,15 @@ Route::get('/', [WelcomeController::class, 'index'])->name('home');
 */
 Route::get('/dashboard', function () {
     $user = auth()->user();
-
-    if ($user->role === 'doctor') {
-        return redirect()->route('doctor.dashboard');
-    }
-    if ($user->role === 'perawat') {
-        return redirect()->route('nurse.dashboard');
+    if (!$user) {
+        return redirect()->route('login');
     }
 
+    return match ($user->role) {
+        'doctor'  => redirect()->route('doctor.dashboard'),
+        'perawat' => redirect()->route('nurse.dashboard'),
+        default   => redirect()->route('patient.dashboard'), // <-- patient & role lain
+    };
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -147,3 +162,32 @@ Route::middleware(['auth', 'role:perawat'])
         Route::get('/profile', [NurseProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [NurseProfileController::class, 'update'])->name('profile.update');
     });
+
+// --- Patient area ---
+Route::prefix('patient')->name('patient.')->middleware(['auth', 'role:patient'])->group(function () {
+    Route::get('/', [PatientDashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/chats', [PatientChatController::class, 'index'])->name('chats.index');
+    Route::get('/chats/{doctor}', [PatientChatController::class, 'show'])->name('chats.show');
+    Route::post('/chats/{doctor}', [PatientChatController::class, 'store'])->name('chats.store');
+
+    Route::get('/rooms', [PatientRoomController::class, 'index'])->name('rooms.index');
+
+    Route::get('/appointments', [PatientAppointmentController::class, 'index'])->name('appointments.index');
+    Route::get('/appointments/create', [PatientAppointmentController::class, 'create'])->name('appointments.create');
+    Route::post('/appointments', [PatientAppointmentController::class, 'store'])->name('appointments.store');
+
+    Route::get('/queues', [PatientQueueController::class, 'index'])->name('queues.index');
+
+    Route::get('/records', [PatientMedicalRecordController::class, 'index'])->name('records.index');
+    Route::get('/records/{record}', [PatientMedicalRecordController::class, 'show'])->name('records.show');
+
+    Route::get('/prescriptions', [PatientPrescriptionController::class, 'index'])->name('prescriptions.index');
+    Route::get('/prescriptions/{rx}', [PatientPrescriptionController::class, 'show'])->name('prescriptions.show');
+    Route::post('/prescriptions/{rx}/checkout', [PatientPrescriptionController::class, 'checkout'])->name('prescriptions.checkout');
+
+    Route::get('/payments/{invoice}', [PatientPaymentController::class, 'show'])->name('payments.show');
+    Route::post('/payments/{invoice}/qris', [PatientPaymentController::class, 'createQris'])->name('payments.qris');
+
+    Route::post('/emergency', [PatientEmergencyController::class, 'store'])->name('emergency.store');
+});

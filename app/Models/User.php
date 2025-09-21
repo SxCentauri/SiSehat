@@ -57,6 +57,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Appointment::class, 'patient_id');
     }
+    public function patientChatMessages()
+    {
+        return $this->hasMany(\App\Models\ChatMessage::class, 'patient_id');
+    }
+
+    public function prescriptions()
+    {
+        return $this->hasMany(\App\Models\Prescription::class, 'patient_id');
+    }
 
     // ======= Relasi Chat =======
     public function messagesAsDoctor()
@@ -72,8 +81,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function latestMessageForDoctor(): HasOne
     {
         return $this->hasOne(ChatMessage::class, 'patient_id')
-                    ->where('doctor_id', Auth::id())
-                    ->latestOfMany();
+            ->where('doctor_id', Auth::id())
+            ->latestOfMany();
     }
 
     /**
