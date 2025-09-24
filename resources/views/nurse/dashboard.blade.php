@@ -263,12 +263,12 @@
         <div class="grid grid-auto-fit">
             <div class="card stat-card">
                 <div class="stat-card-content">
-                    <div class="section-title"><i class="fa-solid fa-bed-pulse"></i><h3>Pasien Inap</h3></div>
-                    <div class="stat-number">{{ $inpatients ?? 0 }}</div>
-                    <p class="stat-description">Total pasien sedang dirawat</p>
+                    <div class="section-title"><i class="fa-solid fa-bed-pulse"></i><h3>Permintaan Booking</h3></div>
+                    <div class="stat-number">{{ $pendingBookings }}</div>
+                    <p class="stat-description">Menunggu Persetujuan</p>
                 </div>
                 <div class="actions">
-                    <a href="{{ route('nurse.monitorings.index') }}" class="btn btn-outline btn-sm">Lihat Pasien</a>
+                    <a href="{{ route('nurse.room-bookings.index') }}" class="btn btn-outline btn-sm">Proses</a>
                 </div>
             </div>
 

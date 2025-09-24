@@ -14,6 +14,7 @@ use App\Models\MedicationReminder;
 use App\Models\DoctorSupport;
 use App\Models\EmergencyResponse;
 use App\Models\NurseProfile;
+use App\Models\RoomBooking;
 
 class NurseDashboardController extends Controller
 {
@@ -33,9 +34,11 @@ class NurseDashboardController extends Controller
         // 4. Hitung skor dalam persentase
         $profileScore = (count($fields) > 0) ? intval(($filled / count($fields)) * 100) : 0;
 
+        $pendingBookingCount = RoomBooking::where('status', 'pending')->count();
+
         return view('nurse.dashboard', [
             'schedules'   => NurseSchedule::count(),
-            'inpatients'  => PatientMonitoring::count(),
+            'pendingBookings' => $pendingBookingCount,
             'rooms'       => RoomStatus::count(),
             'reminders'   => MedicationReminder::count(),
             'supports'    => DoctorSupport::count(),

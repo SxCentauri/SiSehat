@@ -443,7 +443,6 @@
           <table>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Nama Ruangan</th>
                 <th>Status</th>
                 <th>Kapasitas</th>
@@ -454,16 +453,15 @@
             <tbody>
               @foreach($rooms as $room)
                 <tr>
-                  <td data-label="ID">{{ $room->id }}</td>
                   <td data-label="Nama Ruangan">
                     <span class="mobile-label">Nama:</span>{{ $room->name }}
                   </td>
                   <td data-label="Status">
                     <span class="mobile-label">Status:</span>
                     @if($room->status == 'available')
-                      <span class="badge bg-success">Kosong</span>
+                      <span class="badge bg-success">Tersedia</span>
                     @elseif($room->status == 'occupied')
-                      <span class="badge bg-danger">Terisi</span>
+                      <span class="badge bg-danger">Penuh</span>
                     @else
                       <span class="badge bg-warning">Maintenance</span>
                     @endif

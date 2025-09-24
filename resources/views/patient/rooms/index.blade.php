@@ -26,7 +26,15 @@
             @forelse($rooms as $r)
               <tr>
                 <td>{{ $r->name }}</td>
-                <td><span class="badge">{{ ucfirst($r->status) }}</span></td>
+                <td>
+                    @if($r->status == 'available')
+                      <span class="badge bg-success">Kosong</span>
+                    @elseif($r->status == 'occupied')
+                      <span class="badge bg-danger">Terisi</span>
+                    @else
+                      <span class="badge bg-warning">Maintenance</span>
+                    @endif
+                </td>
                 <td>{{ $r->capacity }}</td>
                 <td>{{ $r->occupied }}</td>
               </tr>

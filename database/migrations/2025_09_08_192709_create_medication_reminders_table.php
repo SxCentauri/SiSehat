@@ -10,7 +10,9 @@ return new class extends Migration
     {
         Schema::create('medication_reminders', function (Blueprint $table) {
             $table->id();
-            $table->string('patient_name');   // Pasien yang diberi obat
+            $table->foreignId('patient_id')
+                  ->constrained('users')
+                  ->onDelete('cascade');
             $table->string('medication');     // Nama obat
             $table->string('dosage')->nullable(); // Dosis
             $table->time('time');             // Jam pemberian obat

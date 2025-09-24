@@ -13,7 +13,7 @@ class RoomStatusController extends Controller
      */
     public function index()
     {
-        $rooms = RoomStatus::paginate(10);
+        $rooms = RoomStatus::paginate(100);
         return view('nurse.rooms.index', compact('rooms'));
     }
 

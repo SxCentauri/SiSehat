@@ -88,20 +88,23 @@
       </div>
 
       <div class="card stat-card">
-        <div class="stat-card-content">
-          <div class="section-title">
-            <i class="fa-solid fa-receipt"></i>
-            <h3>Tagihan Unpaid</h3>
-          </div>
-          <div class="stat-number">{{ $unpaidCount }}</div>
-          <p class="stat-description text-center">Menunggu pembayaran</p>
+    <div class="stat-card-content">
+        <div class="section-title">
+            {{-- Mengganti ikon menjadi ikon tempat tidur --}}
+            <i class="fa-solid fa-bed"></i>
+            <h3>Booking Ruangan</h3>
         </div>
-        <div class="actions">
-          <a class="btn btn-outline btn-sm" href="{{ route('patient.prescriptions.index') }}">
-            <i class="fa-solid fa-qrcode"></i> Bayar
-          </a>
-        </div>
-      </div>
+        {{-- Menampilkan jumlah booking yang pending --}}
+        <div class="stat-number">{{ $pendingBookingCount }}</div>
+        <p class="stat-description text-center">Permintaan Pending</p>
+    </div>
+    <div class="actions">
+        {{-- Mengarahkan ke halaman riwayat booking ruangan --}}
+        <a class="btn btn-outline btn-sm" href="{{ route('patient.bookingroom.index') }}">
+            <i class="fa-solid fa-eye"></i> Lihat Riwayat
+        </a>
+    </div>
+    </div>
     </div>
 
     {{-- ===== Aksi cepat ===== --}}

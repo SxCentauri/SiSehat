@@ -3,17 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar Reminder Obat - MediCare</title>
+  <title>Manajemen Reminder Obat - MediCare</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #2563eb;
-      --secondary: #1e40af;
-      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --primary-dark: #1e40af;
+      --secondary: #64748b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
       --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
       --radius: 16px;
-      --shadow: 0 15px 40px rgba(37,99,235,0.1);
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
     }
 
     * {
@@ -24,260 +33,374 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: #1f2937;
+      background-color: var(--bg);
+      color: var(--text);
       line-height: 1.6;
     }
 
     .container {
       max-width: 1200px;
-      margin: auto;
+      margin: 0 auto;
       padding: 100px 20px 40px;
     }
 
     .card {
-      background: #fff;
+      background: var(--card-bg);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 24px;
-      border: 1px solid rgba(96,165,250,0.1);
+      padding: 32px;
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .section-title {
-      display:flex;
-      align-items:center;
-      gap:14px;
-      font-size:22px;
-      font-weight:700;
-      margin-bottom:25px;
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     }
 
-    .section-title i {
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header i {
       color: var(--primary);
-      background:#e0f2fe;
-      padding:12px;
-      border-radius:12px;
+      background: #e0f2fe;
+      padding: 12px;
+      border-radius: 12px;
       min-width: 46px;
       text-align: center;
+      font-size: 18px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
     }
 
     .btn {
-      padding:10px 18px;
-      border-radius:12px;
-      font-weight:600;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      text-decoration:none;
-      border:none;
-      cursor:pointer;
-      transition:.3s;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
       font-size: 14px;
     }
 
     .btn-primary {
       background: var(--gradient);
-      color:#fff;
-      box-shadow:0 8px 20px rgba(37,99,235,.2);
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
     }
 
     .btn-primary:hover {
-      transform:translateY(-2px);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 13px;
     }
 
     .btn-warning {
-      background:#fde68a;
-      color:#92400e;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .btn-warning:hover {
+      background: #fde68a;
+      transform: translateY(-2px);
     }
 
     .btn-danger {
-      background:#fca5a5;
-      color:#991b1b;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
     }
 
-    .btn-info {
-      background:#bae6fd;
-      color:#075985;
+    .btn-danger:hover {
+      background: #fecaca;
+      transform: translateY(-2px);
     }
 
-    .btn-secondary {
-      background:#e5e7eb;
-      color:#1f2937;
-    }
-
-    .btn-secondary:hover {
-      background:#d1d5db;
-    }
-
-    .table-container {
-      overflow-x:auto;
-      border-radius:var(--radius);
-      box-shadow:0 10px 30px rgba(0,0,0,0.05);
-      margin: 20px 0;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    table {
-      width:100%;
-      border-collapse:collapse;
-      min-width: 600px;
-    }
-
-    th {
-      background:#eff6ff;
-      color:var(--primary);
-      padding:14px 12px;
-      text-align:left;
-      font-size:14px;
-      text-transform:uppercase;
-      white-space: nowrap;
-    }
-
-    td {
-      padding:14px 12px;
-      border-bottom:1px solid #f1f5f9;
-      font-size:15px;
-    }
-
-    .badge {
-      padding:6px 10px;
-      border-radius:8px;
-      font-weight:600;
-      font-size:13px;
-      display: inline-block;
-      text-align: center;
-    }
-
-    .bg-success {
-      background:#bbf7d0;
-      color:#166534;
-    }
-
-    .bg-danger {
-      background:#fecaca;
-      color:#991b1b;
-    }
-
-    .bg-warning {
-      background:#fde68a;
-      color:#92400e;
-    }
-
-    .empty {
-      text-align:center;
-      color:#9ca3af;
-      padding:50px 20px;
+    .alert {
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .alert-success {
-      background: #dcfce7;
-      color: #166534;
-      border-radius: 12px;
-      padding: 12px 16px;
-      margin-bottom: 20px;
+      background-color: #f0fdf4;
       border: 1px solid #bbf7d0;
-      font-weight: 500;
+      color: #166534;
+    }
+
+    .alert-success i {
+      color: var(--success);
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background-color: #f8fafc;
+    }
+
+    th {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-light);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background-color: #f8fafc;
+      transform: translateX(5px);
+    }
+
+    .patient-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .patient-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .patient-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .patient-name {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .patient-id {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .medication-info {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .btn-sm {
-      padding: 8px 12px;
-      font-size: 13px;
+    .medication-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #f0f9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 14px;
+    }
+
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #f0fdf4;
+      color: var(--success);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #bbf7d0;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      gap: 6px;
+    }
+
+    .status-active {
+      background-color: #f0fdf4;
+      color: var(--success);
+      border: 1px solid #bbf7d0;
+    }
+
+    .status-inactive {
+      background-color: #f1f5f9;
+      color: var(--text-light);
+      border: 1px solid var(--border);
+    }
+
+    .status-completed {
+      background-color: #faf5ff;
+      color: #8b5cf6;
+      border: 1px solid #e9d5ff;
+    }
+
+    .status-pending {
+      background-color: #fffbeb;
+      color: var(--warning);
+      border: 1px solid #fed7aa;
     }
 
     .action-group {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
-    .button-group {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-light);
     }
 
-    /* Pagination Styles */
+    .empty-state i {
+      font-size: 64px;
+      margin-bottom: 16px;
+      color: #d1d5db;
+    }
+
+    .empty-state h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
     .pagination {
       display: flex;
       justify-content: center;
-      margin-top: 25px;
-      flex-wrap: wrap;
+      margin-top: 24px;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .pagination .page-item {
-      display: inline-flex;
-    }
-
-    .pagination .page-link {
-      padding: 8px 14px;
+    .pagination a, .pagination span {
+      padding: 8px 16px;
       border-radius: 8px;
-      background: white;
-      color: #4b5563;
       text-decoration: none;
-      font-weight: 600;
-      border: 1px solid #e5e7eb;
-      transition: all 0.2s;
+      font-weight: 500;
+      transition: all 0.3s;
+      font-size: 14px;
     }
 
-    .pagination .page-item.active .page-link {
-      background: var(--gradient);
-      color: white;
+    .pagination a {
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    .pagination a:hover {
+      background-color: #eff6ff;
       border-color: var(--primary);
     }
 
-    .pagination .page-link:hover {
-      background: #eff6ff;
-      color: var(--primary);
+    .pagination .current {
+      background: var(--gradient);
+      color: white;
+      border: 1px solid var(--primary);
     }
 
     /* Responsive Styles */
-    @media (max-width: 1024px) {
+    @media (max-width: 768px) {
       .container {
         padding: 90px 15px 30px;
       }
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 80px 12px 20px;
-      }
 
       .card {
-        padding: 20px;
-        border-radius: 14px;
+        padding: 24px;
       }
 
-      .section-title {
-        font-size: 20px;
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-content {
         flex-direction: column;
         text-align: center;
-        gap: 10px;
-        margin-bottom: 20px;
+        gap: 12px;
       }
 
-      .section-title i {
-        width: 42px;
-        height: 42px;
-        padding: 10px;
-      }
-
-      .button-group {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .button-group .btn {
-        justify-content: center;
-        text-align: center;
+      .header h1 {
+        font-size: 24px;
       }
 
       th, td {
-        padding: 12px 10px;
+        padding: 12px 16px;
+      }
+
+      .table-container {
+        font-size: 14px;
+      }
+
+      .patient-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .patient-avatar {
+        width: 32px;
+        height: 32px;
         font-size: 14px;
       }
 
@@ -288,120 +411,108 @@
 
       .action-group .btn {
         justify-content: center;
+        text-align: center;
       }
     }
 
     @media (max-width: 640px) {
       .container {
-        padding: 70px 10px 15px;
+        padding: 80px 12px 20px;
       }
 
-      .section-title {
-        font-size: 18px;
+      .card {
+        padding: 20px;
+        border-radius: 14px;
       }
 
-      .alert-success {
-        padding: 10px 14px;
-        font-size: 14px;
+      .header h1 {
+        font-size: 22px;
       }
 
-      /* Sembunyikan kolom tertentu pada layar kecil */
-      .table-container table th:nth-child(1),
-      .table-container table td:nth-child(1) {
-        display: none;
+      th, td {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+
+      .empty-state {
+        padding: 40px 15px;
+      }
+
+      .empty-state i {
+        font-size: 48px;
+      }
+
+      .status-badge {
+        padding: 6px 12px;
+        font-size: 11px;
       }
     }
 
     @media (max-width: 480px) {
-      .section-title {
-        font-size: 16px;
+      th, td {
+        padding: 8px 10px;
       }
 
-      .btn {
-        padding: 8px 14px;
+      .pagination a, .pagination span {
+        padding: 6px 12px;
         font-size: 13px;
       }
+    }
 
-      /* Sembunyikan kolom tambahan pada layar sangat kecil */
-      .table-container table th:nth-child(5),
-      .table-container table td:nth-child(5) {
-        display: none;
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
       }
-
-      .pagination .page-link {
-        padding: 6px 10px;
-        font-size: 14px;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
-    /* Tambahan untuk tabel responsif */
-    .mobile-label {
+    .card {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    tbody tr {
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    /* Focus states for accessibility */
+    .btn:focus, a:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* Confirmation Dialog */
+    .confirmation-dialog {
       display: none;
-      font-weight: 700;
-      margin-right: 8px;
-      color: #4b5563;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
     }
 
-    @media (max-width: 640px) {
-      /* Ubah tabel menjadi kartu pada tampilan mobile */
-      .table-container {
-        overflow-x: visible;
-        box-shadow: none;
-      }
+    .dialog-content {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
 
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-
-      thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-      }
-
-      tr {
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        margin-bottom: 15px;
-        padding: 15px;
-        background: white;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      }
-
-      td {
-        border: none;
-        border-bottom: 1px solid #f1f5f9;
-        position: relative;
-        padding-left: 45%;
-        padding-right: 15px;
-        display: flex;
-        align-items: center;
-        min-height: 40px;
-      }
-
-      td:last-child {
-        border-bottom: 0;
-      }
-
-      td:before {
-        content: attr(data-label);
-        position: absolute;
-        left: 15px;
-        width: 40%;
-        padding-right: 15px;
-        white-space: nowrap;
-        font-weight: 600;
-        color: #4b5563;
-      }
-
-      .mobile-label {
-        display: inline;
-      }
-
-      .action-group {
-        justify-content: center;
-        margin-top: 10px;
-      }
+    .dialog-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      justify-content: center;
     }
   </style>
 </head>
@@ -410,113 +521,109 @@
 
   <div class="container">
     <div class="card">
-      <div class="section-title">
-        <i class="fa-solid fa-pills"></i>
-        <h3>Daftar Reminder Obat</h3>
-      </div>
-
-      <div class="button-group">
+      <div class="header">
+        <div class="header-content">
+          <i class="fa-solid fa-bell"></i>
+          <h1>Manajemen Reminder Obat</h1>
+        </div>
         <a href="{{ route('nurse.reminders.create') }}" class="btn btn-primary">
-          <i class="fa-solid fa-plus"></i> Tambah Reminder
-        </a>
-        <a href="{{ route('nurse.dashboard') }}" class="btn btn-secondary">
-          <i class="fa-solid fa-arrow-left"></i> Kembali Dashboard
+          <i class="fa-solid fa-plus"></i> Tambah Reminder Baru
         </a>
       </div>
 
       @if(session('success'))
-        <div class="alert-success">
-          <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+        <div class="alert alert-success">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>{{ session('success') }}</span>
         </div>
       @endif
 
-      @if($reminders->isEmpty())
-        <div class="empty">
-          <i class="fa-regular fa-calendar-check fa-2x" style="margin-bottom: 15px;"></i>
-          <p>Belum ada data reminder obat</p>
-        </div>
-      @else
-        <div class="table-container">
-          <table>
-            <thead>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Pasien</th>
+              <th>Obat</th>
+              <th>Waktu</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            @forelse ($reminders as $reminder)
               <tr>
-                <th>ID</th>
-                <th>Pasien</th>
-                <th>Obat</th>
-                <th>Dosis</th>
-                <th>Waktu</th>
-                <th>Status</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($reminders as $reminder)
-                @php
-                  // Simulasi status berdasarkan waktu (contoh sederhana)
-                  $reminderTime = strtotime($reminder->time);
-                  $currentTime = time();
-                  $timeDiff = $reminderTime - $currentTime;
-
-                  if ($timeDiff > 3600) {
-                      $status = 'scheduled';
-                  } elseif ($timeDiff > 0) {
-                      $status = 'upcoming';
-                  } else {
-                      $status = 'completed';
-                  }
-                @endphp
-
-                <tr>
-                  <td data-label="ID">{{ $reminder->id }}</td>
-                  <td data-label="Pasien">
-                    <span class="mobile-label">Pasien:</span>{{ $reminder->patient_name }}
-                  </td>
-                  <td data-label="Obat">
-                    <span class="mobile-label">Obat:</span>{{ $reminder->medication }}
-                  </td>
-                  <td data-label="Dosis">
-                    <span class="mobile-label">Dosis:</span>{{ $reminder->dosage }}
-                  </td>
-                  <td data-label="Waktu">
-                    <span class="mobile-label">Waktu:</span>{{ $reminder->time }}
-                  </td>
-                  <td data-label="Status">
-                    <span class="mobile-label">Status:</span>
-                    @if($status == 'scheduled')
-                      <span class="badge bg-success">Terjadwal</span>
-                    @elseif($status == 'upcoming')
-                      <span class="badge bg-warning">Segera</span>
-                    @else
-                      <span class="badge" style="background: #e5e7eb; color: #374151;">Selesai</span>
-                    @endif
-                  </td>
-                  <td data-label="Aksi">
-                    <span class="mobile-label">Aksi:</span>
-                    <div class="action-group">
-                      <a href="{{ route('nurse.reminders.show', $reminder->id) }}" class="btn btn-info btn-sm" title="Detail">
-                        <i class="fa-solid fa-eye"></i>
-                        <span class="mobile-label">Detail</span>
-                      </a>
-                      <a href="{{ route('nurse.reminders.edit', $reminder->id) }}" class="btn btn-warning btn-sm" title="Edit">
-                        <i class="fa-solid fa-pen"></i>
-                        <span class="mobile-label">Edit</span>
-                      </a>
-                      <form action="{{ route('nurse.reminders.destroy', $reminder->id) }}" method="POST" onsubmit="return confirm('Yakin hapus reminder ini?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
-                          <i class="fa-solid fa-trash"></i>
-                          <span class="mobile-label">Hapus</span>
-                        </button>
-                      </form>
+                <td>
+                  <div class="patient-info">
+                    <div class="patient-avatar">
+                      {{ substr($reminder->patient->name ?? 'P', 0, 1) }}
                     </div>
-                  </td>
-                </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
+                    <div class="patient-details">
+                      <span class="patient-name">{{ $reminder->patient->name ?? 'Pasien tidak ditemukan' }}</span>
+                      <span class="patient-id">ID: {{ $reminder->patient->id ?? '-' }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="medication-info">
+                    <div class="medication-icon">
+                      <i class="fa-solid fa-pills"></i>
+                    </div>
+                    <div>
+                      <div class="medication-name">{{ $reminder->medication }}</div>
+                      <div class="medication-dosage" style="font-size: 12px; color: var(--text-light);">
+                        {{ $reminder->dosage ?? 'Dosis tidak ditentukan' }}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="time-badge">
+                    <i class="fa-solid fa-clock"></i>
+                    {{ \Carbon\Carbon::parse($reminder->time)->format('H:i') }}
+                  </span>
+                </td>
+                <td>
+                  @if($reminder->status == 'done')
+                    <span class="status-badge status-active">
+                      <i class="fa-solid fa-check-circle"></i> Selesai
+                    </span>
+                  @else
+                    <span class="status-badge status-pending">
+                        <i class="fa-solid fa-hourglass-half"></i> Pending
+                    </span>
+                  @endif
+                </td>
+                <td>
+                  <div class="action-group">
+                    <a href="{{ route('nurse.reminders.edit', $reminder->id) }}" class="btn btn-warning btn-sm">
+                      <i class="fa-solid fa-pen-to-square"></i> Edit
+                    </a>
+                    <form action="{{ route('nurse.reminders.destroy', $reminder->id) }}" method="POST" class="action-form">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete(event)">
+                        <i class="fa-solid fa-trash"></i> Hapus
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            @empty
+              <tr>
+                <td colspan="5">
+                  <div class="empty-state">
+                    <i class="fa-solid fa-bell-slash"></i>
+                    <h3>Belum ada reminder yang dibuat</h3>
+                    <p>Mulai dengan membuat reminder obat baru</p>
+                  </div>
+                </td>
+              </tr>
+            @endforelse
+          </tbody>
+        </table>
+      </div>
 
+      @if($reminders->count() > 0)
         <div class="pagination">
           {{ $reminders->links() }}
         </div>
@@ -524,31 +631,59 @@
     </div>
   </div>
 
+  <!-- Confirmation Dialog -->
+  <div class="confirmation-dialog" id="deleteDialog">
+    <div class="dialog-content">
+      <i class="fa-solid fa-triangle-exclamation" style="font-size: 48px; color: var(--danger); margin-bottom: 16px;"></i>
+      <h3 style="margin-bottom: 8px;">Konfirmasi Penghapusan</h3>
+      <p>Apakah Anda yakin ingin menghapus reminder ini?</p>
+      <div class="dialog-buttons">
+        <button type="button" class="btn btn-secondary" onclick="closeDialog()">
+          <i class="fa-solid fa-times"></i> Batal
+        </button>
+        <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+          <i class="fa-solid fa-trash"></i> Ya, Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Konfirmasi sebelum menghapus
-    document.querySelectorAll('form').forEach(form => {
-      form.addEventListener('submit', function(e) {
-        if (!confirm('Yakin hapus reminder ini?')) {
-          e.preventDefault();
+    let currentForm = null;
+
+    function confirmDelete(event) {
+      event.preventDefault();
+      currentForm = event.target.closest('form');
+      document.getElementById('deleteDialog').style.display = 'flex';
+      return false;
+    }
+
+    function confirmDelete() {
+      if (currentForm) {
+        currentForm.submit();
+      }
+      closeDialog();
+    }
+
+    function closeDialog() {
+      document.getElementById('deleteDialog').style.display = 'none';
+      currentForm = null;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Tutup dialog ketika klik di luar konten
+      document.getElementById('deleteDialog').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeDialog();
         }
       });
-    });
 
-    // Tambahkan label data untuk tampilan mobile
-    document.addEventListener('DOMContentLoaded', function() {
-      if (window.innerWidth <= 640) {
-        const headers = [];
-        document.querySelectorAll('thead th').forEach(header => {
-          headers.push(header.textContent);
-        });
-
-        document.querySelectorAll('tbody tr').forEach(row => {
-          const cells = row.querySelectorAll('td');
-          cells.forEach((cell, index) => {
-            cell.setAttribute('data-label', headers[index]);
-          });
-        });
-      }
+      // Tutup dialog dengan ESC key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeDialog();
+        }
+      });
     });
   </script>
 </body>

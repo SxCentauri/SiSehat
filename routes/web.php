@@ -27,6 +27,8 @@ use App\Http\Controllers\Patient\{
     PrescriptionController  as PatientPrescriptionController,
     PaymentController       as PatientPaymentController,
     EmergencyController     as PatientEmergencyController,
+    RoomBookingController as PatientRoomBookingController,
+
 };
 
 
@@ -40,6 +42,8 @@ use App\Http\Controllers\Nurse\{
     DoctorSupportController,
     EmergencyResponseController,
     ProfileController as NurseProfileController,
+    RoomBookingController as NurseRoomBookingController,
+
 };
 // === patent Controllers ===
 
@@ -161,10 +165,15 @@ Route::middleware(['auth', 'role:perawat'])
         // Profile
         Route::get('/profile', [NurseProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [NurseProfileController::class, 'update'])->name('profile.update');
+
+        Route::get('/room-bookings', [NurseRoomBookingController::class, 'index'])->name('room-bookings.index');
+        Route::get('/room-bookings/{roomBooking}/edit', [NurseRoomBookingController::class, 'edit'])->name('room-bookings.edit');
+        Route::put('/room-bookings/{roomBooking}', [NurseRoomBookingController::class, 'update'])->name('room-bookings.update');
+        Route::put('/room-bookings/{roomBooking}/checkout', [NurseRoomBookingController::class, 'checkout'])->name('room-bookings.checkout');
     });
 
-// --- Patient area ---
-Route::prefix('patient')->name('patient.')->middleware(['auth', 'role:patient'])->group(function () {
+    // --- Patient area ---
+    Route::prefix('patient')->name('patient.')->middleware(['auth', 'role:user'])->group(function () {
     Route::get('/', [PatientDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/chats', [PatientChatController::class, 'index'])->name('chats.index');
@@ -190,4 +199,8 @@ Route::prefix('patient')->name('patient.')->middleware(['auth', 'role:patient'])
     Route::post('/payments/{invoice}/qris', [PatientPaymentController::class, 'createQris'])->name('payments.qris');
 
     Route::post('/emergency', [PatientEmergencyController::class, 'store'])->name('emergency.store');
-});
+
+    Route::get('/room-bookings', [PatientRoomBookingController::class, 'index'])->name('bookingroom.index');
+    Route::get('/room-bookings/create', [PatientRoomBookingController::class, 'create'])->name('bookingroom.create');
+    Route::post('/room-bookings', [PatientRoomBookingController::class, 'store'])->name('bookingroom.store');
+    });
