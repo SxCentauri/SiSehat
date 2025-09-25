@@ -36,13 +36,15 @@ class NurseDashboardController extends Controller
 
         $pendingBookingCount = RoomBooking::where('status', 'pending')->count();
 
+        $pendingEmergenciesCount = EmergencyResponse::where('status', 'pending')->count();
+
         return view('nurse.dashboard', [
             'schedules'   => NurseSchedule::count(),
             'pendingBookings' => $pendingBookingCount,
             'rooms'       => RoomStatus::count(),
             'reminders'   => MedicationReminder::count(),
             'supports'    => DoctorSupport::count(),
-            'emergencies' => EmergencyResponse::count(),
+            'emergencies' => $pendingEmergenciesCount,
             'profile'     => $profile,       // Variabel profil ditambahkan
             'profileScore'=> $profileScore,
         ]);

@@ -28,7 +28,7 @@ use App\Http\Controllers\Patient\{
     PaymentController       as PatientPaymentController,
     EmergencyController     as PatientEmergencyController,
     RoomBookingController as PatientRoomBookingController,
-
+    MedicationReminderController as PatientReminderController,
 };
 
 
@@ -160,7 +160,8 @@ Route::middleware(['auth', 'role:perawat'])
         Route::resource('/supports', DoctorSupportController::class);
 
         // Emergency respon
-        Route::resource('/emergencies', EmergencyResponseController::class);
+        Route::resource('/emergencies', EmergencyResponseController::class)->only(['index', 'edit', 'update']);
+        Route::put('emergencies/{emergency}/resolve', [EmergencyResponseController::class, 'resolve'])->name('emergencies.resolve');
 
         // Profile
         Route::get('/profile', [NurseProfileController::class, 'edit'])->name('profile.edit');
@@ -203,4 +204,7 @@ Route::middleware(['auth', 'role:perawat'])
     Route::get('/room-bookings', [PatientRoomBookingController::class, 'index'])->name('bookingroom.index');
     Route::get('/room-bookings/create', [PatientRoomBookingController::class, 'create'])->name('bookingroom.create');
     Route::post('/room-bookings', [PatientRoomBookingController::class, 'store'])->name('bookingroom.store');
+    // Halaman untuk menampilkan daftar reminder
+    Route::get('/reminders', [PatientReminderController::class, 'index'])->name('reminders.index');
+    Route::put('/reminders/{reminder}/done', [PatientReminderController::class, 'markAsDone'])->name('reminders.markAsDone');
     });

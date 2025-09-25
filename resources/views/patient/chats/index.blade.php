@@ -7,55 +7,485 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{
-      --primary:#2563eb; --secondary:#1e40af; --accent:#60a5fa;
-      --text:#1f2937; --muted:#6b7280; --bg:#f8fafc; --white:#fff;
-      --light:#eff6ff; --light2:#dbeafe; --radius:12px;
-      --shadow:0 10px 25px rgba(37,99,235,.08); --shadow2:0 15px 35px rgba(37,99,235,.12);
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --secondary: #64748b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --completed: #8b5cf6;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+      --radius: 16px;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
     }
-    body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);min-height:100vh;line-height:1.6}
-    a{text-decoration:none;color:inherit}
-    .container{max-width:1200px;margin:0 auto;padding:24px 20px}
 
-    .page-header{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;background:var(--white);padding:1.25rem 1.5rem;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:1.25rem}
-    .page-title{display:flex;align-items:center;gap:.75rem;font-size:1.6rem;font-weight:800;color:var(--secondary)}
-    .page-title i{color:var(--primary);background:var(--light);padding:.6rem;border-radius:10px}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    .search{position:relative;max-width:360px;width:100%}
-    .search i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted)}
-    .search input{width:100%;padding:.8rem .9rem .8rem 2.6rem;border:1px solid #e5e7eb;border-radius:10px;background:var(--light);outline:none}
-    .search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(96,165,250,.2)}
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-top: 80px;
+    }
 
-    .section{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:1rem 1rem 1.2rem;margin-top:1rem}
-    .section .h3{display:flex;align-items:center;gap:.6rem;margin:.25rem 0 1rem 0;font-weight:800}
-    .section .h3 i{color:var(--primary)}
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+    }
 
-    /* list cards (mobile) */
-    .list{display:grid;gap:.75rem}
-    .item{display:flex;align-items:center;padding:1rem;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);transition:.2s;border-left:4px solid transparent}
-    .item:hover{transform:translateY(-2px);box-shadow:var(--shadow2);border-left-color:var(--primary)}
-    .ava{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;margin-right:.9rem;flex-shrink:0}
-    .info{flex:1;min-width:0}
-    .name{font-weight:700;margin-bottom:2px}
-    .last{color:var(--muted);font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .meta{display:flex;flex-direction:column;align-items:flex-end;gap:.35rem;color:var(--muted);font-size:.86rem}
-    .badge{background:#fee2e2;color:#991b1b;border-radius:999px;padding:.25rem .55rem;font-weight:700;font-size:.75rem}
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 24px;
+    }
 
-    /* table (desktop) */
-    .table-wrap{display:none}
-    @media(min-width:1024px){
-      .list{display:none}
-      .table-wrap{display:block;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-      table{width:100%;border-collapse:collapse}
-      thead{background:var(--light2)}
-      th,td{padding:1rem 1.1rem;border-bottom:1px solid #eef2f7;text-align:left}
-      tbody tr:hover{background:var(--light)}
-      .actions{display:flex;gap:.6rem}
-      .btn{display:inline-flex;align-items:center;gap:.4rem;border-radius:8px;padding:.5rem .9rem;font-weight:600;font-size:.9rem;border:1px solid #e5e7eb}
-      .btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}
-      .btn-primary:hover{filter:brightness(.95)}
-      .btn-outline{background:#fff}
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header i {
+      color: var(--primary);
+      background: #e0f2fe;
+      padding: 12px;
+      border-radius: 12px;
+      min-width: 46px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+
+    .btn-sm {
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+
+    .search-container {
+      position: relative;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .search-container i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      z-index: 2;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 48px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 14px;
+      background: var(--card-bg);
+      transition: all 0.3s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .section-title i {
+      color: var(--primary);
+      background: #e0f2fe;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .chat-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .chat-item {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .chat-item:hover {
+      background: #f8fafc;
+      border-color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 18px;
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+
+    .chat-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .doctor-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .last-message {
+      color: var(--text-light);
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chat-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      margin-left: 16px;
+    }
+
+    .unread-badge {
+      background: var(--danger);
+      color: white;
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .time-stamp {
+      color: var(--text-light);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin: 20px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background-color: #f8fafc;
+    }
+
+    th {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-light);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .table-btn {
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 12px;
+    }
+
+    .table-btn-primary {
+      background: var(--gradient);
+      color: #fff;
+    }
+
+    .table-btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+    }
+
+    .table-btn-outline {
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .table-btn-outline:hover {
+      background: #e2e8f0;
+      transform: translateY(-1px);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-light);
+    }
+
+    .empty-state i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      color: #d1d5db;
+    }
+
+    .empty-state h4 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 15px 30px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+
+      .header h2 {
+        font-size: 22px;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .search-container {
+        max-width: 100%;
+      }
+
+      .table-container {
+        display: none;
+      }
+
+      .chat-list {
+        display: grid;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .chat-list {
+        display: none;
+      }
+
+      .table-container {
+        display: block;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding-top: 70px;
+      }
+
+      .container {
+        padding: 0 12px 20px;
+      }
+
+      .card {
+        padding: 20px;
+        border-radius: 14px;
+      }
+
+      .header h2 {
+        font-size: 20px;
+      }
+
+      .header-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .chat-item {
+        padding: 16px;
+      }
+
+      .avatar {
+        width: 44px;
+        height: 44px;
+        font-size: 16px;
+        margin-right: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .chat-meta {
+        display: none;
+      }
+
+      .last-message {
+        font-size: 13px;
+      }
+    }
+
+    /* Focus states for accessibility */
+    .btn:focus, a:focus, input:focus, .table-btn:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .chat-item {
+      animation: fadeIn 0.3s ease-out;
     }
   </style>
 </head>
@@ -63,55 +493,88 @@
   @include('layouts.medicare')
 
   <main class="container">
-    <div class="page-header">
-      <h1 class="page-title"><i class="fa-solid fa-comments"></i> Chat Dokter</h1>
-      <div class="search">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="search" placeholder="Cari dokter...">
+    <div class="card">
+      <div class="header">
+        <div class="header-content">
+          <i class="fa-solid fa-comments"></i>
+          <h2>Chat Dokter</h2>
+        </div>
+        <div class="header-actions">
+          <a href="{{ route('patient.dashboard') }}" class="btn btn-secondary btn-sm">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+          </a>
+        </div>
       </div>
-    </div>
 
-    {{-- === Terbaru (dokter yang pernah di-chat) === --}}
-    <section class="section">
-      <div class="h3"><i class="fa-solid fa-clock-rotate-left"></i><span>Terbaru</span></div>
+      <!-- Recent Chats Section -->
+      <div class="section-title">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>Percakapan Terbaru</span>
+      </div>
 
       @if(($recentDoctors ?? collect())->isEmpty())
-        <p class="last" style="text-align:center;margin:.25rem 0 0 0;">Belum ada riwayat percakapan.</p>
+        <div class="empty-state">
+          <i class="fa-solid fa-comment-slash"></i>
+          <h4>Belum ada percakapan</h4>
+          <p>Mulai percakapan baru dengan dokter pilihan Anda</p>
+        </div>
       @else
-        {{-- mobile cards --}}
-        <div class="list" id="recentList">
+        <!-- Mobile List -->
+        <div class="chat-list" id="recentList">
           @foreach($recentDoctors as $d)
-            @php $un = (int)($unread[$d->id] ?? 0); @endphp
-            <a href="{{ route('patient.chats.show', $d) }}" class="item">
-              <div class="ava">{{ strtoupper(mb_substr($d->name,0,1)) }}</div>
-              <div class="info">
-                <div class="name">{{ $d->name }}</div>
-                <div class="last">Tap untuk lanjutkan percakapan</div>
+            @php $unreadCount = (int)($unread[$d->id] ?? 0); @endphp
+            <a href="{{ route('patient.chats.show', $d) }}" class="chat-item">
+              <div class="avatar">
+                {{ strtoupper(mb_substr($d->name, 0, 1)) }}
               </div>
-              <div class="meta">
-                @if($un>0)<span class="badge">{{ $un }}</span>@endif
+              <div class="chat-info">
+                <div class="doctor-name">{{ $d->name }}</div>
+                <div class="last-message">Tap untuk melanjutkan percakapan</div>
+              </div>
+              <div class="chat-meta">
+                @if($unreadCount > 0)
+                  <span class="unread-badge">{{ $unreadCount }}</span>
+                @endif
+                <span class="time-stamp">Terbaru</span>
               </div>
             </a>
           @endforeach
         </div>
 
-        {{-- desktop table --}}
-        <div class="table-wrap">
+        <!-- Desktop Table -->
+        <div class="table-container">
           <table id="recentTable">
-            <thead><tr><th>Dokter</th><th>Belum dibaca</th><th style="width:1%;">Aksi</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Dokter</th>
+                <th>Pesan Belum Dibaca</th>
+                <th style="width: 150px;">Aksi</th>
+              </tr>
+            </thead>
             <tbody>
               @foreach($recentDoctors as $d)
-                @php $un = (int)($unread[$d->id] ?? 0); @endphp
+                @php $unreadCount = (int)($unread[$d->id] ?? 0); @endphp
                 <tr>
                   <td>
-                    <div style="display:flex;align-items:center;gap:.7rem">
-                      <div class="ava" style="width:40px;height:40px;font-size:.95rem">{{ strtoupper(mb_substr($d->name,0,1)) }}</div>
-                      <div>{{ $d->name }}</div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div class="avatar" style="width: 40px; height: 40px; font-size: 16px;">
+                        {{ strtoupper(mb_substr($d->name, 0, 1)) }}
+                      </div>
+                      <div>
+                        <div style="font-weight: 600;">{{ $d->name }}</div>
+                        <div style="font-size: 12px; color: var(--text-light);">Percakapan terbaru</div>
+                      </div>
                     </div>
                   </td>
-                  <td>@if($un>0)<span class="badge">{{ $un }} pesan</span>@else <span class="last">0</span>@endif</td>
-                  <td class="actions">
-                    <a class="btn btn-primary" href="{{ route('patient.chats.show', $d) }}">
+                  <td>
+                    @if($unreadCount > 0)
+                      <span class="unread-badge">{{ $unreadCount }} pesan baru</span>
+                    @else
+                      <span style="color: var(--text-light); font-size: 14px;">Tidak ada pesan baru</span>
+                    @endif
+                  </td>
+                  <td>
+                    <a href="{{ route('patient.chats.show', $d) }}" class="table-btn table-btn-primary">
                       <i class="fa-solid fa-message"></i> Buka Chat
                     </a>
                   </td>
@@ -121,43 +584,67 @@
           </table>
         </div>
       @endif
-    </section>
 
-    {{-- === Semua Dokter (mulai chat baru) === --}}
-    <section class="section">
-      <div class="h3"><i class="fa-solid fa-user-doctor"></i><span>Semua Dokter</span></div>
+      <!-- All Doctors Section -->
+      <div class="section-title" style="margin-top: 30px;">
+        <i class="fa-solid fa-user-doctor"></i>
+        <span>Semua Dokter Tersedia</span>
+      </div>
 
-      @php $listAll = $allDoctors ?? $doctors ?? collect(); @endphp
-      @if($listAll->isEmpty())
-        <p class="last" style="text-align:center;margin:.25rem 0 0 0;">Belum ada dokter terdaftar.</p>
+      @php $allDoctorsList = $allDoctors ?? $doctors ?? collect(); @endphp
+      @if($allDoctorsList->isEmpty())
+        <div class="empty-state">
+          <i class="fa-solid fa-user-doctor"></i>
+          <h4>Belum ada dokter terdaftar</h4>
+          <p>Silakan hubungi administrator untuk informasi lebih lanjut</p>
+        </div>
       @else
-        <div class="list" id="allList">
-          @foreach($listAll as $d)
-            <a href="{{ route('patient.chats.show', $d) }}" class="item">
-              <div class="ava">{{ strtoupper(mb_substr($d->name,0,1)) }}</div>
-              <div class="info">
-                <div class="name">{{ $d->name }}</div>
-                <div class="last">Mulai chat</div>
+        <!-- Mobile List -->
+        <div class="chat-list" id="allList">
+          @foreach($allDoctorsList as $d)
+            <a href="{{ route('patient.chats.show', $d) }}" class="chat-item">
+              <div class="avatar">
+                {{ strtoupper(mb_substr($d->name, 0, 1)) }}
               </div>
-              <div class="meta"></div>
+              <div class="chat-info">
+                <div class="doctor-name">{{ $d->name }}</div>
+                <div class="last-message">Mulai percakapan baru</div>
+              </div>
+              <div class="chat-meta">
+                <span class="time-stamp">Chat Baru</span>
+              </div>
             </a>
           @endforeach
         </div>
 
-        <div class="table-wrap">
+        <!-- Desktop Table -->
+        <div class="table-container">
           <table id="allTable">
-            <thead><tr><th>Nama</th><th style="width:1%;">Aksi</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Nama Dokter</th>
+                <th>Status</th>
+                <th style="width: 150px;">Aksi</th>
+              </tr>
+            </thead>
             <tbody>
-              @foreach($listAll as $d)
+              @foreach($allDoctorsList as $d)
                 <tr>
                   <td>
-                    <div style="display:flex;align-items:center;gap:.7rem">
-                      <div class="ava" style="width:40px;height:40px;font-size:.95rem">{{ strtoupper(mb_substr($d->name,0,1)) }}</div>
-                      <div>{{ $d->name }}</div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div class="avatar" style="width: 40px; height: 40px; font-size: 16px;">
+                        {{ strtoupper(mb_substr($d->name, 0, 1)) }}
+                      </div>
+                      <div style="font-weight: 600;">{{ $d->name }}</div>
                     </div>
                   </td>
-                  <td class="actions">
-                    <a class="btn btn-outline" href="{{ route('patient.chats.show', $d) }}">
+                  <td>
+                    <span style="color: var(--success); font-size: 14px;">
+                      <i class="fa-solid fa-circle-check"></i> Tersedia
+                    </span>
+                  </td>
+                  <td>
+                    <a href="{{ route('patient.chats.show', $d) }}" class="table-btn table-btn-outline">
                       <i class="fa-solid fa-message"></i> Mulai Chat
                     </a>
                   </td>
@@ -167,29 +654,35 @@
           </table>
         </div>
       @endif
-    </section>
+    </div>
   </main>
 
   <script>
-    // filter nama dokter (mobile & desktop)
-    const q = document.getElementById('search');
-    function filterList(listSelector, textSelector){
-      document.querySelectorAll(listSelector).forEach(el=>{
-        const name = el.querySelector(textSelector)?.textContent?.toLowerCase() || '';
-        el.style.display = (!q.value || name.includes(q.value.toLowerCase())) ? '' : 'none';
+    document.addEventListener('DOMContentLoaded', function() {
+      // Filter function for desktop table
+      function filterTable(tableSelector) {
+        const searchTerm = searchInput.value.toLowerCase();
+        document.querySelectorAll(`${tableSelector} tbody tr`).forEach(row => {
+          const name = row.querySelector('td:first-child')?.textContent?.toLowerCase() || '';
+          if (name.includes(searchTerm)) {
+            row.style.display = '';
+            row.style.animation = 'fadeIn 0.3s ease-out';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      }
+
+      // Add hover effects to chat items
+      const chatItems = document.querySelectorAll('.chat-item');
+      chatItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateX(8px)';
+        });
+        item.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateX(5px)';
+        });
       });
-    }
-    function filterTable(tableSelector){
-      document.querySelectorAll(tableSelector+' tbody tr').forEach(tr=>{
-        const name = tr.querySelector('td div:last-child')?.textContent?.toLowerCase() || '';
-        tr.style.display = (!q.value || name.includes(q.value.toLowerCase())) ? '' : 'none';
-      });
-    }
-    q?.addEventListener('input', ()=>{
-      filterList('#recentList .item','.name');
-      filterList('#allList .item','.name');
-      filterTable('#recentTable');
-      filterTable('#allTable');
     });
   </script>
 </body>

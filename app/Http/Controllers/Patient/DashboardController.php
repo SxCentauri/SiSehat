@@ -8,6 +8,7 @@ use App\Models\Queue;
 use App\Models\MedicalRecord;
 use App\Models\RoomStatus;
 use App\Models\RoomBooking;
+use App\Models\MedicationReminder; // Pastikan model ini di-import
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -32,6 +33,26 @@ class DashboardController extends Controller
             ->where('status', 'pending')
             ->count();
 
-        return view('patient.dashboard', compact('upcoming', 'queues', 'recentRecords', 'roomStatuses', 'pendingBookingCount'));
+        // [TAMBAHAN] Mengambil reminder obat yang masih pending untuk hari ini
+        $medicationReminders = MedicationReminder::where('patient_id', $user->id)
+            ->where('status', 'pending')
+            ->orderBy('time')
+            ->limit(3) // Ambil 3 reminder terdekat
+            ->get();
+
+         $pendingRemindersCount = MedicationReminder::where('patient_id', $user->id)
+            ->where('status', 'pending')
+            ->count();
+
+        return view('patient.dashboard', compact(
+            'upcoming',
+            'queues',
+            'recentRecords',
+            'roomStatuses',
+            'pendingBookingCount',
+            'medicationReminders',
+            'pendingRemindersCount',
+        ));
     }
 }
+

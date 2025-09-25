@@ -116,6 +116,17 @@
             box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
         }
 
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
         .alert {
             padding: 16px;
             border-radius: 10px;
@@ -313,6 +324,13 @@
             border-color: var(--primary);
         }
 
+        /* Header Actions */
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
         /* Responsive Styles */
         @media (max-width: 768px) {
             .container {
@@ -336,6 +354,11 @@
 
             .header h2 {
                 font-size: 22px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
             }
 
             th, td {
@@ -368,6 +391,16 @@
 
             .header h2 {
                 font-size: 20px;
+            }
+
+            .header-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
             }
 
             th, td {
@@ -452,9 +485,14 @@
                     <i class="fa-solid fa-calendar-check"></i>
                     <h2>Riwayat Booking Ruangan</h2>
                 </div>
-                <a href="{{ route('patient.bookingroom.create') }}" class="btn btn-primary">
-                    <i class="fa-solid fa-plus"></i> Booking Ruangan Baru
-                </a>
+                <div class="header-actions">
+                    <a href="{{ route('patient.dashboard') }}" class="btn btn-secondary">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+                    </a>
+                    <a href="{{ route('patient.bookingroom.create') }}" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Booking Ruangan Baru
+                    </a>
+                </div>
             </div>
 
             @if (session('success'))
