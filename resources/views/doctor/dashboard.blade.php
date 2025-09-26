@@ -603,15 +603,24 @@
 
       <!-- Schedule Card -->
       <div class="card quick-action-card">
-        <div class="action-icon">
-          <i class="fa-solid fa-calendar-check"></i>
-        </div>
-        <div class="action-title">Jadwal Praktek</div>
-        <div class="action-description">Atur ketersediaan mingguan dan jam praktek untuk pasien</div>
-        <a class="btn btn-primary btn-full" href="{{ route('doctor.schedules.index') }}">
-          <i class="fa-solid fa-clock"></i> Kelola Jadwal
-        </a>
-      </div>
+    <div class="action-icon">
+        <i class="fa-solid fa-user-doctor"></i>
+    </div>
+    <div class="action-title">Dukungan Perawat</div>
+    <div class="action-description">Lihat dan balas permintaan dukungan dari tim perawat.</div>
+
+    {{-- Anda perlu membuat route ini nanti untuk halaman dokter --}}
+    <a class="btn btn-primary btn-full" href="{{ route('doctor.supports.index') }}">
+        <i class="fa-solid fa-inbox"></i>
+        Lihat Permintaan
+        {{-- Menampilkan badge jika ada permintaan baru --}}
+        @if($supportRequestsCount > 0)
+            <span style="background: #ef4444; color: white; border-radius: 50%; padding: 2px 8px; font-size: 11px; margin-left: 8px;">
+                {{ $supportRequestsCount }}
+            </span>
+        @endif
+    </a>
+</div>
 
       <!-- Medical Records Card -->
       <div class="card quick-action-card">

@@ -92,10 +92,42 @@
             color: var(--text);
         }
 
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
         .stats {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         .stat-item {
@@ -360,6 +392,11 @@
                 font-size: 24px;
             }
 
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
             .stats {
                 justify-content: center;
                 width: 100%;
@@ -431,6 +468,11 @@
                 padding: 6px 12px;
                 font-size: 11px;
             }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -474,7 +516,7 @@
         }
 
         /* Focus states for accessibility */
-        .action-btn:focus, .filter-btn:focus {
+        .action-btn:focus, .filter-btn:focus, .btn:focus {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
         }
@@ -530,23 +572,29 @@
                     <i class="fa-solid fa-bed-pulse"></i>
                     <h1>Manajemen Booking Ruangan</h1>
                 </div>
-                <div class="stats">
-                    <div class="stat-item stat-pending">
-                        <i class="fa-solid fa-clock"></i>
-                        <span>Pending: {{ $bookings->where('status', 'pending')->count() }}</span>
-                    </div>
-                    <div class="stat-item stat-approved">
-                        <i class="fa-solid fa-check-circle"></i>
-                        <span>Disetujui: {{ $bookings->where('status', 'approved')->count() }}</span>
-                    </div>
-                    <div class="stat-item stat-completed">
-                        <i class="fa-solid fa-check-double"></i>
-                        <span>Selesai: {{ $bookings->where('status', 'completed')->count() }}</span>
-                    </div>
-                    <div class="stat-item stat-rejected">
-                        <i class="fa-solid fa-times-circle"></i>
-                        <span>Ditolak: {{ $bookings->where('status', 'rejected')->count() }}</span>
-                    </div>
+                <div class="header-actions">
+                    <a href="{{ route('nurse.dashboard') }}" class="btn btn-secondary">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item stat-pending">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Pending: {{ $bookings->where('status', 'pending')->count() }}</span>
+                </div>
+                <div class="stat-item stat-approved">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>Disetujui: {{ $bookings->where('status', 'approved')->count() }}</span>
+                </div>
+                <div class="stat-item stat-completed">
+                    <i class="fa-solid fa-check-double"></i>
+                    <span>Selesai: {{ $bookings->where('status', 'completed')->count() }}</span>
+                </div>
+                <div class="stat-item stat-rejected">
+                    <i class="fa-solid fa-times-circle"></i>
+                    <span>Ditolak: {{ $bookings->where('status', 'rejected')->count() }}</span>
                 </div>
             </div>
 

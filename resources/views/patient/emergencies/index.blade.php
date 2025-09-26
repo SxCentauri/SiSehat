@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dukungan Dokter - MediCare</title>
+    <title>Riwayat Laporan Darurat - MediCare</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -75,8 +75,8 @@
         }
 
         .header i {
-            color: var(--primary);
-            background: #e0f2fe;
+            color: var(--danger);
+            background: #fee2e2;
             padding: 12px;
             border-radius: 12px;
             min-width: 46px;
@@ -111,25 +111,13 @@
             font-size: 14px;
         }
 
-        .btn-primary {
-            background: var(--primary);
+        .btn-danger {
+            background: var(--danger);
             color: white;
         }
 
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
+        .btn-danger:hover {
+            background: #dc2626;
             transform: translateY(-2px);
         }
 
@@ -201,28 +189,59 @@
             border: 1px solid transparent;
         }
 
-        .badge-Terkirim {
-            background-color: #f0f9ff;
-            color: #0284c7;
-            border-color: #bae6fd;
-        }
-
-        .badge-Dilihat {
+        .badge-pending {
             background-color: #fffbeb;
             color: var(--warning);
             border-color: #fef3c7;
         }
 
-        .badge-Diproses {
-            background-color: #faf5ff;
+        .badge-approved {
+            background-color: #f0fdf4;
+            color: var(--success);
+            border-color: #bbf7d0;
+        }
+
+        .badge-rejected {
+            background-color: #fef2f2;
+            color: var(--danger);
+            border-color: #fecaca;
+        }
+
+        .badge-completed {
+            background-color: #f5f3ff;
             color: var(--completed);
             border-color: #ddd6fe;
         }
 
-        .badge-Selesai {
+        .level-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .level-low {
             background-color: #f0fdf4;
             color: var(--success);
-            border-color: #bbf7d0;
+        }
+
+        .level-medium {
+            background-color: #fffbeb;
+            color: var(--warning);
+        }
+
+        .level-high {
+            background-color: #fef2f2;
+            color: var(--danger);
+        }
+
+        .level-critical {
+        background-color: #fee2e2; /* Latar belakang merah yang lebih pekat */
+        color: #991b1b;        /* Teks merah gelap */
+        font-weight: 700;      /* Teks tebal untuk penekanan */
         }
 
         .alert-success {
@@ -410,15 +429,15 @@
         <div class="card">
             <div class="header">
                 <div class="header-content">
-                    <i class="fa-solid fa-headset"></i>
-                    <h2>Dukungan Dokter</h2>
+                    <i class="fa-solid fa-list-check"></i>
+                    <h2>Riwayat Laporan Darurat</h2>
                 </div>
                 <div class="header-actions">
-                    <a href="{{ route('nurse.dashboard') }}" class="btn btn-secondary btn-sm">
+                    <a href="{{ route('patient.dashboard') }}" class="btn btn-secondary btn-sm">
                         <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
                     </a>
-                    <a href="{{ route('nurse.supports.create') }}" class="btn btn-primary btn-sm">
-                        <i class="fa-solid fa-plus"></i> Buat Permintaan Baru
+                    <a href="{{ route('patient.emergencies.create') }}" class="btn btn-danger btn-sm">
+                        <i class="fa-solid fa-plus"></i> Lapor Darurat Baru
                     </a>
                 </div>
             </div>
@@ -430,51 +449,78 @@
                 </div>
             @endif
 
-            @if($supports->isEmpty())
+            @if($emergencies->isEmpty())
                 <div class="empty-state">
-                    <i class="fa-solid fa-headset"></i>
-                    <h3>Belum ada permintaan dukungan</h3>
-                    <p>Permintaan dukungan dokter yang Anda buat akan muncul di sini</p>
+                    <i class="fa-solid fa-file-medical"></i>
+                    <h3>Belum ada riwayat laporan darurat</h3>
+                    <p>Laporan darurat Anda akan muncul di sini setelah membuat laporan</p>
                 </div>
             @else
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
-                                <th>Subjek</th>
-                                <th>Dokter Tujuan</th>
-                                <th>Pasien</th>
+                                <th>Tanggal Laporan</th>
+                                <th>Level</th>
+                                <th>Deskripsi</th>
                                 <th>Status</th>
-                                <th>Aksi</th>
+                                <th>Penanganan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($supports as $support)
+                            @foreach ($emergencies as $emergency)
                                 <tr>
                                     <td>
-                                        <div style="font-weight: 600;">{{ Str::limit($support->subjek, 40) }}</div>
-                                        @if(strlen($support->subjek) > 40)
+                                        <div style="font-weight: 600;">{{ $emergency->created_at->format('d M Y') }}</div>
+                                        <div style="font-size: 12px; color: var(--text-light);">{{ $emergency->created_at->format('H:i') }}</div>
+                                    </td>
+                                    <td>
+                                        @php
+                                            $levelClass = match($emergency->level) {
+                                                'low' => 'level-low',
+                                                'medium' => 'level-medium',
+                                                'high' => 'level-high',
+                                                'critical' => 'level-critical',
+                                                default => 'level-medium',
+                                            };
+                                        @endphp
+                                        <span class="level-indicator {{ $levelClass }}">
+                                            <i class="fa-solid fa-circle"></i>
+                                            {{ ucfirst($emergency->level) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight: 500;">{{ Str::limit($emergency->description, 50) }}</div>
+                                        @if(strlen($emergency->description) > 50)
                                             <div style="font-size: 11px; color: var(--text-light); margin-top: 4px;">
-                                                Klik detail untuk melihat selengkapnya
+                                                Klik untuk melihat selengkapnya
                                             </div>
                                         @endif
                                     </td>
                                     <td>
-                                        <div style="font-weight: 500;">Dr. {{ $support->dokter->name ?? 'N/A' }}</div>
-                                    </td>
-                                    <td>
-                                        <div style="font-weight: 500;">{{ $support->patient->name ?? 'N/A' }}</div>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-{{ str_replace(' ', '', $support->status) }}">
+                                        @php
+                                            $statusClass = match($emergency->status) {
+                                                'pending' => 'badge-pending',
+                                                'approved' => 'badge-approved',
+                                                'rejected' => 'badge-rejected',
+                                                'completed' => 'badge-completed',
+                                                default => 'badge-pending',
+                                            };
+                                        @endphp
+                                        <span class="badge {{ $statusClass }}">
                                             <i class="fa-solid fa-circle"></i>
-                                            {{ $support->status }}
+                                            {{ ucfirst($emergency->status) }}
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="{{ route('nurse.supports.show', $support->id) }}" class="btn btn-outline btn-sm">
-                                            <i class="fa-solid fa-eye"></i> Detail
-                                        </a>
+                                        @if($emergency->status == 'approved' || $emergency->status == 'completed')
+                                            <div style="font-size: 13px;">
+                                                <div><strong>Dokter:</strong> Dr. {{ $emergency->doctor->name ?? 'N/A' }}</div>
+                                                <div><strong>Ruangan:</strong> {{ $emergency->room->name ?? 'N/A' }}</div>
+                                            </div>
+                                        @else
+                                            <span style="color: var(--text-light); font-style: italic;">Menunggu penanganan</span>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -482,9 +528,9 @@
                     </table>
                 </div>
 
-                @if(method_exists($supports,'links'))
+                @if(method_exists($emergencies,'links'))
                     <div class="pagination">
-                        {{ $supports->links() }}
+                        {{ $emergencies->links() }}
                     </div>
                 @endif
             @endif

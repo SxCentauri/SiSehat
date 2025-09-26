@@ -5,16 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Ruangan - MediCare</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #2563eb;
-      --secondary: #1e40af;
-      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-      --bg: #f8fafc;
-      --radius: 16px;
-      --shadow: 0 15px 40px rgba(37,99,235,0.1);
+      --primary-dark: #1e40af;
+      --secondary: #64748b;
+      --success: #10b981;
       --warning: #f59e0b;
+      --danger: #ef4444;
+      --completed: #8b5cf6;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+      --radius: 16px;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
     }
 
     * {
@@ -25,195 +33,301 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: #1f2937;
+      background-color: var(--bg);
+      color: var(--text);
       line-height: 1.6;
-      padding: 0;
+      padding-top: 80px;
     }
 
     .container {
       max-width: 800px;
-      margin: 100px auto 40px;
-      padding: 0 20px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
     }
 
     .card {
-      background: #fff;
+      background: var(--card-bg);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 32px;
-      border: 1px solid rgba(96,165,250,0.1);
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .section-title {
-      display:flex;
-      align-items:center;
-      gap:14px;
-      font-size:22px;
-      font-weight:700;
-      margin-bottom:25px;
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     }
 
-    .section-title i {
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header i {
       color: var(--primary);
-      background:#e0f2fe;
-      padding:12px;
-      border-radius:12px;
+      background: #e0f2fe;
+      padding: 12px;
+      border-radius: 12px;
       min-width: 46px;
       text-align: center;
+      font-size: 18px;
+    }
+
+    .header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
     }
 
     .btn {
-      padding:12px 24px;
-      border-radius:12px;
-      font-weight:600;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      text-decoration:none;
-      border:none;
-      cursor:pointer;
-      transition:.3s;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
       font-size: 14px;
     }
 
     .btn-warning {
       background: var(--warning);
-      color:#fff;
-      box-shadow:0 8px 20px rgba(245,158,11,.2);
+      color: white;
     }
 
     .btn-warning:hover {
-      transform:translateY(-2px);
-      box-shadow:0 12px 25px rgba(245,158,11,.3);
       background: #e58c08;
+      transform: translateY(-2px);
     }
 
     .btn-secondary {
-      background:#e5e7eb;
-      color:#1f2937;
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
     .btn-secondary:hover {
-      background:#d1d5db;
+      background: #e2e8f0;
+      transform: translateY(-2px);
     }
 
     .form-group {
       margin-bottom: 24px;
     }
 
-    label {
+    .form-label {
       display: block;
       margin-bottom: 8px;
       font-weight: 600;
-      color: #374151;
+      color: var(--text);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .form-control {
+    .form-label i {
+      color: var(--primary);
+      font-size: 14px;
+    }
+
+    .form-control, .form-select {
       width: 100%;
-      padding: 12px 16px;
-      border: 1px solid #d1d5db;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
       border-radius: 10px;
-      font-size: 16px;
+      font-size: 14px;
       font-family: 'Inter', sans-serif;
       transition: all 0.3s;
+      background: white;
     }
 
-    .form-control:focus {
+    .form-control:focus, .form-select:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      transform: translateY(-1px);
     }
 
-    .form-select {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      font-size: 16px;
-      font-family: 'Inter', sans-serif;
-      background-color: white;
-      transition: all 0.3s;
-    }
-
-    .form-select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-    }
-
-    .button-group {
+    .form-actions {
       display: flex;
       gap: 12px;
       margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
       flex-wrap: wrap;
     }
 
-    .badge {
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-weight: 600;
+    .error-message {
+      color: var(--danger);
       font-size: 13px;
-      display: inline-block;
-    }
-
-    .badge-success {
-      background:#bbf7d0;
-      color:#166534;
-    }
-
-    .badge-danger {
-      background:#fecaca;
-      color:#991b1b;
-    }
-
-    .badge-warning {
-      background:#fde68a;
-      color:#92400e;
-    }
-
-    .status-info {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .status-item {
+      margin-top: 6px;
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 14px;
+    }
+
+    .error-message i {
+      font-size: 12px;
+    }
+
+    .form-hint {
+      color: var(--text-light);
+      font-size: 13px;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-hint i {
+      font-size: 12px;
+      color: var(--primary);
+    }
+
+    .status-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .status-item {
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      gap: 4px;
+      border: 1px solid transparent;
+    }
+
+    .badge-success {
+      background-color: #f0fdf4;
+      color: var(--success);
+      border-color: #bbf7d0;
+    }
+
+    .badge-danger {
+      background-color: #fef2f2;
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .badge-warning {
+      background-color: #fffbeb;
+      color: var(--warning);
+      border-color: #fef3c7;
+    }
+
+    .capacity-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .alert-error {
+      background-color: #fef2f2;
+      color: #dc2626;
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      border: 1px solid #fecaca;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alert-error i {
+      color: #ef4444;
+    }
+
+    .alert-error ul {
+      margin: 8px 0 0 20px;
+    }
+
+    .alert-error li {
+      margin-bottom: 4px;
     }
 
     /* Responsive Styles */
     @media (max-width: 768px) {
       .container {
-        margin: 90px auto 30px;
-        padding: 0 15px;
+        padding: 0 15px 30px;
       }
 
       .card {
         padding: 24px;
       }
 
-      .section-title {
-        font-size: 20px;
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
-      .button-group {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+
+      .header h2 {
+        font-size: 22px;
+      }
+
+      .form-actions {
         flex-direction: column;
       }
 
-      .button-group .btn {
+      .btn {
+        width: 100%;
         justify-content: center;
+      }
+
+      .capacity-info {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .status-info {
+        grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
+      body {
+        padding-top: 70px;
+      }
+
       .container {
-        margin: 80px auto 20px;
-        padding: 0 12px;
+        padding: 0 12px 20px;
       }
 
       .card {
@@ -221,37 +335,64 @@
         border-radius: 14px;
       }
 
-      .section-title {
-        font-size: 18px;
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
+      .header h2 {
+        font-size: 20px;
       }
 
       .form-control, .form-select {
-        padding: 10px 14px;
+        padding: 12px 14px;
       }
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    /* Focus states for accessibility */
+    .btn:focus, .form-control:focus, .form-select:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
     }
   </style>
 </head>
 <body>
   @include('layouts.medicare')
 
-  <div class="container">
+  <main class="container">
     <div class="card">
-      <div class="section-title">
-        <i class="fa-solid fa-pen-to-square"></i>
-        <h3>Edit Ruangan</h3>
+      <div class="header">
+        <div class="header-content">
+          <i class="fa-solid fa-pen-to-square"></i>
+          <h2>Edit Ruangan</h2>
+        </div>
+        <a href="{{ route('nurse.rooms.index') }}" class="btn btn-secondary">
+          <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar
+        </a>
       </div>
 
       @if ($errors->any())
-        <div style="background: #fef2f2; color: #ef4444; padding: 16px; border-radius: 10px; margin-bottom: 24px; border: 1px solid #fecaca;">
-          <strong><i class="fa-solid fa-circle-exclamation"></i> Terdapat kesalahan:</strong>
-          <ul style="margin-top: 8px; margin-left: 20px;">
-            @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-            @endforeach
-          </ul>
+        <div class="alert-error">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <div>
+            <strong>Terjadi kesalahan:</strong>
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
         </div>
       @endif
 
@@ -260,81 +401,175 @@
         @method('PUT')
 
         <div class="form-group">
-          <label for="name">Nama Ruangan *</label>
-          <input type="text" id="name" name="name" class="form-control" value="{{ old('name', $room->name) }}" required placeholder="Masukkan nama ruangan">
+          <label for="name" class="form-label">
+            <i class="fa-solid fa-signature"></i>
+            Nama Ruangan
+          </label>
+          <input type="text" id="name" name="name" class="form-control"
+                 value="{{ old('name', $room->name) }}"
+                 placeholder="Contoh: Ruang ICU 1, Ruang Isolasi A, dll."
+                 required>
+          @error('name')
+            <div class="error-message">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              {{ $message }}
+            </div>
+          @enderror
         </div>
 
         <div class="form-group">
-          <label for="status">Status *</label>
+          <label for="room_number" class="form-label">
+            <i class="fa-solid fa-hashtag"></i>
+            Nomor Ruangan
+          </label>
+          <input type="text" id="room_number" name="room_number" class="form-control"
+                 value="{{ old('room_number', $room->room_number) }}"
+                 placeholder="Contoh: 101, A-12, ICU-1"
+                 required>
+          @error('room_number')
+            <div class="error-message">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              {{ $message }}
+            </div>
+          @enderror
+        </div>
+
+        <div class="form-group">
+          <label for="status" class="form-label">
+            <i class="fa-solid fa-circle-check"></i>
+            Status Ruangan
+          </label>
           <select id="status" name="status" class="form-select" required>
-            <option value="available" {{ old('status', $room->status) == 'available' ? 'selected' : '' }}>Kosong</option>
+            <option value="">Pilih Status...</option>
+            <option value="available" {{ old('status', $room->status) == 'available' ? 'selected' : '' }}>Tersedia</option>
             <option value="occupied" {{ old('status', $room->status) == 'occupied' ? 'selected' : '' }}>Terisi</option>
             <option value="maintenance" {{ old('status', $room->status) == 'maintenance' ? 'selected' : '' }}>Maintenance</option>
           </select>
+          @error('status')
+            <div class="error-message">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              {{ $message }}
+            </div>
+          @enderror
 
           <div class="status-info">
             <div class="status-item">
-              <span class="badge badge-success">Kosong</span>
-              <span> - Tersedia untuk pasien baru</span>
+              <span class="badge badge-success">
+                <i class="fa-solid fa-circle-check"></i> Tersedia
+              </span>
+              <span>Ruangan kosong dan siap digunakan</span>
             </div>
             <div class="status-item">
-              <span class="badge badge-danger">Terisi</span>
-              <span> - Sudah ada pasien</span>
+              <span class="badge badge-danger">
+                <i class="fa-solid fa-circle-xmark"></i> Terisi
+              </span>
+              <span>Ruangan sedang digunakan pasien</span>
             </div>
             <div class="status-item">
-              <span class="badge badge-warning">Maintenance</span>
-              <span> - Dalam perbaikan</span>
+              <span class="badge badge-warning">
+                <i class="fa-solid fa-triangle-exclamation"></i> Maintenance
+              </span>
+              <span>Ruangan dalam perbaikan</span>
             </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="capacity">Kapasitas *</label>
-          <input type="number" id="capacity" name="capacity" class="form-control" value="{{ old('capacity', $room->capacity) }}" required min="1" placeholder="Jumlah maksimal pasien">
+        <div class="capacity-info">
+          <div class="form-group">
+            <label for="capacity" class="form-label">
+              <i class="fa-solid fa-users"></i>
+              Kapasitas Maksimal
+            </label>
+            <input type="number" id="capacity" name="capacity" class="form-control"
+                   value="{{ old('capacity', $room->capacity) }}"
+                   min="1" max="50"
+                   placeholder="Jumlah maksimal pasien"
+                   required>
+            @error('capacity')
+              <div class="error-message">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+
+          <div class="form-group">
+            <label for="occupied" class="form-label">
+              <i class="fa-solid fa-user-injured"></i>
+              Jumlah Terisi
+            </label>
+            <input type="number" id="occupied" name="occupied" class="form-control"
+                   value="{{ old('occupied', $room->occupied) }}"
+                   min="0"
+                   placeholder="Jumlah pasien saat ini"
+                   required>
+            @error('occupied')
+              <div class="error-message">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="occupied">Terisi *</label>
-          <input type="number" id="occupied" name="occupied" class="form-control" value="{{ old('occupied', $room->occupied) }}" required min="0" :max="$room->capacity" placeholder="Jumlah pasien saat ini">
-          <small style="display: block; margin-top: 6px; color: #6b7280;">
-            Jumlah terisi tidak boleh melebihi kapasitas (Maks: {{ $room->capacity }})
-          </small>
-        </div>
-
-        <div class="button-group">
+        <div class="form-actions">
           <button type="submit" class="btn btn-warning">
             <i class="fa-solid fa-floppy-disk"></i> Update Ruangan
           </button>
           <a href="{{ route('nurse.rooms.index') }}" class="btn btn-secondary">
-            <i class="fa-solid fa-xmark"></i> Kembali
+            <i class="fa-solid fa-times"></i> Batal
           </a>
         </div>
       </form>
     </div>
-  </div>
+  </main>
 
   <script>
-    // Validasi jumlah terisi tidak melebihi kapasitas
     document.addEventListener('DOMContentLoaded', function() {
+      // Add animation to form elements
+      const formElements = document.querySelectorAll('.form-group');
+      formElements.forEach((element, index) => {
+        element.style.animationDelay = `${index * 0.2}s`;
+        element.style.animation = 'fadeIn 0.6s ease-out';
+      });
+
+      // Real-time validation for capacity and occupied
       const capacityInput = document.getElementById('capacity');
       const occupiedInput = document.getElementById('occupied');
 
-      function validateOccupied() {
+      function validateCapacity() {
         const capacity = parseInt(capacityInput.value);
         const occupied = parseInt(occupiedInput.value);
 
-        if (occupied > capacity) {
+        if (capacity > 0 && occupied > capacity) {
           occupiedInput.setCustomValidity('Jumlah terisi tidak boleh melebihi kapasitas');
+          occupiedInput.style.borderColor = 'var(--danger)';
         } else {
           occupiedInput.setCustomValidity('');
+          occupiedInput.style.borderColor = '';
         }
       }
 
-      capacityInput.addEventListener('change', validateOccupied);
-      occupiedInput.addEventListener('input', validateOccupied);
+      capacityInput.addEventListener('input', validateCapacity);
+      occupiedInput.addEventListener('input', validateCapacity);
 
-      // Validasi awal
-      validateOccupied();
+      // Auto-adjust occupied based on status
+      const statusSelect = document.getElementById('status');
+      statusSelect.addEventListener('change', function() {
+        if (this.value === 'available') {
+          occupiedInput.value = 0;
+        } else if (this.value === 'occupied') {
+          const capacity = parseInt(capacityInput.value) || 1;
+          const currentOccupied = parseInt(occupiedInput.value) || 0;
+          if (currentOccupied === 0) {
+            occupiedInput.value = 1;
+          }
+        }
+        validateCapacity();
+      });
+
+      // Initial validation
+      validateCapacity();
     });
   </script>
 </body>

@@ -7,16 +7,16 @@ use App\Models\Appointment;
 use App\Models\ChatMessage;
 use App\Models\DoctorProfile;
 use App\Models\MedicalRecord;
+use App\Models\DoctorSupport;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
-
+use Illuminate\Support\Facades\Auth; // [FIX] Menggunakan namespace yang benar untuk Auth
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $doctorId = $request->user()->id;
+        $doctorId = Auth::id(); // Sekarang Auth::id() akan berfungsi dengan benar
         $today = Carbon::now('Asia/Jakarta')->toDateString();
 
         // Kartu statistik
@@ -46,7 +46,11 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        // Skor kelengkapan profil (optional, biar ada indikator)
+        $supportRequestsCount = DoctorSupport::where('dokter_id', $doctorId)
+            ->whereIn('status', ['Terkirim', 'Dilihat'])
+            ->count();
+
+        // Skor kelengkapan profil
         $profile = DoctorProfile::firstOrCreate(['user_id' => $doctorId]);
         $fields  = ['specialization', 'bio', 'clinic_address', 'phone', 'avatar_path'];
         $filled  = collect($fields)->filter(fn($f) => !empty($profile->{$f}))->count();
@@ -59,7 +63,8 @@ class DashboardController extends Controller
             'unreadMessages',
             'upcoming',
             'profileScore',
-            'profile'
+            'profile',
+            'supportRequestsCount'
         ));
     }
 }

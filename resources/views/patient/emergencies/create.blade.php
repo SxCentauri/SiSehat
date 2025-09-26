@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buat Permintaan Dukungan - MediCare</title>
+    <title>Laporkan Kondisi Darurat - MediCare</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -75,8 +75,8 @@
         }
 
         .header i {
-            color: var(--primary);
-            background: #e0f2fe;
+            color: var(--danger);
+            background: #fee2e2;
             padding: 12px;
             border-radius: 12px;
             min-width: 46px;
@@ -105,13 +105,13 @@
             font-size: 14px;
         }
 
-        .btn-primary {
-            background: var(--primary);
+        .btn-danger {
+            background: var(--danger);
             color: white;
         }
 
-        .btn-primary:hover {
-            background: var(--primary-dark);
+        .btn-danger:hover {
+            background: #dc2626;
             transform: translateY(-2px);
         }
 
@@ -136,17 +136,9 @@
             font-weight: 600;
             color: var(--text);
             font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .form-label i {
-            color: var(--primary);
-            font-size: 14px;
-        }
-
-        .form-input, .form-select, .form-textarea {
+        .form-textarea, .form-select {
             width: 100%;
             padding: 14px 16px;
             border: 1px solid var(--border);
@@ -171,11 +163,39 @@
             background-size: 16px;
         }
 
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
+        .form-textarea:focus, .form-select:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
             transform: translateY(-1px);
+        }
+
+        .level-option {
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 4px 0;
+            font-weight: 500;
+        }
+
+        .level-low {
+            color: #15803d;
+            background-color: #f0fdf4;
+        }
+
+        .level-medium {
+            color: #d97706;
+            background-color: #fffbeb;
+        }
+
+        .level-high {
+            color: #dc2626;
+            background-color: #fef2f2;
+        }
+
+        .level-critical {
+            color: #be123c;
+            background-color: #fdf2f8;
+            font-weight: 600;
         }
 
         .form-actions {
@@ -267,7 +287,7 @@
                 font-size: 20px;
             }
 
-            .form-input, .form-select, .form-textarea {
+            .form-textarea, .form-select {
                 padding: 12px 14px;
             }
         }
@@ -289,7 +309,7 @@
         }
 
         /* Focus states for accessibility */
-        .btn:focus, a:focus, .form-input:focus, .form-select:focus, .form-textarea:focus {
+        .btn:focus, a:focus, .form-textarea:focus, .form-select:focus {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
         }
@@ -302,95 +322,75 @@
         <div class="card">
             <div class="header">
                 <div class="header-content">
-                    <i class="fa-solid fa-headset"></i>
-                    <h2>Buat Permintaan Dukungan Baru</h2>
+                    <i class="fa-solid fa-plus"></i>
+                    <h2>Laporkan Kondisi Darurat</h2>
                 </div>
+                <a href="{{ route('patient.dashboard') }}" class="btn btn-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+                </a>
             </div>
 
-            <form action="{{ route('nurse.supports.store') }}" method="POST">
+            <form action="{{ route('patient.emergencies.store') }}" method="POST">
                 @csrf
 
                 <div class="form-group">
-                    <label for="dokter_id" class="form-label">
-                        <i class="fa-solid fa-user-md"></i>
-                        Tujukan kepada Dokter
+                    <label for="description" class="form-label">
+                        <i class="fa-solid fa-comment-medical"></i>
+                        Jelaskan kondisi Anda
                     </label>
-                    <select name="dokter_id" id="dokter_id" class="form-select" required>
-                        <option value="">Pilih Dokter...</option>
-                        @foreach ($doctors as $doctor)
-                            <option value="{{ $doctor->id }}" {{ old('dokter_id') == $doctor->id ? 'selected' : '' }}>
-                                Dr. {{ $doctor->name }}
-                            </option>
-                        @endforeach
+                    <textarea name="description" id="description" class="form-textarea"
+                              placeholder="Contoh: Tiba-tiba merasa nyeri dada hebat, sesak napas, dan keringat dingin. Jelaskan secara detail gejala yang dialami, lokasi nyeri, dan sejak kapan gejala muncul."
+                              required>{{ old('description') }}</textarea>
+                    @error('description')
+                        <div class="error-message">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    <div class="form-hint">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        Semakin detail deskripsi Anda, semakin cepat kami dapat memberikan bantuan yang tepat
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="level" class="form-label">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        Tingkat Kedaruratan
+                    </label>
+                    <select name="level" id="level" class="form-select" required>
+                        <option value="">Pilih tingkat kedaruratan...</option>
+                        <option value="low" class="level-low" {{ old('level') == 'low' ? 'selected' : '' }}>
+                            Rendah - Tidak mendesak, tetapi membutuhkan saran medis
+                        </option>
+                        <option value="medium" class="level-medium" {{ old('level') == 'medium' ? 'selected' : '' }}>
+                            Sedang - Membutuhkan perhatian dalam beberapa jam ke depan
+                        </option>
+                        <option value="high" class="level-high" {{ old('level') == 'high' ? 'selected' : '' }}>
+                            Tinggi - Mendesak, membutuhkan penanganan segera
+                        </option>
+                        <option value="critical" class="level-critical" {{ old('level') == 'critical' ? 'selected' : '' }}>
+                            Kritis - Mengancam jiwa, membutuhkan pertolongan segera
+                        </option>
                     </select>
-                    @error('dokter_id')
+                    @error('level')
                         <div class="error-message">
                             <i class="fa-solid fa-circle-exclamation"></i>
                             {{ $message }}
                         </div>
                     @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="patient_id" class="form-label">
-                        <i class="fa-solid fa-user-injured"></i>
-                        Terkait Pasien
-                    </label>
-                    <select name="patient_id" id="patient_id" class="form-select" required>
-                        <option value="">Pilih Pasien...</option>
-                        @foreach ($patients as $patient)
-                            <option value="{{ $patient->id }}" {{ old('patient_id') == $patient->id ? 'selected' : '' }}>
-                                {{ $patient->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('patient_id')
-                        <div class="error-message">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="subjek" class="form-label">
-                        <i class="fa-solid fa-tag"></i>
-                        Subjek Permintaan
-                    </label>
-                    <input type="text" name="subjek" id="subjek" class="form-input"
-                           value="{{ old('subjek') }}"
-                           placeholder="Contoh: Konsultasi kondisi pasien, Permintaan second opinion, dll."
-                           required>
-                    @error('subjek')
-                        <div class="error-message">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="deskripsi" class="form-label">
-                        <i class="fa-solid fa-file-medical"></i>
-                        Deskripsi Detail
-                    </label>
-                    <textarea name="deskripsi" id="deskripsi" class="form-textarea"
-                              placeholder="Jelaskan secara detail alasan permintaan dukungan, kondisi pasien, dan hal spesifik yang membutuhkan perhatian dokter."
-                              required>{{ old('deskripsi') }}</textarea>
-                    @error('deskripsi')
-                        <div class="error-message">
-                            <i class="fa-solid fa-circle-exclamation"></i>
-                            {{ $message }}
-                        </div>
-                    @enderror
+                    <div class="form-hint">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        Pilih tingkat kedaruratan sesuai dengan kondisi yang dialami
+                    </div>
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa-solid fa-paper-plane"></i> Kirim Permintaan Dukungan
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa-solid fa-paper-plane"></i> Kirim Laporan Darurat
                     </button>
-                    <a href="{{ route('nurse.supports.index') }}" class="btn btn-secondary">
-                        <i class="fa-solid fa-list"></i> Lihat Daftar Permintaan
+                    <a href="{{ route('patient.emergencies.index') }}" class="btn btn-secondary">
+                        <i class="fa-solid fa-list"></i> Lihat Riwayat Laporan
                     </a>
                 </div>
             </form>
@@ -405,6 +405,20 @@
                 element.style.animationDelay = `${index * 0.2}s`;
                 element.style.animation = 'fadeIn 0.6s ease-out';
             });
+
+            // Add real-time character count for textarea
+            const textarea = document.getElementById('description');
+            const charCount = document.createElement('div');
+            charCount.className = 'form-hint';
+            charCount.innerHTML = '<i class="fa-solid fa-keyboard"></i> Jumlah karakter: <span id="charCount">0</span>';
+            textarea.parentNode.appendChild(charCount);
+
+            textarea.addEventListener('input', function() {
+                document.getElementById('charCount').textContent = this.value.length;
+            });
+
+            // Trigger initial count
+            textarea.dispatchEvent(new Event('input'));
         });
     </script>
 </body>

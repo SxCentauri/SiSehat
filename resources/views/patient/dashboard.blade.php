@@ -14,6 +14,7 @@
       --success: #10b981;
       --warning: #f59e0b;
       --danger: #ef4444;
+      --critical: #dc2626;
       --completed: #8b5cf6;
       --bg: #f8fafc;
       --card-bg: #ffffff;
@@ -23,6 +24,7 @@
       --radius: 16px;
       --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
       --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      --emergency-gradient: linear-gradient(135deg, #ef4444, #dc2626);
     }
 
     * {
@@ -143,6 +145,36 @@
       margin: 0 auto 16px;
     }
 
+    .emergency-stat-card {
+      text-align: center;
+      padding: 24px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px solid #fecaca;
+      background: linear-gradient(135deg, #fef2f2, #fecaca);
+    }
+
+    .emergency-stat-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      background: var(--emergency-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
     .stat-number {
       font-size: 32px;
       font-weight: 800;
@@ -151,10 +183,25 @@
       line-height: 1;
     }
 
+    .emergency-stat-number {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--critical);
+      margin: 8px 0;
+      line-height: 1;
+    }
+
     .stat-label {
       color: var(--text-light);
       font-size: 14px;
       margin-bottom: 16px;
+    }
+
+    .emergency-stat-label {
+      color: var(--critical);
+      font-size: 14px;
+      margin-bottom: 16px;
+      font-weight: 600;
     }
 
     .btn {
@@ -191,6 +238,18 @@
     .btn-outline:hover {
       background: #e2e8f0;
       transform: translateY(-2px);
+    }
+
+    .btn-emergency {
+      background: var(--emergency-gradient);
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-emergency:hover {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(239, 68, 68, 0.4);
     }
 
     .btn-danger {
@@ -317,11 +376,34 @@
       flex-direction: column;
     }
 
+    .emergency-action-card {
+      text-align: center;
+      padding: 24px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border: 2px solid #fecaca;
+      background: linear-gradient(135deg, #fef2f2, #fed7d7);
+    }
+
     .action-icon {
       width: 80px;
       height: 80px;
       border-radius: 20px;
       background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 32px;
+      margin: 0 auto 20px;
+    }
+
+    .emergency-action-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      background: var(--emergency-gradient);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -337,12 +419,28 @@
       color: var(--text);
     }
 
+    .emergency-action-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--critical);
+    }
+
     .action-description {
       color: var(--text-light);
       font-size: 14px;
       line-height: 1.5;
       margin-bottom: 20px;
       flex-grow: 1;
+    }
+
+    .emergency-action-description {
+      color: var(--critical);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex-grow: 1;
+      font-weight: 500;
     }
 
     .medical-record-item {
@@ -405,7 +503,7 @@
       font-size: 16px;
       font-weight: 700;
       border-radius: 12px;
-      background: linear-gradient(135deg, #ef4444, #dc2626);
+      background: var(--emergency-gradient);
       color: white;
       border: none;
       cursor: pointer;
@@ -459,7 +557,17 @@
         font-size: 28px;
       }
 
+      .emergency-stat-number {
+        font-size: 28px;
+      }
+
       .action-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+      }
+
+      .emergency-action-icon {
         width: 60px;
         height: 60px;
         font-size: 24px;
@@ -503,11 +611,20 @@
       .stat-number {
         font-size: 24px;
       }
+
+      .emergency-stat-number {
+        font-size: 24px;
+      }
     }
 
     /* Focus states for accessibility */
     .btn:focus, a:focus, button:focus {
       outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .btn-emergency:focus {
+      outline: 2px solid var(--critical);
       outline-offset: 2px;
     }
   </style>
@@ -539,11 +656,10 @@
 
     @php
       $upcomingCount = $upcoming->count();
-      $queueCount = $queues->count();
       $rxPendingCount = $rxPendingCount ?? 0;
-      $unpaidCount = $unpaidCount ?? 0;
       $pendingRemindersCount = $pendingRemindersCount ?? 0;
       $pendingBookingCount = $pendingBookingCount ?? 0;
+      $emergencyCount = $emergencyCount ?? 0; // Tambahkan variabel untuk emergency count
     @endphp
 
     <!-- Statistics Cards -->
@@ -572,12 +688,12 @@
 
       <div class="card stat-card">
         <div class="stat-icon">
-          <i class="fa-solid fa-prescription-bottle-medical"></i>
+          <i class="fa-solid fa-file-medical"></i>
         </div>
-        <div class="stat-number">{{ $rxPendingCount }}</div>
-        <div class="stat-label">Resep Menunggu</div>
-        <a class="btn btn-outline btn-sm btn-full" href="{{ route('patient.prescriptions.index') }}">
-          <i class="fa-solid fa-pills"></i> Lihat Resep
+        <div class="stat-number">{{ $medicalRecordCount }}</div>
+        <div class="stat-label">Riwayat Medis</div>
+        <a class="btn btn-outline btn-sm btn-full" href="{{ route('patient.records.index') }}">
+          <i class="fa-solid fa-pills"></i> Lihat Riwayat
         </a>
       </div>
 
@@ -617,14 +733,15 @@
         </a>
       </div>
 
-      <div class="card quick-action-card">
-        <div class="action-icon">
-          <i class="fa-solid fa-comments"></i>
+      <!-- Emergency Action Card -->
+      <div class="card emergency-action-card">
+        <div class="emergency-action-icon">
+          <i class="fa-solid fas fa-plus"></i>
         </div>
-        <div class="action-title">Chat Dokter</div>
-        <div class="action-description">Konsultasi singkat dan tindak lanjut dengan dokter Anda</div>
-        <a class="btn btn-primary btn-full" href="{{ route('patient.chats.index') }}">
-          <i class="fa-solid fa-message"></i> Buka Chat
+        <div class="emergency-action-title">Darurat Medis</div>
+        <div class="emergency-action-description">Akses cepat untuk keadaan darurat dan bantuan medis segera</div>
+        <a class="btn btn-emergency btn-full" href="{{ route('patient.emergencies.create') }}">
+          <i class="fa-solid fa-plus"></i> Akses Darurat
         </a>
       </div>
     </div>
@@ -685,77 +802,10 @@
         </div>
       @endif
     </div>
-
-    <!-- Recent Medical Records -->
-    <div class="card">
-      <div class="header">
-        <div class="header-content">
-          <i class="fa-solid fa-file-medical"></i>
-          <h2>Riwayat Medis Terakhir</h2>
-        </div>
-        <a href="{{ route('patient.records.index') }}" class="btn btn-outline btn-sm">
-          <i class="fa-solid fa-history"></i> Riwayat Lengkap
-        </a>
-      </div>
-
-      @if($recentRecords->isEmpty())
-        <div class="empty-state">
-          <i class="fa-solid fa-file-medical"></i>
-          <h4>Belum ada catatan medis</h4>
-          <p>Riwayat medis akan muncul setelah konsultasi</p>
-        </div>
-      @else
-        <div style="display: grid; gap: 12px;">
-          @foreach($recentRecords as $r)
-            <div class="medical-record-item">
-              <div class="record-header">
-                <div>
-                  <div class="record-diagnosis">
-                    {{ $r->diagnosis ?? 'Tidak ada diagnosa' }}
-                  </div>
-                  <div class="record-date">
-                    {{ $r->created_at->format('d M Y H:i') }}
-                  </div>
-                </div>
-                <a class="btn btn-outline btn-sm" href="{{ route('patient.records.show', $r) }}">
-                  <i class="fa-solid fa-eye"></i> Detail
-                </a>
-              </div>
-            </div>
-          @endforeach
-        </div>
-      @endif
-    </div>
-
-    <!-- Emergency Section -->
-    <div class="emergency-section">
-      <form action="{{ route('patient.emergency.store') }}" method="POST">
-        @csrf
-        <input type="hidden" name="level" value="high">
-        <button class="emergency-btn" type="submit" onclick="return confirm('Apakah Anda yakin ingin mengaktifkan emergency?')">
-          <i class="fa-solid fa-triangle-exclamation"></i> 🚨 EMERGENCY BUTTON 🚨
-        </button>
-        <p style="color: var(--text-light); font-size: 12px; margin-top: 8px;">
-          Hanya gunakan dalam keadaan darurat medis
-        </p>
-      </form>
-    </div>
   </main>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Auto-hide alert after 5 seconds
-      const alert = document.querySelector('.alert');
-      if (alert) {
-        setTimeout(() => {
-          alert.style.opacity = '0';
-          alert.style.transition = 'opacity 0.5s ease';
-          setTimeout(() => {
-            alert.style.display = 'none';
-          }, 500);
-        }, 5000);
-      }
-
       // Add hover effects to medical records
       const medicalRecords = document.querySelectorAll('.medical-record-item');
       medicalRecords.forEach(record => {
@@ -767,15 +817,16 @@
         });
       });
 
-      // Emergency button confirmation
-      const emergencyBtn = document.querySelector('.emergency-btn');
-      if (emergencyBtn) {
-        emergencyBtn.addEventListener('click', function(e) {
-          if (!confirm('⚠️ PERINGATAN: Ini adalah tombol darurat! Apakah Anda yakin ingin melanjutkan?')) {
-            e.preventDefault();
-          }
+      // Add special effects to emergency cards
+      const emergencyCards = document.querySelectorAll('.emergency-stat-card, .emergency-action-card');
+      emergencyCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-5px) scale(1.02)';
         });
-      }
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(-5px)';
+        });
+      });
     });
   </script>
 </body>

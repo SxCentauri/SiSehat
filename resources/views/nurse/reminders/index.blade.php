@@ -91,6 +91,12 @@
       color: var(--text);
     }
 
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
     .btn {
       padding: 12px 20px;
       border-radius: 12px;
@@ -114,6 +120,17 @@
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+      transform: translateY(-2px);
     }
 
     .btn-sm {
@@ -384,6 +401,11 @@
         font-size: 24px;
       }
 
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
       th, td {
         padding: 12px 16px;
       }
@@ -412,6 +434,11 @@
       .action-group .btn {
         justify-content: center;
         text-align: center;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
       }
     }
 
@@ -526,9 +553,14 @@
           <i class="fa-solid fa-bell"></i>
           <h1>Manajemen Reminder Obat</h1>
         </div>
-        <a href="{{ route('nurse.reminders.create') }}" class="btn btn-primary">
-          <i class="fa-solid fa-plus"></i> Tambah Reminder Baru
-        </a>
+        <div class="header-actions">
+          <a href="{{ route('nurse.dashboard') }}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+          </a>
+          <a href="{{ route('nurse.reminders.create') }}" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Tambah Reminder Baru
+          </a>
+        </div>
       </div>
 
       @if(session('success'))
@@ -683,6 +715,12 @@
         if (e.key === 'Escape') {
           closeDialog();
         }
+      });
+
+      // Add animation to table rows
+      const tableRows = document.querySelectorAll('tbody tr');
+      tableRows.forEach((row, index) => {
+        row.style.animationDelay = `${index * 0.1}s`;
       });
     });
   </script>

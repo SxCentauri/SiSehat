@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Dukungan - MediCare</title>
+    <title>Detail & Balasan Dukungan - MediCare</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -105,6 +105,16 @@
             font-size: 14px;
         }
 
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
         .btn-secondary {
             background: #f1f5f9;
             color: var(--text);
@@ -189,9 +199,9 @@
         }
 
         .status-Terkirim {
-            background-color: #f0f9ff;
-            color: #0284c7;
-            border-color: #bae6fd;
+            background-color: #fefce8;
+            color: #a16207;
+            border-color: #fef9c3;
         }
 
         .status-Dilihat {
@@ -212,7 +222,7 @@
             border-color: #bbf7d0;
         }
 
-        .response-box {
+        .response-section {
             background: #f0fdf4;
             border: 1px solid #bbf7d0;
             border-radius: 12px;
@@ -221,7 +231,7 @@
             animation: fadeIn 0.6s ease-out;
         }
 
-        .response-box h3 {
+        .response-section h3 {
             font-size: 16px;
             font-weight: 600;
             color: #15803d;
@@ -231,7 +241,7 @@
             gap: 8px;
         }
 
-        .response-box h3 i {
+        .response-section h3 i {
             font-size: 14px;
         }
 
@@ -242,6 +252,80 @@
             border: 1px solid #bbf7d0;
             line-height: 1.6;
             white-space: pre-wrap;
+        }
+
+        .response-form {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-label i {
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.5;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 13px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .error-message i {
+            font-size: 12px;
+        }
+
+        .form-hint {
+            color: var(--text-light);
+            font-size: 13px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-hint i {
+            font-size: 12px;
+            color: var(--primary);
         }
 
         .meta-info {
@@ -313,6 +397,10 @@
                 width: 100%;
                 justify-content: center;
             }
+
+            .form-textarea {
+                padding: 12px 14px;
+            }
         }
 
         /* Animation */
@@ -332,7 +420,7 @@
         }
 
         /* Focus states for accessibility */
-        .btn:focus, a:focus {
+        .btn:focus, a:focus, .form-textarea:focus {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
         }
@@ -348,7 +436,7 @@
                     <i class="fa-solid fa-circle-info"></i>
                     <h2>Detail Permintaan Dukungan</h2>
                 </div>
-                <a href="{{ route('nurse.supports.index') }}" class="btn btn-secondary">
+                <a href="{{ route('doctor.supports.index') }}" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar
                 </a>
             </div>
@@ -367,10 +455,10 @@
 
                     <div class="info-item">
                         <div class="info-label">
-                            <i class="fa-solid fa-user-md"></i>
-                            Dokter Tujuan
+                            <i class="fa-solid fa-user-nurse"></i>
+                            Dari Perawat
                         </div>
-                        <div class="info-value">Dr. {{ $support->dokter->name ?? 'N/A' }}</div>
+                        <div class="info-value">{{ $support->perawat->name ?? 'N/A' }}</div>
                     </div>
 
                     <div class="info-item">
@@ -396,38 +484,53 @@
                 </div>
 
                 <div class="info-section">
-                    <h3><i class="fa-solid fa-file-medical"></i> Deskripsi Detail</h3>
+                    <h3><i class="fa-solid fa-file-medical"></i> Deskripsi Permintaan</h3>
 
                     <div class="info-item">
                         <div class="info-label">
                             <i class="fa-solid fa-align-left"></i>
-                            Deskripsi Permintaan
+                            Deskripsi Detail
                         </div>
                         <div class="info-value" style="white-space: pre-wrap; line-height: 1.6;">{{ $support->deskripsi }}</div>
                     </div>
                 </div>
             </div>
 
-            @if($support->respon_dokter)
-                <div class="response-box">
-                    <h3><i class="fa-solid fa-comment-medical"></i> Respon dari Dokter</h3>
+            @if($support->status === 'Selesai')
+                <div class="response-section">
+                    <h3><i class="fa-solid fa-comment-medical"></i> Respons Anda</h3>
                     <div class="response-content">{{ $support->respon_dokter }}</div>
                 </div>
             @else
-                <div class="info-section">
-                    <h3><i class="fa-solid fa-clock"></i> Status Respon</h3>
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fa-solid fa-info-circle"></i>
-                            Informasi
-                        </div>
-                        <div class="info-value">
-                            <div style="display: flex; align-items: center; gap: 8px; color: var(--warning);">
-                                <i class="fa-solid fa-clock"></i>
-                                Menunggu respon dari dokter...
+                <div class="response-form">
+                    <form action="{{ route('doctor.supports.update', $support->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="form-group">
+                            <label for="respon_dokter" class="form-label">
+                                <i class="fa-solid fa-reply"></i>
+                                Tulis Respons Anda
+                            </label>
+                            <textarea name="respon_dokter" id="respon_dokter" class="form-textarea"
+                                      placeholder="Berikan respons dan saran untuk perawat terkait permintaan dukungan ini..."
+                                      required>{{ old('respon_dokter') }}</textarea>
+                            @error('respon_dokter')
+                                <div class="error-message">
+                                    <i class="fa-solid fa-circle-exclamation"></i>
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                            <div class="form-hint">
+                                <i class="fa-solid fa-lightbulb"></i>
+                                Respons Anda akan dikirim ke perawat dan status permintaan akan diubah menjadi "Selesai"
                             </div>
                         </div>
-                    </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-paper-plane"></i> Kirim Respons & Selesaikan
+                        </button>
+                    </form>
                 </div>
             @endif
 
@@ -452,6 +555,22 @@
                 section.style.animationDelay = `${index * 0.2}s`;
                 section.style.animation = 'fadeIn 0.6s ease-out';
             });
+
+            // Add real-time character count for textarea
+            const textarea = document.getElementById('respon_dokter');
+            if (textarea) {
+                const charCount = document.createElement('div');
+                charCount.className = 'form-hint';
+                charCount.innerHTML = '<i class="fa-solid fa-keyboard"></i> Jumlah karakter: <span id="charCount">0</span>';
+                textarea.parentNode.appendChild(charCount);
+
+                textarea.addEventListener('input', function() {
+                    document.getElementById('charCount').textContent = this.value.length;
+                });
+
+                // Trigger initial count
+                textarea.dispatchEvent(new Event('input'));
+            }
 
             // Add hover effects to info items
             const infoItems = document.querySelectorAll('.info-item');

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dukungan Dokter - MediCare</title>
+    <title>Permintaan Dukungan Perawat - MediCare</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -202,9 +202,9 @@
         }
 
         .badge-Terkirim {
-            background-color: #f0f9ff;
-            color: #0284c7;
-            border-color: #bae6fd;
+            background-color: #fefce8;
+            color: #a16207;
+            border-color: #fef9c3;
         }
 
         .badge-Dilihat {
@@ -410,15 +410,12 @@
         <div class="card">
             <div class="header">
                 <div class="header-content">
-                    <i class="fa-solid fa-headset"></i>
-                    <h2>Dukungan Dokter</h2>
+                    <i class="fa-solid fa-inbox"></i>
+                    <h2>Permintaan Dukungan dari Perawat</h2>
                 </div>
                 <div class="header-actions">
-                    <a href="{{ route('nurse.dashboard') }}" class="btn btn-secondary btn-sm">
+                    <a href="{{ route('doctor.dashboard') }}" class="btn btn-secondary btn-sm">
                         <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
-                    </a>
-                    <a href="{{ route('nurse.supports.create') }}" class="btn btn-primary btn-sm">
-                        <i class="fa-solid fa-plus"></i> Buat Permintaan Baru
                     </a>
                 </div>
             </div>
@@ -432,9 +429,9 @@
 
             @if($supports->isEmpty())
                 <div class="empty-state">
-                    <i class="fa-solid fa-headset"></i>
-                    <h3>Belum ada permintaan dukungan</h3>
-                    <p>Permintaan dukungan dokter yang Anda buat akan muncul di sini</p>
+                    <i class="fa-solid fa-inbox"></i>
+                    <h3>Tidak ada permintaan dukungan</h3>
+                    <p>Permintaan dukungan dari perawat akan muncul di sini</p>
                 </div>
             @else
                 <div class="table-container">
@@ -442,7 +439,7 @@
                         <thead>
                             <tr>
                                 <th>Subjek</th>
-                                <th>Dokter Tujuan</th>
+                                <th>Dari Perawat</th>
                                 <th>Pasien</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
@@ -460,10 +457,12 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div style="font-weight: 500;">Dr. {{ $support->dokter->name ?? 'N/A' }}</div>
+                                        <div style="font-weight: 500;">{{ $support->perawat->name ?? 'N/A' }}</div>
+                                        <div style="font-size: 12px; color: var(--text-light);">Perawat</div>
                                     </td>
                                     <td>
                                         <div style="font-weight: 500;">{{ $support->patient->name ?? 'N/A' }}</div>
+                                        <div style="font-size: 12px; color: var(--text-light);">Pasien</div>
                                     </td>
                                     <td>
                                         <span class="badge badge-{{ str_replace(' ', '', $support->status) }}">
@@ -472,8 +471,9 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="{{ route('nurse.supports.show', $support->id) }}" class="btn btn-outline btn-sm">
-                                            <i class="fa-solid fa-eye"></i> Detail
+                                        <a href="{{ route('doctor.supports.show', $support->id) }}" class="btn btn-primary btn-sm">
+                                            <i class="fa-solid fa-{{ $support->status === 'Selesai' ? 'eye' : 'reply' }}"></i>
+                                            {{ $support->status === 'Selesai' ? 'Lihat Detail' : 'Lihat & Balas' }}
                                         </a>
                                     </td>
                                 </tr>
@@ -507,6 +507,21 @@
                 row.addEventListener('mouseleave', function() {
                     this.style.transform = 'translateX(5px)';
                 });
+            });
+
+            // Update badge colors based on status
+            const badges = document.querySelectorAll('.badge');
+            badges.forEach(badge => {
+                const status = badge.textContent.trim();
+                if (status === 'Terkirim') {
+                    badge.innerHTML = '<i class="fa-solid fa-clock"></i> ' + status;
+                } else if (status === 'Dilihat') {
+                    badge.innerHTML = '<i class="fa-solid fa-eye"></i> ' + status;
+                } else if (status === 'Diproses') {
+                    badge.innerHTML = '<i class="fa-solid fa-gears"></i> ' + status;
+                } else if (status === 'Selesai') {
+                    badge.innerHTML = '<i class="fa-solid fa-check"></i> ' + status;
+                }
             });
         });
     </script>

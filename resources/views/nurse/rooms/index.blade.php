@@ -5,15 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daftar Ruangan - MediCare</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #2563eb;
-      --secondary: #1e40af;
-      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --primary-dark: #1e40af;
+      --secondary: #64748b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --completed: #8b5cf6;
       --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
       --radius: 16px;
-      --shadow: 0 15px 40px rgba(37,99,235,0.1);
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
     }
 
     * {
@@ -24,248 +33,363 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      padding: 100px 20px 40px;
+      background-color: var(--bg);
+      color: var(--text);
       line-height: 1.6;
+      padding-top: 80px;
     }
 
     .container {
       max-width: 1200px;
-      margin: auto;
+      margin: 0 auto;
+      padding: 0 20px 40px;
     }
 
     .card {
-      background: #fff;
+      background: var(--card-bg);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 28px;
-      border: 1px solid rgba(96,165,250,0.1);
+      padding: 32px;
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .section-title {
-      display:flex;
-      align-items:center;
-      gap:14px;
-      font-size:22px;
-      font-weight:700;
-      margin-bottom:25px;
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     }
 
-    .section-title i {
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header i {
       color: var(--primary);
-      background:#e0f2fe;
-      padding:12px;
-      border-radius:12px;
+      background: #e0f2fe;
+      padding: 12px;
+      border-radius: 12px;
+      min-width: 46px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .btn {
-      padding:10px 16px;
-      border-radius:12px;
-      font-weight:600;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      text-decoration:none;
-      border:none;
-      cursor:pointer;
-      transition:.3s;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
       font-size: 14px;
     }
 
     .btn-primary {
-      background: var(--gradient);
-      color:#fff;
-      box-shadow:0 8px 20px rgba(37,99,235,.2);
+      background: var(--primary);
+      color: white;
     }
 
     .btn-primary:hover {
-      transform:translateY(-2px);
-    }
-
-    .btn-warning {
-      background:#fde68a;
-      color:#92400e;
-    }
-
-    .btn-danger {
-      background:#fca5a5;
-      color:#991b1b;
-    }
-
-    .btn-info {
-      background:#bae6fd;
-      color:#075985;
+      background: var(--primary-dark);
+      transform: translateY(-2px);
     }
 
     .btn-secondary {
-      background:#e5e7eb;
-      color:#1f2937;
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
     .btn-secondary:hover {
-      background:#d1d5db;
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
+
+    .btn-info {
+      background: #dbeafe;
+      color: var(--primary);
+      border: 1px solid #dbeafe;
+    }
+
+    .btn-info:hover {
+      background: #bfdbfe;
+      transform: translateY(-2px);
+    }
+
+    .btn-warning {
+      background: #fef3c7;
+      color: var(--warning);
+      border: 1px solid #fef3c7;
+    }
+
+    .btn-warning:hover {
+      background: #fde68a;
+      transform: translateY(-2px);
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: var(--danger);
+      border: 1px solid #fee2e2;
+    }
+
+    .btn-danger:hover {
+      background: #fecaca;
+      transform: translateY(-2px);
     }
 
     .btn-sm {
-      padding: 6px 10px;
+      padding: 10px 16px;
       font-size: 13px;
     }
 
-    .button-group {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
     .table-container {
-      overflow-x:auto;
-      border-radius:var(--radius);
-      box-shadow:0 10px 30px rgba(0,0,0,0.05);
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
       margin: 20px 0;
-      -webkit-overflow-scrolling: touch;
     }
 
     table {
-      width:100%;
-      border-collapse:collapse;
-      min-width: 600px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background-color: #f8fafc;
     }
 
     th {
-      background:#eff6ff;
-      color:var(--primary);
-      padding:14px 12px;
-      text-align:left;
-      font-size:14px;
-      text-transform:uppercase;
-      white-space: nowrap;
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-light);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
     }
 
     td {
-      padding:14px 12px;
-      border-bottom:1px solid #f1f5f9;
-      font-size:15px;
-      vertical-align: middle;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background-color: #f8fafc;
+      transform: translateX(5px);
     }
 
     .badge {
-      padding:6px 10px;
-      border-radius:8px;
-      font-weight:600;
-      font-size:13px;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      gap: 6px;
+      border: 1px solid transparent;
+    }
+
+    .badge-success {
+      background-color: #f0fdf4;
+      color: var(--success);
+      border-color: #bbf7d0;
+    }
+
+    .badge-warning {
+      background-color: #fffbeb;
+      color: var(--warning);
+      border-color: #fef3c7;
+    }
+
+    .badge-danger {
+      background-color: #fef2f2;
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+
+    .room-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .room-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .capacity-bar {
+      width: 100px;
+      height: 8px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 4px 0;
+    }
+
+    .capacity-fill {
+      height: 100%;
+      background: var(--gradient);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    .capacity-text {
+      font-size: 12px;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .empty-state {
       text-align: center;
+      padding: 60px 20px;
+      color: var(--text-light);
     }
 
-    .bg-success {
-      background:#bbf7d0;
-      color:#166534;
+    .empty-state i {
+      font-size: 64px;
+      margin-bottom: 16px;
+      color: #d1d5db;
     }
 
-    .bg-danger {
-      background:#fecaca;
-      color:#991b1b;
+    .empty-state h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: var(--text);
     }
 
-    .bg-warning {
-      background:#fde68a;
-      color:#92400e;
-    }
-
-    .empty {
-      text-align:center;
-      color:#9ca3af;
-      padding:50px 20px;
+    .empty-state p {
+      font-size: 14px;
     }
 
     .alert-success {
-      background: #dcfce7;
+      background-color: #f0fdf4;
       color: #166534;
-      border-radius: 12px;
-      padding: 12px 16px;
-      margin-bottom: 20px;
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-bottom: 24px;
       border: 1px solid #bbf7d0;
-      font-weight: 500;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
+    .alert-success i {
+      color: #16a34a;
+    }
+
     .action-group {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .pagination {
       display: flex;
       justify-content: center;
-      margin-top: 25px;
-      flex-wrap: wrap;
+      margin-top: 24px;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .pagination .page-item {
-      display: inline-flex;
-    }
-
-    .pagination .page-link {
-      padding: 8px 14px;
+    .pagination a, .pagination span {
+      padding: 8px 16px;
       border-radius: 8px;
-      background: white;
-      color: #4b5563;
       text-decoration: none;
-      font-weight: 600;
-      border: 1px solid #e5e7eb;
-      transition: all 0.2s;
+      font-weight: 500;
+      transition: all 0.3s;
+      font-size: 14px;
     }
 
-    .pagination .page-item.active .page-link {
-      background: var(--gradient);
-      color: white;
+    .pagination a {
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    .pagination a:hover {
+      background-color: #eff6ff;
       border-color: var(--primary);
     }
 
-    .pagination .page-link:hover {
-      background: #eff6ff;
-      color: var(--primary);
+    .pagination .current {
+      background: var(--gradient);
+      color: white;
+      border: 1px solid var(--primary);
     }
 
     /* Responsive Styles */
-    @media (max-width: 1024px) {
-      body {
-        padding: 90px 15px 30px;
-      }
-    }
-
     @media (max-width: 768px) {
-      body {
-        padding: 80px 12px 20px;
+      .container {
+        padding: 0 15px 30px;
       }
 
       .card {
         padding: 24px;
-        border-radius: 14px;
       }
 
-      .section-title {
-        font-size: 20px;
-      }
-
-      .button-group {
+      .header {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-start;
       }
 
-      .button-group .btn {
-        justify-content: center;
+      .header-content {
+        flex-direction: column;
         text-align: center;
+        gap: 12px;
+      }
+
+      .header h2 {
+        font-size: 22px;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
       }
 
       th, td {
-        padding: 12px 10px;
-        font-size: 14px;
+        padding: 12px 16px;
       }
 
       .action-group {
@@ -273,222 +397,202 @@
         align-items: stretch;
       }
 
-      .action-group .btn {
+      .btn {
+        width: 100%;
         justify-content: center;
       }
     }
 
     @media (max-width: 640px) {
       body {
-        padding: 70px 10px 15px;
+        padding-top: 70px;
       }
 
-      .section-title {
-        font-size: 18px;
+      .container {
+        padding: 0 12px 20px;
+      }
+
+      .card {
+        padding: 20px;
+        border-radius: 14px;
+      }
+
+      .header h2 {
+        font-size: 20px;
+      }
+
+      .header-actions {
         flex-direction: column;
-        text-align: center;
-        gap: 10px;
+        width: 100%;
       }
 
-      .section-title i {
-        width: 42px;
-        height: 42px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      th, td {
+        padding: 10px 12px;
+        font-size: 13px;
       }
 
-      .alert-success {
-        padding: 10px 14px;
-        font-size: 14px;
+      .room-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
       }
 
-      /* Sembunyikan kolom ID pada layar kecil */
-      .table-container table th:nth-child(1),
-      .table-container table td:nth-child(1) {
-        display: none;
+      .capacity-bar {
+        width: 80px;
       }
     }
 
     @media (max-width: 480px) {
-      .section-title {
-        font-size: 16px;
+      th, td {
+        padding: 8px 10px;
       }
 
-      .btn {
-        padding: 8px 12px;
-        font-size: 13px;
+      .badge {
+        padding: 6px 12px;
+        font-size: 11px;
       }
 
-      /* Sembunyikan kolom Kapasitas dan Terisi pada layar sangat kecil */
-      .table-container table th:nth-child(4),
-      .table-container table td:nth-child(4),
-      .table-container table th:nth-child(5),
-      .table-container table td:nth-child(5) {
-        display: none;
-      }
-
-      .pagination .page-link {
-        padding: 6px 10px;
+      .room-icon {
+        width: 32px;
+        height: 32px;
         font-size: 14px;
       }
     }
 
-    /* Tambahan untuk tabel responsif */
-    .mobile-label {
-      display: none;
-      font-weight: 700;
-      margin-right: 8px;
-      color: #4b5563;
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    @media (max-width: 640px) {
-      /* Ubah tabel menjadi kartu pada tampilan mobile */
-      .table-container {
-        overflow-x: visible;
-        box-shadow: none;
-      }
+    .card {
+      animation: fadeIn 0.5s ease-out;
+    }
 
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
+    tbody tr {
+      animation: fadeIn 0.3s ease-out;
+    }
 
-      thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-      }
-
-      tr {
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        margin-bottom: 15px;
-        padding: 15px;
-        background: white;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      }
-
-      td {
-        border: none;
-        border-bottom: 1px solid #f1f5f9;
-        position: relative;
-        padding-left: 45%;
-        padding-right: 15px;
-        display: flex;
-        align-items: center;
-        min-height: 40px;
-      }
-
-      td:last-child {
-        border-bottom: 0;
-        justify-content: center;
-        padding-left: 15px;
-      }
-
-      td:before {
-        content: attr(data-label);
-        position: absolute;
-        left: 15px;
-        width: 40%;
-        padding-right: 15px;
-        white-space: nowrap;
-        font-weight: 600;
-        color: #4b5563;
-      }
-
-      .mobile-label {
-        display: inline;
-      }
-
-      .action-group {
-        justify-content: center;
-        margin-top: 10px;
-        flex-direction: row;
-      }
+    /* Focus states for accessibility */
+    .btn:focus, a:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
     }
   </style>
 </head>
 <body>
   @include('layouts.medicare')
 
-  <div class="container">
+  <main class="container">
     <div class="card">
-      <div class="section-title">
-        <i class="fa-solid fa-bed"></i>
-        <h3>Daftar Ruangan</h3>
-      </div>
-
-      <div class="button-group">
-        <a href="{{ route('nurse.rooms.create') }}" class="btn btn-primary">
-          <i class="fa-solid fa-plus"></i> Tambah Ruangan
-        </a>
-        <a href="{{ route('nurse.dashboard') }}" class="btn btn-secondary">
-          <i class="fa-solid fa-arrow-left"></i> Kembali Dashboard
-        </a>
+      <div class="header">
+        <div class="header-content">
+          <i class="fa-solid fa-bed"></i>
+          <h2>Daftar Ruangan</h2>
+        </div>
+        <div class="header-actions">
+          <a href="{{ route('nurse.rooms.create') }}" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Tambah Ruangan
+          </a>
+          <a href="{{ route('nurse.dashboard') }}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+          </a>
+        </div>
       </div>
 
       @if(session('success'))
         <div class="alert-success">
-          <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+          <i class="fa-solid fa-circle-check"></i>
+          {{ session('success') }}
         </div>
       @endif
 
       @if($rooms->isEmpty())
-        <div class="empty">
-          <i class="fa-regular fa-hospital fa-2x"></i>
-          <p>Belum ada data ruangan</p>
+        <div class="empty-state">
+          <i class="fa-solid fa-bed"></i>
+          <h3>Belum ada data ruangan</h3>
+          <p>Silakan tambah ruangan baru untuk memulai manajemen</p>
         </div>
       @else
         <div class="table-container">
           <table>
             <thead>
               <tr>
-                <th>Nama Ruangan</th>
+                <th>Ruangan</th>
                 <th>Status</th>
                 <th>Kapasitas</th>
                 <th>Terisi</th>
+                <th>Ketersediaan</th>
                 <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
               @foreach($rooms as $room)
+                @php
+                  $occupancyRate = $room->capacity > 0 ? ($room->occupied / $room->capacity) * 100 : 0;
+                @endphp
                 <tr>
-                  <td data-label="Nama Ruangan">
-                    <span class="mobile-label">Nama:</span>{{ $room->name }}
+                  <td>
+                    <div class="room-info">
+                      <div class="room-icon">
+                        <i class="fa-solid fa-door-closed"></i>
+                      </div>
+                      <div>
+                        <div style="font-weight: 600;">{{ $room->name }}</div>
+                        <div style="font-size: 12px; color: var(--text-light);">No. {{ $room->room_number ?? 'N/A' }}</div>
+                      </div>
+                    </div>
                   </td>
-                  <td data-label="Status">
-                    <span class="mobile-label">Status:</span>
+                  <td>
                     @if($room->status == 'available')
-                      <span class="badge bg-success">Tersedia</span>
+                      <span class="badge badge-success">
+                        <i class="fa-solid fa-circle-check"></i> Tersedia
+                      </span>
                     @elseif($room->status == 'occupied')
-                      <span class="badge bg-danger">Penuh</span>
+                      <span class="badge badge-danger">
+                        <i class="fa-solid fa-circle-xmark"></i> Penuh
+                      </span>
                     @else
-                      <span class="badge bg-warning">Maintenance</span>
+                      <span class="badge badge-warning">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Maintenance
+                      </span>
                     @endif
                   </td>
-                  <td data-label="Kapasitas">
-                    <span class="mobile-label">Kapasitas:</span>{{ $room->capacity }}
+                  <td>
+                    <div style="font-weight: 600;">{{ $room->capacity }}</div>
+                    <div style="font-size: 12px; color: var(--text-light);">Pasien</div>
                   </td>
-                  <td data-label="Terisi">
-                    <span class="mobile-label">Terisi:</span>{{ $room->occupied }}
+                  <td>
+                    <div style="font-weight: 600; color: {{ $room->occupied > 0 ? 'var(--danger)' : 'var(--success)' }};">
+                      {{ $room->occupied }}
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-light);">Terisi</div>
                   </td>
-                  <td data-label="Aksi">
-                    <span class="mobile-label">Aksi:</span>
+                  <td>
+                    <div class="capacity-bar">
+                      <div class="capacity-fill" style="width: {{ $occupancyRate }}%;"></div>
+                    </div>
+                    <div class="capacity-text">{{ number_format($occupancyRate, 0) }}%</div>
+                  </td>
+                  <td>
                     <div class="action-group">
-                      <a href="{{ route('nurse.rooms.show', $room->id) }}" class="btn btn-info btn-sm" title="Detail">
-                        <i class="fa-solid fa-eye"></i>
-                        <span class="mobile-label">Detail</span>
+                      <a href="{{ route('nurse.rooms.show', $room->id) }}" class="btn btn-info btn-sm">
+                        <i class="fa-solid fa-eye"></i> Detail
                       </a>
-                      <a href="{{ route('nurse.rooms.edit', $room->id) }}" class="btn btn-warning btn-sm" title="Edit">
-                        <i class="fa-solid fa-pen"></i>
-                        <span class="mobile-label">Edit</span>
+                      <a href="{{ route('nurse.rooms.edit', $room->id) }}" class="btn btn-warning btn-sm">
+                        <i class="fa-solid fa-pen"></i> Edit
                       </a>
-                      <form action="{{ route('nurse.rooms.destroy', $room->id) }}" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">
+                      <form action="{{ route('nurse.rooms.destroy', $room->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
-                          <i class="fa-solid fa-trash"></i>
-                          <span class="mobile-label">Hapus</span>
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus ruangan ini?')">
+                          <i class="fa-solid fa-trash"></i> Hapus
                         </button>
                       </form>
                     </div>
@@ -499,38 +603,47 @@
           </table>
         </div>
 
-        <div class="pagination">
-          {{ $rooms->links() }}
-        </div>
+        @if(method_exists($rooms,'links'))
+          <div class="pagination">
+            {{ $rooms->links() }}
+          </div>
+        @endif
       @endif
     </div>
-  </div>
+  </main>
 
   <script>
-    // Konfirmasi sebelum menghapus
-    document.querySelectorAll('form').forEach(form => {
-      form.addEventListener('submit', function(e) {
-        if (!confirm('Yakin hapus data ini?')) {
-          e.preventDefault();
-        }
-      });
-    });
-
-    // Tambahkan label data untuk tampilan mobile
     document.addEventListener('DOMContentLoaded', function() {
-      if (window.innerWidth <= 640) {
-        const headers = [];
-        document.querySelectorAll('thead th').forEach(header => {
-          headers.push(header.textContent);
-        });
+      // Add animation to capacity bars
+      const capacityBars = document.querySelectorAll('.capacity-fill');
+      capacityBars.forEach(bar => {
+        const originalWidth = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+          bar.style.width = originalWidth;
+        }, 300);
+      });
 
-        document.querySelectorAll('tbody tr').forEach(row => {
-          const cells = row.querySelectorAll('td');
-          cells.forEach((cell, index) => {
-            cell.setAttribute('data-label', headers[index]);
-          });
+      // Add hover effects to table rows
+      const tableRows = document.querySelectorAll('tbody tr');
+      tableRows.forEach(row => {
+        row.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateX(8px)';
         });
-      }
+        row.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateX(5px)';
+        });
+      });
+
+      // Enhanced delete confirmation
+      const deleteForms = document.querySelectorAll('form[method="POST"]');
+      deleteForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+          if (!confirm('Apakah Anda yakin ingin menghapus ruangan ini? Tindakan ini tidak dapat dibatalkan.')) {
+            e.preventDefault();
+          }
+        });
+      });
     });
   </script>
 </body>
