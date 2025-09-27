@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained('users');
             $table->string('subjek');
             $table->text('deskripsi');
-            $table->enum('status', ['Terkirim', 'Dilihat',- 'Diproses', 'Selesai'])->default('Terkirim');
+            $table->enum('status', ['Terkirim', 'Dilihat', 'Diproses', 'Selesai'])->default('Terkirim');
             $table->text('respon_dokter')->nullable();
             $table->timestamps();
         });
