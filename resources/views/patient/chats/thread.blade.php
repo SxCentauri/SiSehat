@@ -459,7 +459,7 @@
           {{ strtoupper(mb_substr($doctor->name, 0, 1)) }}
         </div>
         <div class="header-info">
-          <div class="title">Chat dengan Dr. {{ $doctor->name }}</div>
+          <div class="title">Dr. {{ $doctor->name }}</div>
           <div class="subtitle">
             <span class="status-dot"></span>
             <span>Online - Spesialis {{ $doctor->specialty ?? 'Umum' }}</span>

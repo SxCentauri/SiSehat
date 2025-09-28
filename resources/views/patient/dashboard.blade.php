@@ -713,12 +713,12 @@
     <div class="grid grid-3">
       <div class="card quick-action-card">
         <div class="action-icon">
-          <i class="fa-solid fa-calendar-plus"></i>
+          <i class="fa-solid fa-comments"></i>
         </div>
-        <div class="action-title">Buat Janji Temu</div>
-        <div class="action-description">Pilih dokter, tanggal, dan jam yang tersedia untuk konsultasi</div>
-        <a class="btn btn-primary btn-full" href="{{ route('patient.appointments.create') }}">
-          <i class="fa-solid fa-plus"></i> Buat Janji
+        <div class="action-title">Chat Dokter</div>
+        <div class="action-description">Konsultasi singkat dan tindak lanjut.</div>
+        <a class="btn btn-primary btn-full" href="{{ route('patient.chats.index') }}">
+          <i class="fa-solid fa-plus"></i> Buka Chat
         </a>
       </div>
 
