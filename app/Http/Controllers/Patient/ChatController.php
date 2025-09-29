@@ -15,22 +15,22 @@ class ChatController extends Controller
         $me = \Illuminate\Support\Facades\Auth::user();
 
         // Dokter yang pernah di-chat, urut terbaru
-        $recentDoctorIds = \App\Models\ChatMessage::where('patient_id', $me->id)
+        $recentDoctorIds = ChatMessage::where('patient_id', $me->id)
             ->orderByDesc('created_at')
             ->pluck('doctor_id')
             ->unique()
             ->values();
 
-        $recentDoctors = \App\Models\User::whereIn('id', $recentDoctorIds)->get();
+        $recentDoctors = User::whereIn('id', $recentDoctorIds)->get();
 
         // Semua dokter lain (untuk mulai chat jika belum ada riwayat)
-        $allDoctors = \App\Models\User::where('role', 'doctor')
+        $allDoctors = User::where('role', 'doctor')
             ->when($recentDoctorIds->isNotEmpty(), fn($q) => $q->whereNotIn('id', $recentDoctorIds))
             ->orderBy('name')
             ->get();
 
         // Hitung pesan belum dibaca dari dokter per doctor_id
-        $unread = \App\Models\ChatMessage::selectRaw('doctor_id, COUNT(*) as unread')
+        $unread = ChatMessage::selectRaw('doctor_id, COUNT(*) as unread')
             ->where('patient_id', $me->id)
             ->where('sender_type', 'doctor')
             ->whereNull('read_at')
@@ -47,7 +47,8 @@ class ChatController extends Controller
         $user = Auth::user();
         $messages = ChatMessage::where('doctor_id', $doctor->id)
             ->where('patient_id', $user->id)
-            ->orderBy('created_at')->get();
+            ->orderBy('created_at')
+            ->get();
 
         // set read_at untuk pesan dokter → pasien
         ChatMessage::where('doctor_id', $doctor->id)

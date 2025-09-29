@@ -206,17 +206,12 @@ Route::prefix('patient')->name('patient.')->middleware(['auth', 'role:user'])->g
     Route::get('/appointments/create', [PatientAppointmentController::class, 'create'])->name('appointments.create');
     Route::post('/appointments', [PatientAppointmentController::class, 'store'])->name('appointments.store');
 
-    Route::get('/queues', [PatientQueueController::class, 'index'])->name('queues.index');
-
     Route::get('/records', [PatientMedicalRecordController::class, 'index'])->name('records.index');
     Route::get('/records/{record}', [PatientMedicalRecordController::class, 'show'])->name('records.show');
 
     Route::get('/prescriptions', [PatientPrescriptionController::class, 'index'])->name('prescriptions.index');
     Route::get('/prescriptions/{rx}', [PatientPrescriptionController::class, 'show'])->name('prescriptions.show');
     Route::post('/prescriptions/{rx}/checkout', [PatientPrescriptionController::class, 'checkout'])->name('prescriptions.checkout');
-
-    Route::get('/payments/{invoice}', [PatientPaymentController::class, 'show'])->name('payments.show');
-    Route::post('/payments/{invoice}/qris', [PatientPaymentController::class, 'createQris'])->name('payments.qris');
 
     Route::get('/room-bookings', [PatientRoomBookingController::class, 'index'])->name('bookingroom.index');
     Route::get('/room-bookings/create', [PatientRoomBookingController::class, 'create'])->name('bookingroom.create');
