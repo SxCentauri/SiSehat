@@ -280,6 +280,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 600px;
     }
 
     thead {
@@ -364,6 +365,17 @@
     }
 
     /* Responsive Styles */
+    @media (max-width: 1024px) {
+      .container {
+        max-width: 100%;
+        padding: 0 20px 30px;
+      }
+      
+      .card {
+        padding: 28px;
+      }
+    }
+
     @media (max-width: 768px) {
       .container {
         padding: 0 15px 30px;
@@ -379,9 +391,10 @@
       }
 
       .header-content {
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row;
+        text-align: left;
         gap: 12px;
+        width: 100%;
       }
 
       .header h2 {
@@ -439,6 +452,15 @@
         font-size: 20px;
       }
 
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header i {
+        align-self: center;
+      }
+
       .header-actions {
         flex-direction: column;
         width: 100%;
@@ -454,15 +476,109 @@
         font-size: 16px;
         margin-right: 12px;
       }
+      
+      .section-title {
+        font-size: 16px;
+      }
+      
+      .section-title i {
+        padding: 6px;
+        font-size: 12px;
+      }
     }
 
     @media (max-width: 480px) {
+      body {
+        padding-top: 60px;
+      }
+      
+      .container {
+        padding: 0 10px 15px;
+      }
+      
+      .card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+      
+      .header h2 {
+        font-size: 18px;
+      }
+      
+      .header i {
+        padding: 10px;
+        min-width: 40px;
+        font-size: 16px;
+      }
+
       .chat-meta {
         display: none;
       }
 
       .last-message {
         font-size: 13px;
+      }
+      
+      .chat-item {
+        padding: 14px;
+      }
+      
+      .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+      
+      .doctor-name {
+        font-size: 14px;
+      }
+      
+      .empty-state {
+        padding: 30px 15px;
+      }
+      
+      .empty-state i {
+        font-size: 40px;
+      }
+      
+      .empty-state h4 {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .header h2 {
+        font-size: 16px;
+      }
+      
+      .header i {
+        padding: 8px;
+        min-width: 36px;
+        font-size: 14px;
+      }
+      
+      .chat-item {
+        padding: 12px;
+      }
+      
+      .avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+        margin-right: 8px;
+      }
+      
+      .doctor-name {
+        font-size: 13px;
+      }
+      
+      .last-message {
+        font-size: 12px;
+      }
+      
+      .empty-state i {
+        font-size: 36px;
       }
     }
 
@@ -487,6 +603,22 @@
     .chat-item {
       animation: fadeIn 0.3s ease-out;
     }
+    
+    /* Status indicator for doctors */
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+    }
+    
+    .status-online {
+      color: var(--success);
+    }
+    
+    .status-offline {
+      color: var(--text-light);
+    }
   </style>
 </head>
 <body>
@@ -505,6 +637,14 @@
           </a>
         </div>
       </div>
+
+      <!-- Search functionality can be added here if needed -->
+      <!--
+      <div class="search-container" style="margin-bottom: 24px;">
+        <i class="fa-solid fa-search"></i>
+        <input type="text" class="search-input" placeholder="Cari dokter...">
+      </div>
+      -->
 
       <!-- Recent Chats Section -->
       <div class="section-title">
@@ -639,7 +779,7 @@
                     </div>
                   </td>
                   <td>
-                    <span style="color: var(--success); font-size: 14px;">
+                    <span class="status-indicator status-online">
                       <i class="fa-solid fa-circle-check"></i> Tersedia
                     </span>
                   </td>
@@ -659,22 +799,13 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Filter function for desktop table
-      function filterTable(tableSelector) {
-        const searchTerm = searchInput.value.toLowerCase();
-        document.querySelectorAll(`${tableSelector} tbody tr`).forEach(row => {
-          const name = row.querySelector('td:first-child')?.textContent?.toLowerCase() || '';
-          if (name.includes(searchTerm)) {
-            row.style.display = '';
-            row.style.animation = 'fadeIn 0.3s ease-out';
-          } else {
-            row.style.display = 'none';
-          }
-        });
-      }
+      // Add animation to chat items
+      const chatItems = document.querySelectorAll('.chat-item');
+      chatItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
+      });
 
       // Add hover effects to chat items
-      const chatItems = document.querySelectorAll('.chat-item');
       chatItems.forEach(item => {
         item.addEventListener('mouseenter', function() {
           this.style.transform = 'translateX(8px)';
@@ -682,6 +813,12 @@
         item.addEventListener('mouseleave', function() {
           this.style.transform = 'translateX(5px)';
         });
+      });
+      
+      // Add animation to table rows
+      const tableRows = document.querySelectorAll('tbody tr');
+      tableRows.forEach((row, index) => {
+        row.style.animationDelay = `${index * 0.1}s`;
       });
     });
   </script>

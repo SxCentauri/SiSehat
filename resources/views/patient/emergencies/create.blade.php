@@ -250,9 +250,10 @@
             }
 
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row;
+                text-align: left;
                 gap: 12px;
+                width: 100%;
             }
 
             .header h2 {
@@ -287,8 +288,80 @@
                 font-size: 20px;
             }
 
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header i {
+                align-self: center;
+            }
+
             .form-textarea, .form-select {
                 padding: 12px 14px;
+            }
+
+            .form-actions {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 60px;
+            }
+
+            .container {
+                padding: 0 10px 15px;
+            }
+
+            .card {
+                padding: 16px;
+                border-radius: 12px;
+            }
+
+            .header h2 {
+                font-size: 18px;
+            }
+
+            .header i {
+                padding: 10px;
+                min-width: 40px;
+                font-size: 16px;
+            }
+
+            .form-textarea, .form-select {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .form-label, .form-hint, .error-message {
+                font-size: 12px;
+            }
+
+            .btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+
+            .form-group {
+                margin-bottom: 18px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .header h2 {
+                font-size: 16px;
+            }
+
+            .header i {
+                padding: 8px;
+                min-width: 36px;
+                font-size: 14px;
+            }
+
+            .form-textarea {
+                min-height: 120px;
             }
         }
 

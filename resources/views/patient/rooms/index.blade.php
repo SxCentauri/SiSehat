@@ -137,6 +137,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 700px; /* Menambahkan lebar minimum untuk tabel */
     }
 
     thead {
@@ -289,10 +290,28 @@
       letter-spacing: 0.5px;
     }
 
-    /* Responsive Styles */
+    /* Responsive Styles - PERBAIKAN UTAMA */
+    @media (max-width: 1200px) {
+      .container {
+        max-width: 100%;
+        padding: 0 20px 30px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .header {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
     @media (max-width: 768px) {
       .container {
-        padding: 0 15px 30px;
+        padding: 0 15px 25px;
       }
 
       .card {
@@ -302,11 +321,12 @@
       .header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 15px;
       }
 
       .header-content {
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row;
+        text-align: left;
         gap: 12px;
       }
 
@@ -320,11 +340,28 @@
       }
 
       th, td {
-        padding: 12px 16px;
+        padding: 14px 16px;
       }
 
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      
+      .stat-item {
+        padding: 14px;
+      }
+      
+      .stat-number {
+        font-size: 20px;
+      }
+      
+      .empty-state {
+        padding: 40px 15px;
+      }
+      
+      .empty-state i {
+        font-size: 48px;
       }
     }
 
@@ -357,12 +394,13 @@
       }
 
       th, td {
-        padding: 10px 12px;
-        font-size: 13px;
+        padding: 12px 14px;
+        font-size: 14px;
       }
 
       .stats-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
       }
 
       .room-info {
@@ -374,22 +412,133 @@
       .capacity-bar {
         width: 80px;
       }
-    }
-
-    @media (max-width: 480px) {
-      th, td {
-        padding: 8px 10px;
-      }
-
+      
       .badge {
         padding: 6px 12px;
         font-size: 11px;
+      }
+      
+      .room-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding-top: 60px;
+      }
+      
+      .container {
+        padding: 0 10px 15px;
+      }
+      
+      .card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+      
+      .header h2 {
+        font-size: 18px;
+      }
+      
+      .header-content i {
+        padding: 10px;
+        min-width: 42px;
+        font-size: 16px;
+      }
+      
+      th, td {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+      
+      .badge {
+        padding: 5px 10px;
+        font-size: 10px;
       }
 
       .room-icon {
         width: 32px;
         height: 32px;
+        font-size: 13px;
+      }
+      
+      .capacity-bar {
+        width: 70px;
+      }
+      
+      .stat-item {
+        padding: 12px;
+      }
+      
+      .stat-number {
+        font-size: 18px;
+      }
+      
+      .stat-label {
+        font-size: 11px;
+      }
+      
+      .empty-state {
+        padding: 30px 10px;
+      }
+      
+      .empty-state i {
+        font-size: 40px;
+      }
+      
+      .empty-state h3 {
+        font-size: 16px;
+      }
+      
+      .empty-state p {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .container {
+        padding: 0 8px 12px;
+      }
+      
+      .card {
+        padding: 14px;
+      }
+      
+      .header h2 {
+        font-size: 16px;
+      }
+      
+      .header-content i {
+        padding: 8px;
+        min-width: 38px;
         font-size: 14px;
+      }
+      
+      th, td {
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+      
+      .room-info {
+        gap: 6px;
+      }
+      
+      .room-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+      }
+      
+      .capacity-bar {
+        width: 60px;
+        height: 6px;
+      }
+      
+      .capacity-text {
+        font-size: 11px;
       }
     }
 
@@ -417,6 +566,31 @@
     .btn:focus, a:focus {
       outline: 2px solid var(--primary);
       outline-offset: 2px;
+    }
+    
+    /* Perbaikan untuk tabel di perangkat kecil */
+    .table-responsive {
+      position: relative;
+    }
+    
+    .table-scroll-indicator {
+      display: none;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 8px;
+      border-radius: 50%;
+      font-size: 14px;
+      z-index: 10;
+    }
+    
+    @media (max-width: 768px) {
+      .table-scroll-indicator {
+        display: block;
+      }
     }
   </style>
 </head>
@@ -472,68 +646,73 @@
         </div>
       @else
         <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Ruangan</th>
-                <th>Status</th>
-                <th>Kapasitas</th>
-                <th>Terisi</th>
-                <th>Ketersediaan</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($rooms as $r)
-                @php
-                  $occupancyRate = $r->capacity > 0 ? ($r->occupied / $r->capacity) * 100 : 0;
-                @endphp
+          <div class="table-responsive">
+            <div class="table-scroll-indicator">
+              <i class="fa-solid fa-arrow-left-right"></i>
+            </div>
+            <table>
+              <thead>
                 <tr>
-                  <td>
-                    <div class="room-info">
-                      <div class="room-icon">
-                        <i class="fa-solid fa-bed"></i>
-                      </div>
-                      <div>
-                        <div style="font-weight: 600;">{{ $r->name }}</div>
-                        <div style="font-size: 12px; color: var(--text-light);">No. {{ $r->room_number ?? 'N/A' }}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    @if($r->status == 'available')
-                      <span class="badge badge-success">
-                        <i class="fa-solid fa-circle-check"></i> Tersedia
-                      </span>
-                    @elseif($r->status == 'occupied')
-                      <span class="badge badge-danger">
-                        <i class="fa-solid fa-circle-xmark"></i> Terisi
-                      </span>
-                    @else
-                      <span class="badge badge-warning">
-                        <i class="fa-solid fa-triangle-exclamation"></i> Maintenance
-                      </span>
-                    @endif
-                  </td>
-                  <td>
-                    <div style="font-weight: 600;">{{ $r->capacity }}</div>
-                    <div style="font-size: 12px; color: var(--text-light);">Pasien</div>
-                  </td>
-                  <td>
-                    <div style="font-weight: 600; color: {{ $r->occupied > 0 ? 'var(--danger)' : 'var(--success)' }};">
-                      {{ $r->occupied }}
-                    </div>
-                    <div style="font-size: 12px; color: var(--text-light);">Terisi</div>
-                  </td>
-                  <td>
-                    <div class="capacity-bar">
-                      <div class="capacity-fill" style="width: {{ $occupancyRate }}%;"></div>
-                    </div>
-                    <div class="capacity-text">{{ number_format($occupancyRate, 0) }}%</div>
-                  </td>
+                  <th>Ruangan</th>
+                  <th>Status</th>
+                  <th>Kapasitas</th>
+                  <th>Terisi</th>
+                  <th>Ketersediaan</th>
                 </tr>
-              @endforeach
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                @foreach($rooms as $r)
+                  @php
+                    $occupancyRate = $r->capacity > 0 ? ($r->occupied / $r->capacity) * 100 : 0;
+                  @endphp
+                  <tr>
+                    <td>
+                      <div class="room-info">
+                        <div class="room-icon">
+                          <i class="fa-solid fa-bed"></i>
+                        </div>
+                        <div>
+                          <div style="font-weight: 600;">{{ $r->name }}</div>
+                          <div style="font-size: 12px; color: var(--text-light);">No. {{ $r->room_number ?? 'N/A' }}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      @if($r->status == 'available')
+                        <span class="badge badge-success">
+                          <i class="fa-solid fa-circle-check"></i> Tersedia
+                        </span>
+                      @elseif($r->status == 'occupied')
+                        <span class="badge badge-danger">
+                          <i class="fa-solid fa-circle-xmark"></i> Terisi
+                        </span>
+                      @else
+                        <span class="badge badge-warning">
+                          <i class="fa-solid fa-triangle-exclamation"></i> Maintenance
+                        </span>
+                      @endif
+                    </td>
+                    <td>
+                      <div style="font-weight: 600;">{{ $r->capacity }}</div>
+                      <div style="font-size: 12px; color: var(--text-light);">Pasien</div>
+                    </td>
+                    <td>
+                      <div style="font-weight: 600; color: {{ $r->occupied > 0 ? 'var(--danger)' : 'var(--success)' }};">
+                        {{ $r->occupied }}
+                      </div>
+                      <div style="font-size: 12px; color: var(--text-light);">Terisi</div>
+                    </td>
+                    <td>
+                      <div class="capacity-bar">
+                        <div class="capacity-fill" style="width: {{ $occupancyRate }}%;"></div>
+                      </div>
+                      <div class="capacity-text">{{ number_format($occupancyRate, 0) }}%</div>
+                    </td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
         </div>
       @endif
     </div>
@@ -558,7 +737,7 @@
           this.style.transform = 'translateX(8px)';
         });
         row.addEventListener('mouseleave', function() {
-          this.style.transform = 'translateX(5px)';
+          this.style.transform = 'translateX(0)';
         });
       });
 
@@ -572,6 +751,19 @@
           }, 150);
         });
       });
+      
+      // Hide scroll indicator after user starts scrolling
+      const tableContainer = document.querySelector('.table-container');
+      const scrollIndicator = document.querySelector('.table-scroll-indicator');
+      
+      if (tableContainer && scrollIndicator) {
+        tableContainer.addEventListener('scroll', function() {
+          scrollIndicator.style.opacity = '0';
+          setTimeout(() => {
+            scrollIndicator.style.display = 'none';
+          }, 300);
+        });
+      }
     });
   </script>
 </body>

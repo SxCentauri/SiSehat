@@ -73,6 +73,7 @@
             display: flex;
             align-items: center;
             gap: 14px;
+            flex-wrap: wrap;
         }
 
         .header i {
@@ -83,6 +84,7 @@
             min-width: 46px;
             text-align: center;
             font-size: 18px;
+            flex-shrink: 0;
         }
 
         .header h2 {
@@ -233,10 +235,28 @@
             border: 1px solid var(--primary);
         }
 
-        /* Responsive Styles */
+        /* Responsive Styles - PERBAIKAN UTAMA */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 100%;
+                padding: 0 20px 30px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .header {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .record-item {
+                align-items: flex-start;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
-                padding: 0 15px 30px;
+                padding: 0 15px 25px;
             }
 
             .card {
@@ -246,12 +266,14 @@
             .header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 15px;
             }
 
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row;
+                text-align: left;
                 gap: 12px;
+                width: 100%;
             }
 
             .header h2 {
@@ -272,6 +294,17 @@
             .btn {
                 width: 100%;
                 justify-content: center;
+            }
+            
+            .record-diagnosis {
+                font-size: 16px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+            
+            .record-diagnosis i {
+                margin-bottom: 4px;
             }
         }
 
@@ -301,6 +334,10 @@
             .record-diagnosis {
                 font-size: 15px;
             }
+            
+            .record-date {
+                font-size: 13px;
+            }
 
             .empty-state {
                 padding: 40px 15px;
@@ -309,12 +346,106 @@
             .empty-state i {
                 font-size: 48px;
             }
+            
+            .empty-state h3 {
+                font-size: 17px;
+            }
+            
+            .empty-state p {
+                font-size: 14px;
+            }
+            
+            .btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
         }
 
         @media (max-width: 480px) {
+            .container {
+                padding: 0 10px 15px;
+            }
+            
+            .card {
+                padding: 16px;
+                border-radius: 12px;
+            }
+            
+            .header h2 {
+                font-size: 18px;
+            }
+            
+            .header-content i {
+                padding: 10px;
+                min-width: 42px;
+                font-size: 16px;
+            }
+            
+            .record-diagnosis {
+                font-size: 14px;
+            }
+            
+            .record-date {
+                font-size: 12px;
+            }
+            
             .pagination a, .pagination span {
                 padding: 6px 12px;
                 font-size: 13px;
+            }
+            
+            .empty-state {
+                padding: 30px 10px;
+            }
+            
+            .empty-state i {
+                font-size: 40px;
+            }
+            
+            .empty-state h3 {
+                font-size: 16px;
+            }
+            
+            .empty-state p {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .container {
+                padding: 0 8px 12px;
+            }
+            
+            .card {
+                padding: 14px;
+            }
+            
+            .header h2 {
+                font-size: 16px;
+            }
+            
+            .header-content i {
+                padding: 8px;
+                min-width: 38px;
+                font-size: 14px;
+            }
+            
+            .record-diagnosis {
+                font-size: 13px;
+            }
+            
+            .record-date {
+                font-size: 11px;
+            }
+            
+            .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .pagination a, .pagination span {
+                padding: 5px 10px;
+                font-size: 12px;
             }
         }
 
@@ -334,6 +465,17 @@
         .btn:focus, a:focus {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
+        }
+        
+        /* Perbaikan untuk hover effects di mobile */
+        @media (max-width: 768px) {
+            .card:hover {
+                transform: none; /* Nonaktifkan transform hover di mobile */
+            }
+            
+            .record-item:hover {
+                transform: none; /* Nonaktifkan transform hover di mobile */
+            }
         }
     </style>
 </head>
@@ -400,16 +542,18 @@
                 card.style.animationDelay = `${index * 0.1}s`;
             });
 
-            // Add hover effects to record items
-            const recordItems = document.querySelectorAll('.record-item');
-            recordItems.forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateX(8px)';
+            // Add hover effects to record items (hanya di desktop)
+            if (window.innerWidth > 768) {
+                const recordItems = document.querySelectorAll('.record-item');
+                recordItems.forEach(item => {
+                    item.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateX(8px)';
+                    });
+                    item.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateX(0)';
+                    });
                 });
-                item.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateX(0)';
-                });
-            });
+            }
         });
     </script>
 </body>

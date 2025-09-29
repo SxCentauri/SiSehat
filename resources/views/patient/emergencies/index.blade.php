@@ -147,6 +147,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 800px; /* Minimum width for table to maintain readability */
         }
 
         thead {
@@ -239,9 +240,9 @@
         }
 
         .level-critical {
-        background-color: #fee2e2; /* Latar belakang merah yang lebih pekat */
-        color: #991b1b;        /* Teks merah gelap */
-        font-weight: 700;      /* Teks tebal untuk penekanan */
+            background-color: #fee2e2;
+            color: #991b1b;
+            font-weight: 700;
         }
 
         .alert-success {
@@ -315,8 +316,18 @@
             border: 1px solid var(--primary);
         }
 
-        /* Responsive Styles */
+        /* Responsive Styles - Diperbaiki */
+        @media (max-width: 1024px) {
+            .container {
+                max-width: 100%;
+            }
+        }
+
         @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            
             .container {
                 padding: 0 15px 30px;
             }
@@ -328,11 +339,12 @@
             .header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 15px;
             }
 
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row;
+                text-align: left;
                 gap: 12px;
             }
 
@@ -348,11 +360,16 @@
             th, td {
                 padding: 12px 16px;
             }
+            
+            .table-container {
+                margin: 15px 0;
+                border-radius: 8px;
+            }
         }
 
         @media (max-width: 640px) {
             body {
-                padding-top: 70px;
+                padding-top: 60px;
             }
 
             .container {
@@ -382,16 +399,115 @@
                 padding: 10px 12px;
                 font-size: 13px;
             }
-        }
-
-        @media (max-width: 480px) {
-            th, td {
-                padding: 8px 10px;
+            
+            /* Perbaikan untuk tabel pada layar kecil */
+            table {
+                min-width: 600px;
             }
-
+            
             .badge {
                 padding: 6px 12px;
                 font-size: 11px;
+            }
+            
+            .level-indicator {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 55px;
+            }
+            
+            .container {
+                padding: 0 10px 15px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+            
+            .header i {
+                padding: 10px;
+                font-size: 16px;
+                min-width: 40px;
+            }
+            
+            .header h2 {
+                font-size: 18px;
+            }
+            
+            .btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            
+            .empty-state {
+                padding: 40px 15px;
+            }
+            
+            .empty-state i {
+                font-size: 48px;
+            }
+            
+            .empty-state h3 {
+                font-size: 16px;
+            }
+            
+            .empty-state p {
+                font-size: 13px;
+            }
+            
+            .alert-success {
+                padding: 12px 16px;
+                font-size: 13px;
+            }
+        }
+
+        /* Perbaikan untuk layar sangat kecil (di bawah 360px) */
+        @media (max-width: 360px) {
+            body {
+                padding-top: 50px;
+            }
+            
+            .container {
+                padding: 0 8px 10px;
+            }
+
+            .card {
+                padding: 12px;
+                border-radius: 12px;
+            }
+            
+            .header h2 {
+                font-size: 16px;
+            }
+            
+            .header-actions {
+                gap: 8px;
+            }
+            
+            .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .pagination a, .pagination span {
+                padding: 6px 12px;
+                font-size: 12px;
             }
         }
 
@@ -420,6 +536,21 @@
             outline: 2px solid var(--primary);
             outline-offset: 2px;
         }
+        
+        /* Perbaikan untuk sel tabel pada layar kecil */
+        .mobile-table-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .mobile-table-label {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 <body>
@@ -429,8 +560,7 @@
         <div class="card">
             <div class="header">
                 <div class="header-content">
-                    <i class="fa-solid fa-list-check"></i>
-                    <h2>Riwayat Laporan Darurat</h2>
+                    <h2><i class="fa-solid fa-list-check"></i>  Riwayat Laporan Darurat</h2>
                 </div>
                 <div class="header-actions">
                     <a href="{{ route('patient.dashboard') }}" class="btn btn-secondary btn-sm">
@@ -471,8 +601,11 @@
                             @foreach ($emergencies as $emergency)
                                 <tr>
                                     <td>
-                                        <div style="font-weight: 600;">{{ $emergency->created_at->format('d M Y') }}</div>
-                                        <div style="font-size: 12px; color: var(--text-light);">{{ $emergency->created_at->format('H:i') }}</div>
+                                        <div class="mobile-table-cell">
+                                            <span class="mobile-table-label">Tanggal</span>
+                                            <div style="font-weight: 600;">{{ $emergency->created_at->format('d M Y') }}</div>
+                                            <div style="font-size: 12px; color: var(--text-light);">{{ $emergency->created_at->format('H:i') }}</div>
+                                        </div>
                                     </td>
                                     <td>
                                         @php
@@ -484,18 +617,24 @@
                                                 default => 'level-medium',
                                             };
                                         @endphp
-                                        <span class="level-indicator {{ $levelClass }}">
-                                            <i class="fa-solid fa-circle"></i>
-                                            {{ ucfirst($emergency->level) }}
-                                        </span>
+                                        <div class="mobile-table-cell">
+                                            <span class="mobile-table-label">Level</span>
+                                            <span class="level-indicator {{ $levelClass }}">
+                                                <i class="fa-solid fa-circle"></i>
+                                                {{ ucfirst($emergency->level) }}
+                                            </span>
+                                        </div>
                                     </td>
                                     <td>
-                                        <div style="font-weight: 500;">{{ Str::limit($emergency->description, 50) }}</div>
-                                        @if(strlen($emergency->description) > 50)
-                                            <div style="font-size: 11px; color: var(--text-light); margin-top: 4px;">
-                                                Klik untuk melihat selengkapnya
-                                            </div>
-                                        @endif
+                                        <div class="mobile-table-cell">
+                                            <span class="mobile-table-label">Deskripsi</span>
+                                            <div style="font-weight: 500;">{{ Str::limit($emergency->description, 50) }}</div>
+                                            @if(strlen($emergency->description) > 50)
+                                                <div style="font-size: 11px; color: var(--text-light); margin-top: 4px;">
+                                                    Klik untuk melihat selengkapnya
+                                                </div>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td>
                                         @php
@@ -507,20 +646,26 @@
                                                 default => 'badge-pending',
                                             };
                                         @endphp
-                                        <span class="badge {{ $statusClass }}">
-                                            <i class="fa-solid fa-circle"></i>
-                                            {{ ucfirst($emergency->status) }}
-                                        </span>
+                                        <div class="mobile-table-cell">
+                                            <span class="mobile-table-label">Status</span>
+                                            <span class="badge {{ $statusClass }}">
+                                                <i class="fa-solid fa-circle"></i>
+                                                {{ ucfirst($emergency->status) }}
+                                            </span>
+                                        </div>
                                     </td>
                                     <td>
-                                        @if($emergency->status == 'approved' || $emergency->status == 'completed')
-                                            <div style="font-size: 13px;">
-                                                <div><strong>Dokter:</strong> Dr. {{ $emergency->doctor->name ?? 'N/A' }}</div>
-                                                <div><strong>Ruangan:</strong> {{ $emergency->room->name ?? 'N/A' }}</div>
-                                            </div>
-                                        @else
-                                            <span style="color: var(--text-light); font-style: italic;">Menunggu penanganan</span>
-                                        @endif
+                                        <div class="mobile-table-cell">
+                                            <span class="mobile-table-label">Penanganan</span>
+                                            @if($emergency->status == 'approved' || $emergency->status == 'completed')
+                                                <div style="font-size: 13px;">
+                                                    <div><strong>Dokter:</strong> Dr. {{ $emergency->doctor->name ?? 'N/A' }}</div>
+                                                    <div><strong>Ruangan:</strong> {{ $emergency->room->name ?? 'N/A' }}</div>
+                                                </div>
+                                            @else
+                                                <span style="color: var(--text-light); font-style: italic;">Menunggu penanganan</span>
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -551,9 +696,17 @@
                     this.style.transform = 'translateX(8px)';
                 });
                 row.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateX(5px)';
+                    this.style.transform = 'translateX(0)';
                 });
             });
+            
+            // Improve table scrolling on mobile
+            const tableContainer = document.querySelector('.table-container');
+            if (tableContainer) {
+                tableContainer.addEventListener('touchstart', function() {
+                    this.style.overflowX = 'auto';
+                });
+            }
         });
     </script>
 </body>

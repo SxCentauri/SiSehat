@@ -73,6 +73,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      flex-wrap: wrap;
     }
 
     .header i {
@@ -83,6 +84,7 @@
       min-width: 46px;
       text-align: center;
       font-size: 18px;
+      flex-shrink: 0;
     }
 
     .header h2 {
@@ -92,46 +94,52 @@
       margin: 0;
     }
 
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
     .btn {
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
 
     .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
 
     .btn-outline:hover {
-        background: var(--primary);
-        color: white;
-        transform: translateY(-2px);
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
     }
 
     .btn-secondary {
-            background: #f1f5f9;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
 
-        .btn-secondary:hover {
-            background: #e2e8f0;
-            transform: translateY(-2px);
-        }
+    .btn-secondary:hover {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+    }
 
     .btn-sm {
-        padding: 10px 16px;
-        font-size: 13px;
+      padding: 10px 16px;
+      font-size: 13px;
     }
 
     .info-grid {
@@ -210,10 +218,29 @@
       margin-top: 24px;
     }
 
-    /* Responsive Styles */
+    /* Responsive Styles - PERBAIKAN UTAMA */
+    @media (max-width: 1200px) {
+      .container {
+        max-width: 100%;
+        padding: 0 20px 30px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .header {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      
+      .info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+    }
+
     @media (max-width: 768px) {
       .container {
-        padding: 0 15px 30px;
+        padding: 0 15px 25px;
       }
 
       .card {
@@ -223,16 +250,23 @@
       .header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 15px;
       }
 
       .header-content {
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row;
+        text-align: left;
         gap: 12px;
+        width: 100%;
       }
 
       .header h2 {
         font-size: 22px;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
       }
 
       .info-grid {
@@ -241,7 +275,21 @@
       }
 
       .info-section {
-        padding: 16px;
+        padding: 18px;
+      }
+      
+      .info-item {
+        margin-bottom: 14px;
+        padding-bottom: 14px;
+      }
+      
+      .info-value {
+        font-size: 14px;
+      }
+      
+      .notes-content {
+        padding: 14px;
+        font-size: 14px;
       }
     }
 
@@ -263,13 +311,135 @@
         font-size: 20px;
       }
 
-      .actions {
-        justify-content: center;
+      .header-actions {
+        flex-direction: column;
+        width: 100%;
       }
 
       .btn {
         width: 100%;
         justify-content: center;
+      }
+      
+      .info-section {
+        padding: 16px;
+      }
+      
+      .info-section h3 {
+        font-size: 15px;
+        margin-bottom: 14px;
+      }
+      
+      .info-label {
+        font-size: 13px;
+      }
+      
+      .info-value {
+        font-size: 14px;
+      }
+      
+      .notes-content {
+        padding: 12px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 10px 15px;
+      }
+      
+      .card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+      
+      .header h2 {
+        font-size: 18px;
+      }
+      
+      .header-content i {
+        padding: 10px;
+        min-width: 42px;
+        font-size: 16px;
+      }
+      
+      .info-section {
+        padding: 14px;
+      }
+      
+      .info-section h3 {
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+      
+      .info-item {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+      }
+      
+      .info-label {
+        font-size: 12px;
+      }
+      
+      .info-value {
+        font-size: 13px;
+      }
+      
+      .notes-content {
+        padding: 10px;
+        font-size: 12px;
+      }
+      
+      .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .container {
+        padding: 0 8px 12px;
+      }
+      
+      .card {
+        padding: 14px;
+      }
+      
+      .header h2 {
+        font-size: 16px;
+      }
+      
+      .header-content i {
+        padding: 8px;
+        min-width: 38px;
+        font-size: 14px;
+      }
+      
+      .info-section {
+        padding: 12px;
+      }
+      
+      .info-section h3 {
+        font-size: 13px;
+      }
+      
+      .info-label {
+        font-size: 11px;
+      }
+      
+      .info-value {
+        font-size: 12px;
+      }
+      
+      .notes-content {
+        padding: 8px;
+        font-size: 11px;
+      }
+      
+      .btn {
+        padding: 8px 12px;
+        font-size: 12px;
       }
     }
 
@@ -293,6 +463,17 @@
     .btn:focus, a:focus {
       outline: 2px solid var(--primary);
       outline-offset: 2px;
+    }
+    
+    /* Perbaikan untuk hover effects di mobile */
+    @media (max-width: 768px) {
+      .card:hover {
+        transform: none; /* Nonaktifkan transform hover di mobile */
+      }
+      
+      .btn:hover {
+        transform: none; /* Nonaktifkan transform hover di mobile */
+      }
     }
   </style>
 </head>
@@ -388,16 +569,18 @@
         section.style.animation = 'fadeIn 0.6s ease-out';
       });
 
-      // Add hover effects to info items
-      const infoItems = document.querySelectorAll('.info-item');
-      infoItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-          this.style.transform = 'translateX(5px)';
+      // Add hover effects to info items (hanya di desktop)
+      if (window.innerWidth > 768) {
+        const infoItems = document.querySelectorAll('.info-item');
+        infoItems.forEach(item => {
+          item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(5px)';
+          });
+          item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0)';
+          });
         });
-        item.addEventListener('mouseleave', function() {
-          this.style.transform = 'translateX(0)';
-        });
-      });
+      }
     });
   </script>
 </body>

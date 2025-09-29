@@ -303,6 +303,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 600px; /* Membuat tabel memiliki lebar minimum */
     }
 
     thead {
@@ -518,30 +519,51 @@
       box-shadow: 0 12px 35px rgba(239, 68, 68, 0.4);
     }
 
-    /* Responsive Styles */
+    /* Responsive Styles - PERBAIKAN UTAMA */
+    @media (max-width: 1200px) {
+      .container {
+        max-width: 100%;
+        padding: 0 20px 30px;
+      }
+    }
+
     @media (max-width: 1024px) {
       .grid-4 {
         grid-template-columns: repeat(2, 1fr);
       }
+      
+      .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .header-content {
+        width: 100%;
+      }
     }
 
     @media (max-width: 768px) {
+      body {
+        padding-top: 70px;
+      }
+      
       .container {
-        padding: 0 15px 30px;
+        padding: 0 15px 25px;
       }
 
       .card {
         padding: 24px;
-      }
-
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
+        border-radius: 14px;
       }
 
       .header-content {
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row;
+        text-align: left;
         gap: 12px;
       }
 
@@ -551,6 +573,7 @@
 
       .grid-4, .grid-3, .grid-2 {
         grid-template-columns: 1fr;
+        gap: 16px;
       }
 
       .stat-number {
@@ -562,58 +585,190 @@
       }
 
       .action-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
       }
 
       .emergency-action-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+      }
+      
+      .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+      }
+      
+      .table-container {
+        margin: 15px 0;
+        border-radius: 8px;
+      }
+      
+      th, td {
+        padding: 12px 16px;
+        font-size: 14px;
       }
     }
 
     @media (max-width: 640px) {
-      body {
-        padding-top: 70px;
-      }
-
       .container {
         padding: 0 12px 20px;
       }
 
       .card {
         padding: 20px;
-        border-radius: 14px;
       }
 
       .header h2 {
         font-size: 20px;
       }
-
-      th, td {
-        padding: 12px 16px;
+      
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
       }
-
-      .btn {
-        width: 100%;
-        justify-content: center;
+      
+      .header i {
+        padding: 10px;
+        min-width: 42px;
+        font-size: 16px;
+      }
+      
+      .stat-card, .quick-action-card, .emergency-action-card {
+        padding: 20px;
+      }
+      
+      .stat-icon, .emergency-stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+      
+      .action-icon, .emergency-action-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+      }
+      
+      .stat-number, .emergency-stat-number {
+        font-size: 24px;
+      }
+      
+      .action-title, .emergency-action-title {
+        font-size: 16px;
+      }
+      
+      .action-description, .emergency-action-description {
+        font-size: 13px;
       }
     }
 
     @media (max-width: 480px) {
+      body {
+        padding-top: 60px;
+      }
+      
+      .container {
+        padding: 0 10px 15px;
+      }
+      
+      .card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+      
+      .header h2 {
+        font-size: 18px;
+      }
+      
+      .header-content i {
+        padding: 8px;
+        min-width: 38px;
+        font-size: 14px;
+      }
+      
+      .stat-card, .quick-action-card, .emergency-action-card {
+        padding: 16px;
+      }
+      
+      .stat-icon, .emergency-stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+      }
+      
+      .action-icon, .emergency-action-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+      }
+      
+      .stat-number, .emergency-stat-number {
+        font-size: 22px;
+      }
+      
+      .stat-label, .emergency-stat-label {
+        font-size: 13px;
+      }
+      
       th, td {
         padding: 10px 12px;
         font-size: 13px;
       }
-
-      .stat-number {
-        font-size: 24px;
+      
+      .badge {
+        padding: 4px 8px;
+        font-size: 11px;
       }
+      
+      .btn {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+      
+      .empty-state {
+        padding: 30px 15px;
+      }
+      
+      .empty-state i {
+        font-size: 36px;
+      }
+    }
 
-      .emergency-stat-number {
-        font-size: 24px;
+    @media (max-width: 360px) {
+      .container {
+        padding: 0 8px 12px;
+      }
+      
+      .card {
+        padding: 14px;
+      }
+      
+      .header h2 {
+        font-size: 16px;
+      }
+      
+      .stat-card, .quick-action-card, .emergency-action-card {
+        padding: 14px;
+      }
+      
+      .stat-icon, .emergency-stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+      
+      .action-icon, .emergency-action-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+      
+      .stat-number, .emergency-stat-number {
+        font-size: 20px;
       }
     }
 

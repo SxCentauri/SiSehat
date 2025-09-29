@@ -73,6 +73,7 @@
             display: flex;
             align-items: center;
             gap: 14px;
+            flex-wrap: wrap;
         }
 
         .header i {
@@ -83,6 +84,7 @@
             min-width: 46px;
             text-align: center;
             font-size: 18px;
+            flex-shrink: 0;
         }
 
         .header h2 {
@@ -101,6 +103,7 @@
             padding: 8px 16px;
             border-radius: 8px;
             border: 1px solid var(--border);
+            flex-shrink: 0;
         }
 
         .btn {
@@ -236,6 +239,8 @@
             margin-bottom: 16px;
             padding-bottom: 12px;
             border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .time-display {
@@ -260,6 +265,7 @@
             font-size: 12px;
             font-weight: 600;
             gap: 4px;
+            flex-shrink: 0;
         }
 
         .status-pending {
@@ -378,10 +384,29 @@
             border-color: var(--primary);
         }
 
-        /* Responsive Styles */
+        /* Responsive Styles - PERBAIKAN UTAMA */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 100%;
+                padding: 100px 20px 30px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .reminders-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+            }
+            
+            .header {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
-                padding: 90px 15px 30px;
+                padding: 90px 15px 25px;
             }
 
             .card {
@@ -391,12 +416,14 @@
             .header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 15px;
             }
 
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row;
+                text-align: left;
                 gap: 12px;
+                width: 100%;
             }
 
             .header h2 {
@@ -410,16 +437,35 @@
 
             .reminders-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 16px;
             }
 
             .filter-section {
-                flex-direction: column;
+                flex-direction: row;
                 align-items: stretch;
+                justify-content: center;
             }
 
             .filter-btn {
+                flex: 1;
                 text-align: center;
+                min-width: 120px;
+            }
+            
+            .date-info {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .time-display {
+                font-size: 18px;
             }
         }
 
@@ -462,9 +508,40 @@
             .empty-state i, .filter-empty-state i {
                 font-size: 48px;
             }
+            
+            .reminder-card {
+                padding: 20px;
+            }
+            
+            .filter-section {
+                flex-direction: column;
+            }
+            
+            .filter-btn {
+                width: 100%;
+            }
         }
 
         @media (max-width: 480px) {
+            .container {
+                padding: 70px 10px 15px;
+            }
+            
+            .card {
+                padding: 16px;
+                border-radius: 12px;
+            }
+            
+            .header h2 {
+                font-size: 18px;
+            }
+            
+            .header-content i {
+                padding: 10px;
+                min-width: 42px;
+                font-size: 16px;
+            }
+            
             .reminder-card {
                 padding: 16px;
             }
@@ -472,12 +549,100 @@
             .time-display {
                 font-size: 16px;
             }
+            
+            .medication-name {
+                font-size: 16px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+            
+            .medication-details {
+                margin-left: 0;
+            }
+            
+            .detail-item {
+                font-size: 13px;
+            }
+            
+            .status-badge {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+            
+            .empty-state, .filter-empty-state {
+                padding: 30px 10px;
+            }
+            
+            .empty-state i, .filter-empty-state i {
+                font-size: 40px;
+            }
+            
+            .empty-state h3, .filter-empty-state h3 {
+                font-size: 16px;
+            }
+            
+            .empty-state p, .filter-empty-state p {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .container {
+                padding: 70px 8px 12px;
+            }
+            
+            .card {
+                padding: 14px;
+            }
+            
+            .header h2 {
+                font-size: 16px;
+            }
+            
+            .header-content i {
+                padding: 8px;
+                min-width: 38px;
+                font-size: 14px;
+            }
+            
+            .reminder-card {
+                padding: 14px;
+            }
+            
+            .time-display {
+                font-size: 15px;
+            }
+            
+            .medication-name {
+                font-size: 15px;
+            }
+            
+            .detail-item {
+                font-size: 12px;
+            }
+            
+            .btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
         }
 
         /* Focus states for accessibility */
         .btn:focus, a:focus, .filter-btn:focus {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
+        }
+        
+        /* Perbaikan untuk animasi di perangkat mobile */
+        @media (max-width: 768px) {
+            .reminder-card:hover {
+                transform: none; /* Nonaktifkan transform hover di mobile */
+            }
+            
+            .card:hover {
+                transform: none; /* Nonaktifkan transform hover di mobile */
+            }
         }
     </style>
 </head>
@@ -533,7 +698,7 @@
                             $cardClass = $reminder->status == 'done' ? 'completed' : ($isUrgent ? 'urgent' : 'pending');
                         @endphp
 
-                        <div class="reminder-card reminder-item" data-status="{{ $reminder->status }}">
+                        <div class="reminder-card reminder-item {{ $cardClass }}" data-status="{{ $reminder->status }}">
                             <div class="card-header">
                                 <div class="time-display">
                                     <i class="fa-regular fa-clock"></i>
@@ -640,8 +805,14 @@
                     setTimeout(() => alert.style.display = 'none', 500);
                 }, 5000);
             }
+            
+            // Nonaktifkan animasi hover di perangkat mobile
+            if (window.innerWidth <= 768) {
+                document.querySelectorAll('.reminder-card, .card').forEach(card => {
+                    card.style.transform = 'none';
+                });
+            }
         });
     </script>
 </body>
 </html>
-

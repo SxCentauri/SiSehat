@@ -53,11 +53,6 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    }
-
     .header {
       display: flex;
       justify-content: space-between;
@@ -136,11 +131,13 @@
       overflow-x: auto;
       border-radius: 10px;
       border: 1px solid var(--border);
+      margin: 20px 0;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 600px;
     }
 
     thead {
@@ -169,7 +166,6 @@
 
     tbody tr:hover {
       background-color: #f8fafc;
-      transform: translateX(5px);
     }
 
     .badge {
@@ -295,7 +291,7 @@
     /* Filter Section */
     .filter-section {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       margin-bottom: 20px;
       flex-wrap: wrap;
       align-items: center;
@@ -310,6 +306,7 @@
       cursor: pointer;
       transition: all 0.3s;
       font-size: 14px;
+      white-space: nowrap;
     }
 
     .filter-btn.active {
@@ -322,7 +319,97 @@
       border-color: var(--primary);
     }
 
+    /* Mobile Cards View */
+    .mobile-cards {
+      display: none;
+      gap: 12px;
+      flex-direction: column;
+    }
+
+    .appointment-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .appointment-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .card-date-time {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .card-date {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .card-time {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    .card-doctor {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .card-doctor .doctor-icon {
+      width: 28px;
+      height: 28px;
+      font-size: 12px;
+    }
+
+    .doctor-details {
+      flex: 1;
+    }
+
+    .doctor-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .doctor-specialty {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
     /* Responsive Styles */
+    @media (max-width: 1024px) {
+      .container {
+        max-width: 100%;
+        padding: 100px 20px 30px;
+      }
+      
+      .card {
+        padding: 28px;
+      }
+    }
+
     @media (max-width: 768px) {
       .container {
         padding: 90px 15px 30px;
@@ -338,9 +425,10 @@
       }
 
       .header-content {
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row;
+        text-align: left;
         gap: 12px;
+        width: 100%;
       }
 
       .header h2 {
@@ -353,20 +441,25 @@
       }
 
       th, td {
-        padding: 12px 16px;
+        padding: 14px 16px;
       }
 
       .table-container {
-        font-size: 14px;
+        display: none;
+      }
+
+      .mobile-cards {
+        display: flex;
       }
 
       .filter-section {
-        flex-direction: column;
-        align-items: stretch;
+        justify-content: center;
       }
 
       .filter-btn {
+        flex: 1;
         text-align: center;
+        min-width: 80px;
       }
     }
 
@@ -384,6 +477,15 @@
         font-size: 20px;
       }
 
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header i {
+        align-self: center;
+      }
+
       .header-actions {
         flex-direction: column;
         width: 100%;
@@ -392,11 +494,6 @@
       .btn {
         width: 100%;
         justify-content: center;
-      }
-
-      th, td {
-        padding: 10px 12px;
-        font-size: 13px;
       }
 
       .empty-state {
@@ -412,16 +509,77 @@
         font-size: 11px;
       }
 
-      .doctor-info {
+      .filter-section {
+        gap: 6px;
+      }
+
+      .filter-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+        min-width: 70px;
+      }
+
+      .appointment-card {
+        padding: 14px;
+      }
+
+      .card-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+      }
+
+      .card-footer {
         flex-direction: column;
         align-items: flex-start;
-        gap: 5px;
+        gap: 8px;
       }
     }
 
     @media (max-width: 480px) {
-      th, td {
-        padding: 8px 10px;
+      body {
+        padding-top: 70px;
+      }
+      
+      .container {
+        padding: 70px 10px 15px;
+      }
+      
+      .card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+      
+      .header h2 {
+        font-size: 18px;
+      }
+      
+      .header i {
+        padding: 10px;
+        min-width: 40px;
+        font-size: 16px;
+      }
+
+      .empty-state {
+        padding: 30px 10px;
+      }
+      
+      .empty-state i {
+        font-size: 40px;
+      }
+      
+      .empty-state h3 {
+        font-size: 16px;
+      }
+      
+      .empty-state p {
+        font-size: 13px;
+      }
+
+      .filter-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-width: 60px;
       }
 
       .pagination a, .pagination span {
@@ -429,9 +587,42 @@
         font-size: 13px;
       }
 
-      .filter-btn {
-        padding: 6px 12px;
+      .appointment-card {
+        padding: 12px;
+      }
+
+      .card-date {
+        font-size: 14px;
+      }
+
+      .card-time {
         font-size: 13px;
+      }
+
+      .doctor-name {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .header h2 {
+        font-size: 16px;
+      }
+      
+      .header i {
+        padding: 8px;
+        min-width: 36px;
+        font-size: 14px;
+      }
+      
+      .empty-state i {
+        font-size: 36px;
+      }
+      
+      .filter-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+        min-width: 55px;
       }
     }
 
@@ -453,6 +644,10 @@
 
     tbody tr {
       animation: fadeIn 0.3s ease-out;
+    }
+
+    .appointment-card {
+      animation: fadeIn 0.4s ease-out;
     }
 
     /* Focus states for accessibility */
@@ -499,6 +694,7 @@
           <p>Mulai dengan membuat janji temu baru</p>
         </div>
       @else
+        <!-- Desktop Table View -->
         <div class="table-container">
           <table>
             <thead>
@@ -556,6 +752,41 @@
           </table>
         </div>
 
+        <!-- Mobile Cards View -->
+        <div class="mobile-cards" id="mobileCards">
+          @foreach($items as $a)
+            <div class="appointment-card mobile-appointment-row" data-status="{{ $a->status }}">
+              <div class="card-header">
+                <div class="card-date-time">
+                  <div class="card-date">{{ \Carbon\Carbon::parse($a->date)->format('d M Y') }}</div>
+                  <div class="card-time">{{ \Carbon\Carbon::parse($a->date)->isoFormat('dddd') }} • {{ \Illuminate\Support\Str::of($a->time)->limit(5,'') }}</div>
+                </div>
+                <span class="badge {{ $a->status }}">
+                  @if($a->status == 'pending')
+                    <i class="fa-solid fa-clock"></i>
+                  @elseif($a->status == 'confirmed' || $a->status == 'approved')
+                    <i class="fa-solid fa-check-circle"></i>
+                  @elseif($a->status == 'completed')
+                    <i class="fa-solid fa-check-double"></i>
+                  @else
+                    <i class="fa-solid fa-times-circle"></i>
+                  @endif
+                  {{ ucfirst($a->status) }}
+                </span>
+              </div>
+              <div class="card-doctor">
+                <div class="doctor-icon">
+                  <i class="fa-solid fa-user-md"></i>
+                </div>
+                <div class="doctor-details">
+                  <div class="doctor-name">{{ $a->doctor->name ?? ('#'.$a->doctor_id) }}</div>
+                  <div class="doctor-specialty">{{ $a->doctor->specialty ?? 'Spesialis' }}</div>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        </div>
+
         @if(method_exists($items,'links'))
           <div class="pagination">
             {{ $items->links() }}
@@ -574,11 +805,13 @@
       });
       event.target.classList.add('active');
 
-      // Filter rows
-      const rows = document.querySelectorAll('.appointment-row');
+      // Filter desktop table rows
+      const desktopRows = document.querySelectorAll('.appointment-row');
+      const mobileCards = document.querySelectorAll('.mobile-appointment-row');
       let visibleCount = 0;
 
-      rows.forEach(row => {
+      // Filter desktop view
+      desktopRows.forEach(row => {
         if (status === 'all' || row.dataset.status === status) {
           row.style.display = '';
           visibleCount++;
@@ -587,55 +820,71 @@
         }
       });
 
+      // Filter mobile view
+      mobileCards.forEach(card => {
+        if (status === 'all' || card.dataset.status === status) {
+          card.style.display = 'flex';
+          card.style.flexDirection = 'column';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
       // Show empty state if no rows visible
-      const emptyState = document.querySelector('.empty-state');
-      if (visibleCount === 0) {
-        if (!emptyState) {
-          const tableContainer = document.querySelector('.table-container');
-          tableContainer.innerHTML = `
-            <div class="empty-state">
-              <i class="fa-solid fa-filter"></i>
-              <h3>Tidak ada janji temu dengan status ini</h3>
-              <p>Coba pilih filter status lainnya</p>
-            </div>
+      const emptyStates = document.querySelectorAll('.empty-state');
+      if (visibleCount === 0 && status !== 'all') {
+        emptyStates.forEach(state => {
+          state.style.display = 'block';
+          state.innerHTML = `
+            <i class="fa-solid fa-filter"></i>
+            <h3>Tidak ada janji temu dengan status ${getStatusText(status)}</h3>
+            <p>Coba pilih filter status lainnya</p>
           `;
-        }
-      } else {
-        if (emptyState && emptyState.parentElement === document.querySelector('.card')) {
-          emptyState.style.display = 'none';
-        }
-      }
-    }
-
-    // Navbar functionality
-    const navbar = document.getElementById('navbar');
-    const navbarToggle = document.getElementById('navbar-toggle');
-    const navbarMenu = document.getElementById('navbar-menu');
-
-    if (navbarToggle) {
-      navbarToggle.addEventListener('click', () => {
-        navbarMenu.classList.toggle('active');
-        navbarToggle.classList.toggle('active');
-      });
-    }
-
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        navbar?.classList.add('scrolled');
-      } else {
-        navbar?.classList.remove('scrolled');
-      }
-    });
-
-    // Add hover effects and animations
-    document.addEventListener('DOMContentLoaded', function() {
-      const rows = document.querySelectorAll('tbody tr');
-      rows.forEach(row => {
-        row.addEventListener('click', function() {
-          // Optional: Add click functionality for appointment details
-          console.log('Appointment clicked:', this.dataset.status);
         });
+      } else {
+        emptyStates.forEach(state => {
+          state.style.display = 'none';
+        });
+      }
+    }
+
+    function getStatusText(status) {
+      const statusMap = {
+        'pending': 'Pending',
+        'confirmed': 'Dikonfirmasi',
+        'approved': 'Disetujui',
+        'completed': 'Selesai',
+        'cancelled': 'Dibatalkan'
+      };
+      return statusMap[status] || status;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add animation to cards
+      const cards = document.querySelectorAll('.appointment-card');
+      cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
       });
+
+      // Adjust layout based on screen size
+      function adjustLayout() {
+        const tableContainer = document.querySelector('.table-container');
+        const mobileCards = document.getElementById('mobileCards');
+        
+        if (window.innerWidth <= 768) {
+          if (tableContainer) tableContainer.style.display = 'none';
+          if (mobileCards) mobileCards.style.display = 'flex';
+        } else {
+          if (tableContainer) tableContainer.style.display = 'block';
+          if (mobileCards) mobileCards.style.display = 'none';
+        }
+      }
+
+      // Initial adjustment
+      adjustLayout();
+      
+      // Adjust on resize
+      window.addEventListener('resize', adjustLayout);
     });
   </script>
 </body>

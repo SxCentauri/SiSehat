@@ -338,6 +338,13 @@
     }
 
     /* Responsive Styles */
+    @media (max-width: 1024px) {
+      .container {
+        max-width: 100%;
+        padding: 0 20px 20px;
+      }
+    }
+
     @media (max-width: 768px) {
       .container {
         padding: 0 15px 15px;
@@ -360,6 +367,7 @@
       .chat-messages {
         padding: 20px;
         gap: 12px;
+        max-height: 55vh;
       }
 
       .message {
@@ -372,6 +380,10 @@
 
       .header-actions {
         display: none;
+      }
+      
+      .mobile-back-btn {
+        display: flex !important;
       }
     }
 
@@ -406,10 +418,23 @@
       .chat-messages {
         padding: 16px;
         gap: 10px;
+        max-height: 50vh;
       }
 
       .message-bubble {
         padding: 10px 14px;
+      }
+      
+      .message-content {
+        font-size: 13px;
+      }
+      
+      .message-sender {
+        font-size: 11px;
+      }
+      
+      .message-time {
+        font-size: 10px;
       }
 
       .chat-input {
@@ -419,11 +444,28 @@
       .input-form {
         gap: 8px;
       }
+      
+      .input-field input {
+        padding: 10px 14px;
+        font-size: 13px;
+      }
 
       .send-btn {
         padding: 10px 16px;
         min-width: 80px;
         font-size: 12px;
+      }
+      
+      .empty-chat {
+        padding: 40px 15px;
+      }
+      
+      .empty-chat i {
+        font-size: 40px;
+      }
+      
+      .empty-chat h4 {
+        font-size: 15px;
       }
     }
 
@@ -437,8 +479,96 @@
       }
 
       .message-content {
-        font-size: 13px;
+        font-size: 12px;
       }
+      
+      .chat-input {
+        padding: 10px 12px;
+      }
+      
+      .input-field input {
+        padding: 8px 12px;
+      }
+      
+      .send-btn {
+        padding: 8px 12px;
+        min-width: 70px;
+        font-size: 11px;
+      }
+      
+      .header {
+        padding: 14px;
+      }
+      
+      .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+      
+      .title {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .container {
+        padding: 0 10px 10px;
+      }
+      
+      .header {
+        padding: 12px;
+      }
+      
+      .avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+      }
+      
+      .title {
+        font-size: 14px;
+      }
+      
+      .subtitle {
+        font-size: 11px;
+      }
+      
+      .chat-messages {
+        padding: 12px;
+        max-height: 45vh;
+      }
+      
+      .empty-chat {
+        padding: 30px 10px;
+      }
+      
+      .empty-chat i {
+        font-size: 36px;
+      }
+      
+      .empty-chat h4 {
+        font-size: 14px;
+      }
+    }
+
+    /* Mobile back button */
+    .mobile-back-btn {
+      display: none;
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px;
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .mobile-back-btn:hover {
+      background: #e2e8f0;
     }
 
     /* Focus states for accessibility */
@@ -446,10 +576,47 @@
       outline: 2px solid var(--primary);
       outline-offset: 2px;
     }
+    
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      color: var(--text-light);
+      font-size: 12px;
+      font-style: italic;
+    }
+    
+    .typing-dots {
+      display: flex;
+      gap: 3px;
+    }
+    
+    .typing-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-light);
+      animation: typing 1.4s infinite ease-in-out;
+    }
+    
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    
+    @keyframes typing {
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+      40% { transform: scale(1); opacity: 1; }
+    }
   </style>
 </head>
 <body>
   @include('layouts.medicare')
+
+  <!-- Mobile Back Button -->
+  <a href="{{ route('patient.chats.index') }}" class="mobile-back-btn">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
 
   <main class="container">
     <div class="card">
@@ -536,7 +703,7 @@
 
         // Disable button during submission
         sendBtn.disabled = true;
-        sendBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim';
+        sendBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
 
         // Submit form
         this.submit();
@@ -566,6 +733,24 @@
 
       // Focus input on load
       input.focus();
+      
+      // Adjust chat height based on viewport
+      function adjustChatHeight() {
+        const chatMessages = document.querySelector('.chat-messages');
+        if (chatMessages) {
+          const headerHeight = document.querySelector('.header').offsetHeight;
+          const inputHeight = document.querySelector('.chat-input').offsetHeight;
+          const viewportHeight = window.innerHeight;
+          const topPadding = 80; // Body padding-top
+          
+          const availableHeight = viewportHeight - headerHeight - inputHeight - topPadding - 40;
+          chatMessages.style.maxHeight = Math.max(200, availableHeight) + 'px';
+        }
+      }
+      
+      // Adjust on load and resize
+      adjustChatHeight();
+      window.addEventListener('resize', adjustChatHeight);
     });
 
     // Auto-refresh chat every 10 seconds (optional)

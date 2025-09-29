@@ -218,7 +218,7 @@
       color: var(--text-light);
     }
 
-    /* Responsive Styles */
+    /* Responsive Styles - Diperbaiki */
     @media (max-width: 768px) {
       .container {
         padding: 90px 15px 30px;
@@ -231,11 +231,12 @@
       .header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 15px;
       }
 
       .header-content {
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row;
+        text-align: left;
         gap: 12px;
       }
 
@@ -249,7 +250,8 @@
       }
 
       .form-actions {
-        flex-direction: column-reverse;
+        flex-direction: column;
+        gap: 10px;
       }
 
       .btn {
@@ -282,6 +284,12 @@
         padding: 10px 14px;
         font-size: 13px;
       }
+      
+      /* Perbaikan untuk elemen input date dan time di mobile */
+      input[type="date"],
+      input[type="time"] {
+        font-size: 16px; /* Mencegah zoom pada iOS */
+      }
     }
 
     @media (max-width: 480px) {
@@ -295,12 +303,43 @@
 
       .header {
         margin-bottom: 20px;
+        gap: 10px;
       }
 
       .header i {
         padding: 10px;
         font-size: 16px;
         min-width: 40px;
+      }
+      
+      .header h2 {
+        font-size: 18px;
+      }
+      
+      .btn {
+        padding: 10px 20px;
+        font-size: 13px;
+      }
+    }
+
+    /* Perbaikan untuk layar sangat kecil (di bawah 360px) */
+    @media (max-width: 360px) {
+      .container {
+        padding: 60px 8px 10px;
+      }
+      
+      .card {
+        padding: 12px;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+      }
+      
+      .header h2 {
+        font-size: 16px;
       }
     }
 
@@ -482,6 +521,17 @@
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
         submitBtn.disabled = true;
       });
+      
+      // Perbaikan untuk input date/time di mobile
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        dateInput.addEventListener('focus', function() {
+          this.type = 'date';
+        });
+        
+        timeInput.addEventListener('focus', function() {
+          this.type = 'time';
+        });
+      }
     });
 
     // Add some interactive effects
