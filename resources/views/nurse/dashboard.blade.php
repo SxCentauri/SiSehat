@@ -383,6 +383,27 @@
                 flex-direction: column;
                 text-align: center;
             }
+             .card--hero .header{
+    justify-content: center;   /* header di tengah */
+    text-align: center;
+    gap: 16px;
+  }
+  .card--hero .header-content{
+    flex-direction: column;    /* ikon di atas, judul di bawah */
+    align-items: center;       /* horizontal center */
+    justify-content: center;
+    width: 100%;
+  }
+  .card--hero .header-content h2{
+    text-align: center;        /* teksnya ikut center */
+  }
+  .card--hero .header i{
+    margin: 0 auto;            /* ikon tepat di tengah */
+  }
+  .card--hero .header > div:last-child{ /* blok tanggal */
+    width: 100%;
+    text-align: center;
+  }
         }
 
         @media (max-width: 640px) {
@@ -456,7 +477,7 @@
         @endif
 
         <!-- Welcome Header -->
-        <div class="card" style="margin-bottom: 30px;">
+        <div class="card card--hero" style="margin-bottom: 30px;">
             <div class="header">
                 <div class="header-content">
                     <i class="fa-solid fa-user-nurse"></i>

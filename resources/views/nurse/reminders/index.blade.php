@@ -376,6 +376,30 @@
       border: 1px solid var(--primary);
     }
 
+    @media (max-width: 1024px){
+  .card--hero .header{
+    justify-content: center;   /* header di tengah */
+    text-align: center;
+    gap: 16px;
+  }
+  .card--hero .header-content{
+    flex-direction: column;    /* ikon di atas, judul di bawah */
+    align-items: center;       /* horizontal center */
+    justify-content: center;
+    width: 100%;
+  }
+  .card--hero .header-content h2{
+    text-align: center;        /* teksnya ikut center */
+  }
+  .card--hero .header i{
+    margin: 0 auto;            /* ikon tepat di tengah */
+  }
+  .card--hero .header > div:last-child{ /* blok tanggal */
+    width: 100%;
+    text-align: center;
+  }
+}
+
     /* Responsive Styles */
     @media (max-width: 768px) {
       .container {
@@ -547,7 +571,7 @@
   @include('layouts.medicare')
 
   <div class="container">
-    <div class="card">
+    <div class="card card--hero">
       <div class="header">
         <div class="header-content">
           <i class="fa-solid fa-bell"></i>

@@ -37,6 +37,20 @@
     .action-group{display:flex;gap:8px;flex-wrap:wrap}
     .empty{text-align:center;color:var(--text-light);padding:52px 16px}
     .pagination{display:flex;justify-content:center;margin-top:18px;gap:8px;flex-wrap:wrap}
+    @media (max-width: 1024px){
+  .card--hero .header{
+    justify-content: center;   /* dari space-between → center */
+    text-align: center;
+    gap: 16px;
+  }
+  .card--hero .header-content{
+    align-items: center;       /* icon + title ketengah */
+  }
+  .card--hero .header > div:last-child{ /* blok tanggal */
+    width: 100%;
+    text-align: center;
+  }
+}
     @media (max-width: 768px){.card{padding:24px}.btn{width:100%;justify-content:center}.btn-sm{width:auto}}
     @media (max-width: 640px){
       .table-container{border:none}
@@ -45,6 +59,21 @@
       td{border:none;border-bottom:1px solid var(--border);position:relative;padding:10px 12px 10px 46%;min-height:40px;display:flex;align-items:center}
       td:last-child{border-bottom:none}
       td::before{content:attr(data-label);position:absolute;left:12px;top:50%;transform:translateY(-50%);width:42%;font-weight:600;color:var(--text-light);white-space:nowrap}
+      .card--hero .section-title{
+  justify-content: center;   /* bikin sejajar di tengah */
+  text-align: center;
+}
+.card--hero .section-title i{
+  margin: 0 auto;            /* ikon tepat di tengah */
+}
+.card--hero .section-title h3{
+  text-align: center;
+}
+
+/* Tombol2 “Tambah Jadwal” & “Kembali Dashboard” ikut center */
+.card--hero .button-group{
+  justify-content: center;
+}
     }
   </style>
 </head>
@@ -52,7 +81,7 @@
   @include('layouts.medicare')
 
   <div class="container">
-    <div class="card" role="region" aria-label="Daftar Jadwal Perawat">
+    <div class="card card--hero" role="region" aria-label="Daftar Jadwal Perawat">
       <div class="section-title">
         <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
         <h3>Jadwal Perawat</h3>
