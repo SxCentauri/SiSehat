@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\Auth;
 class NurseScheduleController extends Controller
 {
     /**
-     * Menampilkan daftar jadwal HANYA untuk perawat yang sedang login.
+     * Tampilkan jadwal milik perawat yang sedang login.
      */
     public function index()
     {
-        $schedules = NurseSchedule::where('nurse_id', Auth::id())
+        $schedules = NurseSchedule::with('nurse') // eager-load relasi biar efisien
+            ->where('nurse_id', Auth::id())
             ->orderBy('id', 'asc')
             ->paginate(10);
 
@@ -22,7 +23,7 @@ class NurseScheduleController extends Controller
     }
 
     /**
-     * Menampilkan form untuk membuat jadwal baru.
+     * Form buat tambah jadwal (pakai skema sederhana milik perawat).
      */
     public function create()
     {
@@ -31,11 +32,11 @@ class NurseScheduleController extends Controller
     }
 
     /**
-     * Menyimpan jadwal baru ke database.
+     * Simpan jadwal baru (mengisi kolom: nurse_name, task, schedule_date).
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validated = $request->validate([
             'shift' => 'required|string|in:Pagi,Siang,Malam',
             'task'  => 'required|string',
             'date'  => 'required|date',
@@ -43,24 +44,21 @@ class NurseScheduleController extends Controller
 
         $user = Auth::user();
 
-        $scheduleData = [
+        NurseSchedule::create([
             'nurse_id'      => $user->id,
-            'nurse_name'    => $user->name, // Mengisi kolom nurse_name
-            'task'          => 'Shift ' . $validatedData['shift'] . ': ' . $validatedData['task'],
-            'schedule_date' => $validatedData['date'],
-        ];
-
-        NurseSchedule::create($scheduleData);
+            'nurse_name'    => $user->name,
+            'task'          => 'Shift ' . $validated['shift'] . ': ' . $validated['task'],
+            'schedule_date' => $validated['date'],
+        ]);
 
         return redirect()->route('nurse.schedules.index')->with('ok', 'Jadwal berhasil ditambahkan.');
     }
 
     /**
-     * Menampilkan form untuk mengedit jadwal.
+     * Form edit jadwal.
      */
     public function edit(NurseSchedule $schedule)
     {
-        // Keamanan: Pastikan perawat hanya bisa mengedit jadwal miliknya sendiri.
         if ($schedule->nurse_id !== Auth::id()) {
             abort(403, 'Anda tidak memiliki akses untuk mengedit jadwal ini.');
         }
@@ -69,41 +67,36 @@ class NurseScheduleController extends Controller
     }
 
     /**
-     * Memperbarui jadwal di database.
+     * Update jadwal (pakai skema perawat).
      */
     public function update(Request $request, NurseSchedule $schedule)
     {
-        // Keamanan: Pastikan perawat hanya bisa mengupdate jadwal miliknya sendiri.
         if ($schedule->nurse_id !== Auth::id()) {
             abort(403);
         }
 
-        $validatedData = $request->validate([
+        $validated = $request->validate([
             'shift' => 'required|string|in:Pagi,Siang,Malam',
             'task'  => 'required|string',
             'date'  => 'required|date',
         ]);
 
-        // ✅ DEFINISIKAN $user DI SINI UNTUK MENGHINDARI ERROR
         $user = Auth::user();
 
-        $scheduleData = [
-            'nurse_name'    => $user->name, // Pastikan nama juga diupdate jika perlu
-            'task'          => 'Shift ' . $validatedData['shift'] . ': ' . $validatedData['task'],
-            'schedule_date' => $validatedData['date'],
-        ];
-
-        $schedule->update($scheduleData);
+        $schedule->update([
+            'nurse_name'    => $user->name,
+            'task'          => 'Shift ' . $validated['shift'] . ': ' . $validated['task'],
+            'schedule_date' => $validated['date'],
+        ]);
 
         return redirect()->route('nurse.schedules.index')->with('ok', 'Jadwal berhasil diperbarui.');
     }
 
     /**
-     * Menghapus jadwal dari database.
+     * Hapus jadwal.
      */
     public function destroy(NurseSchedule $schedule)
     {
-        // Keamanan: Pastikan perawat hanya bisa menghapus jadwal miliknya sendiri.
         if ($schedule->nurse_id !== Auth::id()) {
             abort(403);
         }
@@ -113,4 +106,3 @@ class NurseScheduleController extends Controller
         return redirect()->route('nurse.schedules.index')->with('ok', 'Jadwal berhasil dihapus.');
     }
 }
-
