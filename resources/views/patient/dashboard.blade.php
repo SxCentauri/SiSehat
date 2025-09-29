@@ -6,7 +6,7 @@
   <title>Dashboard Pasien - MediCare Hospital</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
+   <style>
     :root {
       --primary: #2563eb;
       --primary-dark: #1e40af;
@@ -73,144 +73,6 @@
       }
     }
 
-    /* WELCOME HEADER STYLES - DIUBAH */
-    .welcome-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      margin-bottom: 30px;
-      gap: 16px;
-      padding: 20px 0;
-    }
-
-    .welcome-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .welcome-icon {
-      color: var(--primary);
-      background: #e0f2fe;
-      padding: 16px;
-      border-radius: 50%;
-      width: 70px;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-    }
-
-    .welcome-text h2 {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text);
-      margin: 0 0 8px 0;
-    }
-
-    .welcome-text p {
-      color: var(--text-light);
-      font-size: 16px;
-      margin: 0;
-    }
-
-    .date-info {
-      color: var(--text-light);
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #f8fafc;
-      padding: 12px 24px;
-      border-radius: 30px;
-      border: 1px solid var(--border);
-    }
-
-    /* Responsive Styles untuk Welcome Header */
-    @media (max-width: 768px) {
-      .welcome-header {
-        margin-bottom: 20px;
-        gap: 12px;
-      }
-      
-      .welcome-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
-        padding: 14px;
-      }
-      
-      .welcome-text h2 {
-        font-size: 24px;
-      }
-      
-      .welcome-text p {
-        font-size: 14px;
-      }
-      
-      .date-info {
-        font-size: 14px;
-        padding: 10px 20px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .welcome-header {
-        margin-bottom: 15px;
-        gap: 10px;
-      }
-      
-      .welcome-icon {
-        width: 55px;
-        height: 55px;
-        font-size: 22px;
-        padding: 12px;
-      }
-      
-      .welcome-text h2 {
-        font-size: 22px;
-      }
-      
-      .welcome-text p {
-        font-size: 13px;
-      }
-      
-      .date-info {
-        font-size: 13px;
-        padding: 8px 16px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .welcome-header {
-        margin-bottom: 10px;
-      }
-      
-      .welcome-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-        padding: 10px;
-      }
-      
-      .welcome-text h2 {
-        font-size: 20px;
-      }
-      
-      .welcome-text p {
-        font-size: 12px;
-      }
-      
-      .date-info {
-        font-size: 12px;
-        padding: 6px 14px;
-      }
-    }
-
-    /* STYLES LAINNYA TETAP SAMA */
     .header {
       display: flex;
       justify-content: space-between;
@@ -441,7 +303,6 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 600px; /* Membuat tabel memiliki lebar minimum */
     }
 
     thead {
@@ -657,52 +518,42 @@
       box-shadow: 0 12px 35px rgba(239, 68, 68, 0.4);
     }
 
-    /* Responsive Styles - PERBAIKAN UTAMA */
-    @media (max-width: 1200px) {
-      .container {
-        max-width: 100%;
-        padding: 0 20px 30px;
-      }
-    }
-
+    /* Responsive Styles */
     @media (max-width: 1024px) {
       .grid-4 {
         grid-template-columns: repeat(2, 1fr);
       }
-      
-      .grid-3 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
-      
-      .header-content {
-        width: 100%;
-      }
     }
 
     @media (max-width: 768px) {
-      body {
-        padding-top: 70px;
-      }
-      
       .container {
-        padding: 0 15px 25px;
+        padding: 0 15px 30px;
       }
 
       .card {
         padding: 24px;
-        border-radius: 14px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 12px;
       }
 
       .header-content {
-        flex-direction: row;
-        text-align: left;
-        gap: 12px;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+
+      .date-info {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
       }
 
       .header h2 {
@@ -711,7 +562,6 @@
 
       .grid-4, .grid-3, .grid-2 {
         grid-template-columns: 1fr;
-        gap: 16px;
       }
 
       .stat-number {
@@ -723,190 +573,58 @@
       }
 
       .action-icon {
-        width: 70px;
-        height: 70px;
-        font-size: 28px;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
       }
 
       .emergency-action-icon {
-        width: 70px;
-        height: 70px;
-        font-size: 28px;
-      }
-      
-      .btn {
-        padding: 10px 16px;
-        font-size: 13px;
-      }
-      
-      .table-container {
-        margin: 15px 0;
-        border-radius: 8px;
-      }
-      
-      th, td {
-        padding: 12px 16px;
-        font-size: 14px;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
       }
     }
 
     @media (max-width: 640px) {
+      body {
+        padding-top: 70px;
+      }
+
       .container {
         padding: 0 12px 20px;
       }
 
       .card {
         padding: 20px;
+        border-radius: 14px;
       }
 
       .header h2 {
         font-size: 20px;
       }
-      
-      .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+
+      th, td {
+        padding: 12px 16px;
       }
-      
-      .header i {
-        padding: 10px;
-        min-width: 42px;
-        font-size: 16px;
-      }
-      
-      .stat-card, .quick-action-card, .emergency-action-card {
-        padding: 20px;
-      }
-      
-      .stat-icon, .emergency-stat-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-      }
-      
-      .action-icon, .emergency-action-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
-      }
-      
-      .stat-number, .emergency-stat-number {
-        font-size: 24px;
-      }
-      
-      .action-title, .emergency-action-title {
-        font-size: 16px;
-      }
-      
-      .action-description, .emergency-action-description {
-        font-size: 13px;
+
+      .btn {
+        width: 100%;
+        justify-content: center;
       }
     }
 
     @media (max-width: 480px) {
-      body {
-        padding-top: 60px;
-      }
-      
-      .container {
-        padding: 0 10px 15px;
-      }
-      
-      .card {
-        padding: 16px;
-        border-radius: 12px;
-      }
-      
-      .header h2 {
-        font-size: 18px;
-      }
-      
-      .header-content i {
-        padding: 8px;
-        min-width: 38px;
-        font-size: 14px;
-      }
-      
-      .stat-card, .quick-action-card, .emergency-action-card {
-        padding: 16px;
-      }
-      
-      .stat-icon, .emergency-stat-icon {
-        width: 45px;
-        height: 45px;
-        font-size: 18px;
-      }
-      
-      .action-icon, .emergency-action-icon {
-        width: 55px;
-        height: 55px;
-        font-size: 22px;
-      }
-      
-      .stat-number, .emergency-stat-number {
-        font-size: 22px;
-      }
-      
-      .stat-label, .emergency-stat-label {
-        font-size: 13px;
-      }
-      
       th, td {
         padding: 10px 12px;
         font-size: 13px;
       }
-      
-      .badge {
-        padding: 4px 8px;
-        font-size: 11px;
-      }
-      
-      .btn {
-        padding: 8px 12px;
-        font-size: 12px;
-      }
-      
-      .empty-state {
-        padding: 30px 15px;
-      }
-      
-      .empty-state i {
-        font-size: 36px;
-      }
-    }
 
-    @media (max-width: 360px) {
-      .container {
-        padding: 0 8px 12px;
+      .stat-number {
+        font-size: 24px;
       }
-      
-      .card {
-        padding: 14px;
-      }
-      
-      .header h2 {
-        font-size: 16px;
-      }
-      
-      .stat-card, .quick-action-card, .emergency-action-card {
-        padding: 14px;
-      }
-      
-      .stat-icon, .emergency-stat-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-      }
-      
-      .action-icon, .emergency-action-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-      }
-      
-      .stat-number, .emergency-stat-number {
-        font-size: 20px;
+
+      .emergency-stat-number {
+        font-size: 24px;
       }
     }
 
@@ -933,19 +651,14 @@
       </div>
     @endif
 
-    <!-- Welcome Header - DIUBAH -->
+    <!-- Welcome Header -->
     <div class="card" style="margin-bottom: 30px;">
-      <div class="welcome-header">
-        <div class="welcome-content">
-          <div class="welcome-icon">
-            <i class="fa-solid fa-user"></i>
-          </div>
-          <div class="welcome-text">
-            <h2>Dashboard Pasien</h2>
-            <p>Selamat datang di MediCare Hospital</p>
-          </div>
+      <div class="header">
+        <div class="header-content">
+          <i class="fa-solid fa-user"></i>
+          <h2>Dashboard Pasien</h2>
         </div>
-        <div class="date-info">
+        <div class="date-info" style="color: var(--text-light); font-size: 14px;">
           <i class="fa-solid fa-calendar-day"></i>
           <span>{{ \Carbon\Carbon::now()->format('l, d F Y') }}</span>
         </div>
@@ -1115,7 +828,7 @@
         });
       });
 
-      // Add special effects to emergency cardss
+      // Add special effects to emergency cards
       const emergencyCards = document.querySelectorAll('.emergency-stat-card, .emergency-action-card');
       emergencyCards.forEach(card => {
         card.addEventListener('mouseenter', function() {
@@ -1127,5 +840,5 @@
       });
     });
   </script>
-</body> 
+</body>
 </html>
