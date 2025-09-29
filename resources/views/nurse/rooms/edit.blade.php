@@ -72,6 +72,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      flex-wrap: wrap;
     }
 
     .header i {
@@ -82,6 +83,7 @@
       min-width: 46px;
       text-align: center;
       font-size: 18px;
+      flex-shrink: 0;
     }
 
     .header h2 {
@@ -103,6 +105,7 @@
       cursor: pointer;
       transition: all 0.3s;
       font-size: 14px;
+      flex-shrink: 0;
     }
 
     .btn-warning {
@@ -277,7 +280,7 @@
       margin-bottom: 4px;
     }
 
-    /* Responsive Styles */
+    /* Improved Responsive Styles */
     @media (max-width: 768px) {
       .container {
         padding: 0 15px 30px;
@@ -289,21 +292,26 @@
 
       .header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+        gap: 16px;
       }
 
       .header-content {
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: center;
         text-align: center;
         gap: 12px;
+        width: 100%;
       }
 
       .header h2 {
         font-size: 22px;
+        text-align: center;
       }
 
       .form-actions {
         flex-direction: column;
+        gap: 10px;
       }
 
       .btn {
@@ -318,6 +326,7 @@
 
       .status-info {
         grid-template-columns: 1fr;
+        gap: 10px;
       }
     }
 
@@ -335,12 +344,88 @@
         border-radius: 14px;
       }
 
+      .header-content {
+        flex-direction: column;
+        gap: 10px;
+      }
+
       .header h2 {
         font-size: 20px;
       }
 
       .form-control, .form-select {
         padding: 12px 14px;
+      }
+
+      .status-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+      }
+
+      .status-item span:last-child {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-content {
+        gap: 8px;
+      }
+
+      .header i {
+        padding: 10px;
+        min-width: 42px;
+        font-size: 16px;
+      }
+
+      .header h2 {
+        font-size: 18px;
+      }
+
+      .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .status-info {
+        gap: 8px;
+      }
+
+      .status-item {
+        padding: 10px;
+      }
+
+      .badge {
+        padding: 4px 10px;
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .form-actions {
+        gap: 8px;
+      }
+
+      .status-item {
+        padding: 8px;
+      }
+
+      .alert-error {
+        padding: 12px 16px;
+      }
+
+      .alert-error ul {
+        margin-left: 16px;
       }
     }
 
@@ -415,6 +500,10 @@
               {{ $message }}
             </div>
           @enderror
+          <div class="form-hint">
+            <i class="fa-solid fa-lightbulb"></i>
+            Berikan nama yang jelas dan mudah dikenali
+          </div>
         </div>
 
         <div class="form-group">
@@ -432,6 +521,10 @@
               {{ $message }}
             </div>
           @enderror
+          <div class="form-hint">
+            <i class="fa-solid fa-lightbulb"></i>
+            Nomor unik untuk identifikasi ruangan
+          </div>
         </div>
 
         <div class="form-group">
@@ -490,7 +583,11 @@
                 <i class="fa-solid fa-circle-exclamation"></i>
                 {{ $message }}
               </div>
-            @enderror
+            @enderror>
+            <div class="form-hint">
+              <i class="fa-solid fa-lightbulb"></i>
+              Kapasitas total ruangan
+            </div>
           </div>
 
           <div class="form-group">
@@ -508,7 +605,11 @@
                 <i class="fa-solid fa-circle-exclamation"></i>
                 {{ $message }}
               </div>
-            @enderror
+            @enderror>
+            <div class="form-hint">
+              <i class="fa-solid fa-lightbulb"></i>
+              Pasien yang sedang menempati ruangan
+            </div>
           </div>
         </div>
 

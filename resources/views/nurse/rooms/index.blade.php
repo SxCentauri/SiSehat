@@ -72,6 +72,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      flex-wrap: wrap;
     }
 
     .header i {
@@ -82,6 +83,7 @@
       min-width: 46px;
       text-align: center;
       font-size: 18px;
+      flex-shrink: 0;
     }
 
     .header h2 {
@@ -109,6 +111,7 @@
       cursor: pointer;
       transition: all 0.3s;
       font-size: 14px;
+      flex-shrink: 0;
     }
 
     .btn-primary {
@@ -358,7 +361,7 @@
       border: 1px solid var(--primary);
     }
 
-    /* Responsive Styles */
+    /* Responsive Styles - IMPROVED */
     @media (max-width: 768px) {
       .container {
         padding: 0 15px 30px;
@@ -370,22 +373,27 @@
 
       .header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+        gap: 16px;
       }
 
       .header-content {
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: center;
         text-align: center;
         gap: 12px;
+        width: 100%;
       }
 
       .header h2 {
         font-size: 22px;
+        text-align: center;
       }
 
       .header-actions {
         width: 100%;
-        justify-content: flex-start;
+        justify-content: center;
+        gap: 10px;
       }
 
       th, td {
@@ -395,6 +403,7 @@
       .action-group {
         flex-direction: column;
         align-items: stretch;
+        gap: 6px;
       }
 
       .btn {
@@ -417,6 +426,11 @@
         border-radius: 14px;
       }
 
+      .header-content {
+        flex-direction: column;
+        gap: 10px;
+      }
+
       .header h2 {
         font-size: 20px;
       }
@@ -424,6 +438,7 @@
       .header-actions {
         flex-direction: column;
         width: 100%;
+        gap: 8px;
       }
 
       th, td {
@@ -440,11 +455,30 @@
       .capacity-bar {
         width: 80px;
       }
+
+      .action-group {
+        gap: 4px;
+      }
     }
 
     @media (max-width: 480px) {
+      .header-content {
+        gap: 8px;
+      }
+
+      .header i {
+        padding: 10px;
+        min-width: 42px;
+        font-size: 16px;
+      }
+
+      .header h2 {
+        font-size: 18px;
+      }
+
       th, td {
         padding: 8px 10px;
+        font-size: 12px;
       }
 
       .badge {
@@ -456,6 +490,35 @@
         width: 32px;
         height: 32px;
         font-size: 14px;
+      }
+
+      .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+      }
+
+      .btn-sm {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header-actions {
+        flex-direction: column;
+      }
+
+      .table-container {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 6px 8px;
       }
     }
 
