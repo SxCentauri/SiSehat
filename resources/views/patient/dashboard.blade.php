@@ -1115,7 +1115,7 @@
         });
       });
 
-      // Add special effects to emergency cards
+      // Add special effects to emergency cardss
       const emergencyCards = document.querySelectorAll('.emergency-stat-card, .emergency-action-card');
       emergencyCards.forEach(card => {
         card.addEventListener('mouseenter', function() {
@@ -1127,5 +1127,5 @@
       });
     });
   </script>
-</body>
+</body> 
 </html>
