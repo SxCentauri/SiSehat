@@ -7,269 +7,176 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{
-      --primary-color:#2563eb; --secondary-color:#1e40af; --accent-color:#60a5fa;
-      --light-blue:#dbeafe; --extra-light-blue:#eff6ff; --text-color:#1f2937; --text-light:#6b7280; --white:#ffffff;
-      --doctor-bubble:#dcf8c6; --patient-bubble:#ffffff;
-      --gradient:linear-gradient(135deg,var(--primary-color),var(--secondary-color));
-      --shadow:0 20px 50px rgba(37,99,235,.1); --shadow-hover:0 30px 70px rgba(37,99,235,.15);
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --secondary: #64748b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --completed: #8b5cf6;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+      --radius: 16px;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
     }
 
-    body{
-      line-height:1.6;
-      color:var(--text-color);
-      background:var(--white);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-top: 80px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    a{
-      text-decoration:none;
-      color:inherit
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Container & main content */
-    .container{
-      max-width:1200px;
-      margin:0 auto;
-      padding:24px 20px;
-      padding-top: 100px;
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
 
-    /* Header chat */
-    .chat-header {
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.5rem;
-      background: var(--white);
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-      margin-bottom: 1.5rem;
-      position: sticky;
-      top: 90px;
-      z-index: 10;
+      gap: 16px;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card-bg);
     }
 
-    .patient-avatar {
-      width: 50px;
-      height: 50px;
+    .avatar {
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background: var(--gradient);
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 1.2rem;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 24px;
       flex-shrink: 0;
     }
 
-    .patient-info h2 {
-      font-size: 1.2rem;
-      margin-bottom: 0.25rem;
-      font-weight: 600;
+    .header-info {
+      flex: 1;
     }
 
-    .patient-info p {
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 14px;
       color: var(--text-light);
-      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* Back button */
-    .back-button {
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      background: var(--extra-light-blue);
-      color: var(--primary-color);
-      border-radius: 8px;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      transition: all 0.2s ease;
+      gap: 6px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 13px;
     }
 
-    .back-button:hover {
-      background: var(--light-blue);
-      transform: translateX(-3px);
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
-    /* Chat container */
+    .btn-secondary:hover {
+      background: #e2e8f0;
+      transform: translateY(-1px);
+    }
+
     .chat-container {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      height: calc(100vh - 220px);
-      background: var(--white);
-      border-radius: 12px;
-      box-shadow: var(--shadow);
       overflow: hidden;
     }
 
-    /* Chat messages */
     .chat-messages {
       flex: 1;
-      padding: 1.5rem;
+      padding: 24px;
       overflow-y: auto;
-      background: #f0f4f8;
-      background-image:
-        radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.05) 1px, transparent 0),
-        radial-gradient(circle at 20px 20px, rgba(0, 0, 0, 0.05) 1px, transparent 0);
-      background-size: 20px 20px, 40px 40px;
-      background-position: 0 0, 20px 20px;
       display: flex;
-      /* --- PERUBAHAN UTAMA DI SINI --- */
-      flex-direction: column-reverse; /* Membuat chat menumpuk dari bawah ke atas */
+      flex-direction: column;
+      gap: 16px;
+      max-height: 60vh;
     }
 
     .message {
       display: flex;
-      margin-bottom: 0.5rem;
-      animation: fadeIn 0.3s ease;
+      max-width: 80%;
+      animation: fadeIn 0.3s ease-out;
     }
 
-    .message.doctor {
-      justify-content: flex-end;
-    }
-
-    .message.patient {
-      justify-content: flex-start;
-    }
-
-    .message-content {
-      max-width: 70%;
-      padding: 0.5rem 0.75rem;
-      border-radius: 7.5px;
-      position: relative;
-      box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
-    }
-
-    .message.doctor .message-content {
-      background: var(--doctor-bubble);
-      border-top-right-radius: 0;
-      margin-left: auto;
-    }
-
-    .message.patient .message-content {
-      background: var(--patient-bubble);
-      border-top-left-radius: 0;
-    }
-
-    /* Tail untuk bubble chat */
-    .message.doctor .message-content:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: -8px;
-      width: 0;
-      height: 0;
-      border-left: 8px solid var(--doctor-bubble);
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-    }
-
-    .message.patient .message-content:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -8px;
-      width: 0;
-      height: 0;
-      border-right: 8px solid var(--patient-bubble);
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-    }
-
-    .message-text {
-      word-wrap: break-word;
-    }
-
-    .message-meta {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin-top: 0.25rem;
-      font-size: 0.65rem;
-      gap: 0.25rem;
-    }
-
-    .message-time {
-      color: rgba(0, 0, 0, 0.45);
-    }
-
-    .message-status {
-      display: inline-flex;
-    }
-
-    /* Chat input */
-    .chat-input {
-      display: flex;
-      padding: 0.75rem;
-      background: white;
-      border-top: 1px solid #e5e7eb;
-      align-items: flex-end;
-    }
-
-    .message-input {
-      flex: 1;
-      padding: 0.75rem 1rem;
-      border: 1px solid #e5e7eb;
-      border-radius: 24px;
-      outline: none;
-      font-family: 'Inter', sans-serif;
-      resize: none;
-      max-height: 120px;
-      margin: 0 0.5rem;
-    }
-
-    .message-input:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
-    }
-
-    .send-button {
-      background: var(--primary-color);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .send-button:hover {
-      background: var(--secondary-color);
-      transform: scale(1.05);
-    }
-
-    /* Empty state */
-    .empty-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      color: var(--text-light);
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .empty-state i {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: var(--accent-color);
-    }
-
-    .empty-state p {
-      max-width: 400px;
-    }
-
-    /* Animations */
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -281,50 +188,265 @@
       }
     }
 
-    /* Scrollbar styling */
+    .message.doctor {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .message.patient {
+      align-self: flex-start;
+    }
+
+    .message-bubble {
+      padding: 12px 16px;
+      border-radius: 18px;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .message.doctor .message-bubble {
+      background: var(--gradient);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .message.patient .message-bubble {
+      background: #f1f5f9;
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+    }
+
+    .message-sender {
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: 4px;
+      opacity: 0.9;
+    }
+
+    .message-content {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .message-time {
+      font-size: 11px;
+      opacity: 0.7;
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    .message.patient .message-time {
+      text-align: left;
+    }
+
+    .empty-chat {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-light);
+    }
+
+    .empty-chat i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      color: #d1d5db;
+    }
+
+    .empty-chat h4 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .chat-input {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      background: #f8fafc;
+    }
+
+    .input-form {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .input-field {
+      flex: 1;
+      position: relative;
+    }
+
+    .input-field textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      font-size: 14px;
+      background: white;
+      transition: all 0.3s;
+      resize: none;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      max-height: 120px;
+    }
+
+    .input-field textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .send-btn {
+      padding: 12px 20px;
+      border-radius: 25px;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 100px;
+      justify-content: center;
+    }
+
+    .send-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .send-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Scrollbar Styling */
     .chat-messages::-webkit-scrollbar {
       width: 6px;
     }
 
     .chat-messages::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.05);
-      border-radius: 10px;
+      background: #f1f1f1;
+      border-radius: 3px;
     }
 
     .chat-messages::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
+      background: #c1c1c1;
+      border-radius: 3px;
     }
 
     .chat-messages::-webkit-scrollbar-thumb:hover {
-      background: rgba(0, 0, 0, 0.3);
+      background: #a1a1a1;
     }
 
-    /* Responsive */
+    /* Responsive Styles */
     @media (max-width: 768px) {
       .container {
-        padding: 15px;
-        padding-top: 90px;
+        padding: 0 15px 15px;
       }
 
-      .chat-header {
-        padding: 0.75rem;
-        margin-bottom: 1rem;
+      .header {
+        padding: 20px;
       }
 
-      .patient-avatar {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
+      .avatar {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+
+      .title {
+        font-size: 18px;
+      }
+
+      .chat-messages {
+        padding: 20px;
+        gap: 12px;
+      }
+
+      .message {
+        max-width: 90%;
+      }
+
+      .chat-input {
+        padding: 16px 20px;
+      }
+
+      .header-actions {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding-top: 70px;
+      }
+
+      .container {
+        padding: 0 12px 12px;
+      }
+
+      .header {
+        padding: 16px;
+        gap: 12px;
+      }
+
+      .avatar {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+      }
+
+      .title {
+        font-size: 16px;
+      }
+
+      .subtitle {
+        font-size: 12px;
+      }
+
+      .chat-messages {
+        padding: 16px;
+        gap: 10px;
+      }
+
+      .message-bubble {
+        padding: 10px 14px;
+      }
+
+      .chat-input {
+        padding: 12px 16px;
+      }
+
+      .input-form {
+        gap: 8px;
+      }
+
+      .send-btn {
+        padding: 10px 16px;
+        min-width: 80px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .message {
+        max-width: 95%;
+      }
+
+      .message-bubble {
+        padding: 8px 12px;
       }
 
       .message-content {
-        max-width: 85%;
+        font-size: 13px;
       }
+    }
 
-      .chat-container {
-        height: calc(100vh - 180px);
-      }
+    /* Focus states for accessibility */
+    .btn:focus, .send-btn:focus, textarea:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
     }
   </style>
 </head>
@@ -332,84 +454,130 @@
   @include('layouts.medicare')
 
   <main class="container">
-    <a href="{{ route('doctor.dashboard') }}" class="back-button">
-      <i class="fas fa-arrow-left"></i>
-      Kembali ke Dashboard
-    </a>
-
-    <div class="chat-header">
-      <div class="patient-avatar">
-        {{ substr($patient->name, 0, 1) }}
-      </div>
-      <div class="patient-info">
-        <h2>{{ $patient->name }}</h2>
-        <p>Pasien - ID: {{ $patient->id }}</p>
-      </div>
-    </div>
-
-    <div class="chat-container">
-      <div class="chat-messages" id="chatMessages">
-
-    @if($messages->count() > 0)
-
-      @foreach($messages as $message)
-
-        <div class="message {{ $message->sender_type === 'doctor' ? 'doctor' : 'patient' }}">
-
-          <div class="message-content">
-            <div class="message-text">{{ $message->message }}</div>
-            <div class="message-meta">
-              <span class="message-time">{{ $message->created_at->format('H:i') }}</span>
-
-              @if($message->sender_type === 'doctor')
-                <span class="message-status">
-                  @if($message->read_at)
-                    <i class="fas fa-check-double" title="Dibaca"></i>
-                  @else
-                    <i class="fas fa-check" title="Terkirim"></i>
-                  @endif
-                </span>
-              @endif
-
-            </div>
-          </div>
-
+    <div class="card">
+      <!-- Chat Header -->
+      <div class="header">
+        <div class="avatar">
+          {{ strtoupper(mb_substr($patient->name, 0, 1)) }}
         </div>
-      @endforeach
-
-    @else
-      <div class="empty-state">
-        <i class="fas fa-comments"></i>
-        <h3>Belum ada percakapan</h3>
-        <p>Mulai percakapan dengan mengirim pesan pertama kepada {{ $patient->name }}.</p>
+        <div class="header-info">
+          <div class="title">{{ $patient->name }}</div>
+          <div class="subtitle">
+            <span class="status-dot"></span>
+            <span>Pasien - ID: {{ $patient->id }}</span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <a href="{{ route('doctor.chat.index') }}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> Kembali
+          </a>
+        </div>
       </div>
-    @endif
 
-</div>
+      <!-- Chat Messages -->
+      <div class="chat-container">
+        <div id="chatMessages" class="chat-messages">
+          @if($messages->count() > 0)
+            @foreach($messages as $message)
+              @php $isDoctor = $message->sender_type === 'doctor'; @endphp
+              <div class="message {{ $isDoctor ? 'doctor' : 'patient' }}">
+                <div class="message-bubble">
+                  <div class="message-sender">
+                    {{ $isDoctor ? 'Anda' : $patient->name }}
+                  </div>
+                  <div class="message-content">
+                    {{ $message->message }}
+                  </div>
+                  <div class="message-time">
+                    {{ $message->created_at->format('H:i') }} • {{ $message->created_at->format('d M Y') }}
+                    @if($isDoctor)
+                      <span style="margin-left: 4px;">
+                        @if($message->read_at)
+                          <i class="fas fa-check-double" title="Dibaca"></i>
+                        @else
+                          <i class="fas fa-check" title="Terkirim"></i>
+                        @endif
+                      </span>
+                    @endif
+                  </div>
+                </div>
+              </div>
+            @endforeach
+          @else
+            <div class="empty-chat">
+              <i class="fa-solid fa-comments"></i>
+              <h4>Belum ada percakapan</h4>
+              <p>Mulai percakapan dengan mengirim pesan pertama kepada {{ $patient->name }}</p>
+            </div>
+          @endif
+        </div>
 
-      <form action="{{ route('doctor.chat.send', $patient->id) }}" method="POST" class="chat-input">
-        @csrf
-        <textarea
-          name="message"
-          class="message-input"
-          placeholder="Ketik pesan..."
-          rows="1"
-          oninput="autoResize(this)"
-        ></textarea>
-        <button type="submit" class="send-button">
-          <i class="fas fa-paper-plane"></i>
-        </button>
-      </form>
+        <!-- Chat Input -->
+        <div class="chat-input">
+          <form class="input-form" method="POST" action="{{ route('doctor.chat.send', $patient->id) }}">
+            @csrf
+            <div class="input-field">
+              <textarea name="message" placeholder="Ketik pesan..." autocomplete="off" required oninput="autoResize(this)"></textarea>
+            </div>
+            <button class="send-btn" type="submit">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span class="send-text">Kirim</span>
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </main>
 
   <script>
-    // Fungsi untuk auto-resize textarea
+    document.addEventListener('DOMContentLoaded', function() {
+      // Auto-scroll to bottom
+      const chatMessages = document.getElementById('chatMessages');
+      if (chatMessages) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      // Form submission handling
+      const form = document.querySelector('.input-form');
+      const textarea = form.querySelector('textarea');
+      const sendBtn = form.querySelector('.send-btn');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        if (textarea.value.trim() === '') return;
+
+        // Disable button during submission
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim';
+
+        // Submit form
+        this.submit();
+      });
+
+      // Re-enable button if form submission fails
+      textarea.addEventListener('input', function() {
+        if (sendBtn.disabled) {
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i><span class="send-text">Kirim</span>';
+        }
+      });
+
+      // Add animation to new messages
+      const messages = document.querySelectorAll('.message');
+      messages.forEach((message, index) => {
+        message.style.animationDelay = `${index * 0.1}s`;
+      });
+
+      // Focus textarea on load
+      textarea.focus();
+    });
+
+    // Auto-resize function
     function autoResize(textarea) {
       textarea.style.height = 'auto';
       textarea.style.height = (textarea.scrollHeight) + 'px';
 
-      // Batasi tinggi maksimum
       if (textarea.scrollHeight > 120) {
         textarea.style.overflowY = 'auto';
       } else {
@@ -417,31 +585,10 @@
       }
     }
 
-    // Validasi form
-    document.querySelector('form').addEventListener('submit', function(e) {
-      const messageInput = this.querySelector('textarea[name="message"]');
-      if (!messageInput.value.trim()) {
-        e.preventDefault();
-        messageInput.focus();
-        // Tambahkan efek visual untuk input kosong
-        messageInput.style.borderColor = '#ef4444';
-        setTimeout(() => {
-          messageInput.style.borderColor = '#e5e7eb';
-        }, 1000);
-      }
-    });
-
-    // Auto-focus pada input pesan
-    document.addEventListener('DOMContentLoaded', function() {
-      const messageInput = document.querySelector('.message-input');
-      if (messageInput) {
-        messageInput.focus();
-      }
-    });
-
-    /* SKRIP UNTUK SCROLL KE BAWAH DIHAPUS,
-      KARENA SUDAH DITANGANI OLEH CSS 'flex-direction: column-reverse'
-    */
+    // Auto-refresh chat every 10 seconds (optional)
+    setInterval(() => {
+      // You can implement AJAX refresh here if needed
+    }, 10000);
   </script>
 </body>
 </html>

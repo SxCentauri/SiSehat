@@ -53,7 +53,7 @@ class ChatController extends Controller
         // PENTING: Ubah urutan menjadi 'desc' agar cocok dengan CSS 'column-reverse'
         $messages = ChatMessage::where('doctor_id', $doctor->id)
             ->where('patient_id', $patient->id)
-            ->latest() // Ini adalah singkatan dari orderBy('created_at', 'desc')
+            ->orderBy('created_at') // Ini adalah singkatan dari orderBy('created_at', 'desc')
             ->get();
 
         return view('doctor.chat.thread', compact('patient', 'messages'));
@@ -64,9 +64,6 @@ class ChatController extends Controller
      */
     public function send(User $patient, Request $request)
     {
-        // Keamanan: Anda bisa menambahkan pengecekan otorisasi di sini juga
-        // atau menggunakan Laravel Policy untuk penanganan yang lebih baik.
-        // Untuk saat ini, kita asumsikan jika dokter bisa mengirim, berarti dia berhak.
 
         $data = $request->validate([
             'message' => 'required|string|max:1000'

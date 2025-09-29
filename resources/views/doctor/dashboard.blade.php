@@ -415,7 +415,9 @@
 
       .header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
       }
 
       .header-content {
@@ -426,6 +428,10 @@
 
       .header h2 {
         font-size: 22px;
+      }
+
+      .header-date {
+        justify-content: center;
       }
 
       .grid-4, .grid-3 {

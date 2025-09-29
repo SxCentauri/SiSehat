@@ -7,435 +7,491 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --secondary: #64748b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --completed: #8b5cf6;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+      --radius: 16px;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
     }
 
-    :root {
-        --primary-color: #2563eb;
-        --secondary-color: #1e40af;
-        --accent-color: #60a5fa;
-        --light-blue: #dbeafe;
-        --extra-light-blue: #eff6ff;
-        --text-color: #1f2937;
-        --text-light: #6b7280;
-        --white: #ffffff;
-        --success-color: #10b981;
-        --danger-color: #ef4444;
-        --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        --gradient-light: linear-gradient(135deg, var(--light-blue), var(--extra-light-blue));
-        --shadow: 0 20px 50px rgba(37, 99, 235, 0.1);
-        --shadow-hover: 0 30px 70px rgba(37, 99, 235, 0.15);
-        --border-radius: 16px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-        line-height: 1.6;
-        color: var(--text-color);
-        background: #f8fafc;
-        padding: 100px 20px 40px;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
 
     .container {
-        max-width: 1200px;
-        margin: 0 auto;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 20px 40px;
     }
 
-    /* Header Section */
-    .page-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .page-title {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .page-title i {
-        color: var(--primary-color);
-        font-size: 32px;
-        width: 60px;
-        height: 60px;
-        background: var(--gradient-light);
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .page-title h1 {
-        font-size: 28px;
-        font-weight: 700;
-        color: var(--text-color);
-    }
-
-    .stats-container {
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-    }
-
-    .stat-card {
-        background: var(--white);
-        padding: 16px 24px;
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        min-width: 200px;
-    }
-
-    .stat-icon {
-        width: 48px;
-        height: 48px;
-        background: var(--gradient-light);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary-color);
-        font-size: 20px;
-    }
-
-    .stat-info {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .stat-number {
-        font-size: 24px;
-        font-weight: 700;
-        color: var(--secondary-color);
-    }
-
-    .stat-label {
-        font-size: 14px;
-        color: var(--text-light);
-        font-weight: 500;
-    }
-
-    /* Card Styles */
     .card {
-        background: #fff;
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        padding: 32px;
-        transition: all 0.3s ease;
-        border: 1px solid rgba(96, 165, 250, 0.1);
-        margin-bottom: 30px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 30px;
     }
 
     .card:hover {
-        box-shadow: var(--shadow-hover);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     }
 
-    /* Table Styles */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header i {
+      color: var(--primary);
+      background: #e0f2fe;
+      padding: 12px;
+      border-radius: 12px;
+      min-width: 46px;
+      text-align: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .stats-container {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 200px;
+      border: 1px solid var(--border);
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      background: #e0f2fe;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    .stat-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-number {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
     .table-container {
-        overflow-x: auto;
-        border-radius: var(--border-radius);
-        box-shadow: 0 10px 40px rgba(37, 99, 235, 0.08);
-        margin: 24px 0;
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
     }
 
-    .table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        background: white;
-        border-radius: var(--border-radius);
-        overflow: hidden;
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
 
-    .table th {
-        background: var(--gradient-light);
-        color: var(--primary-color);
-        padding: 18px 16px;
-        font-weight: 600;
-        text-align: left;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        white-space: nowrap;
+    thead {
+      background-color: #f8fafc;
     }
 
-    .table td {
-        padding: 20px 16px;
-        border-bottom: 1px solid #f1f5f9;
-        font-size: 15px;
-        vertical-align: middle;
+    th {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-light);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .table tr:last-child td {
-        border-bottom: none;
+    td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .table tr:hover {
-        background: #f8fafc;
+    tbody tr {
+      transition: all 0.3s ease;
     }
 
-    /* Badge Styles */
+    tbody tr:hover {
+      background-color: #f8fafc;
+      transform: translateX(5px);
+    }
+
     .badge {
-        display: inline-block;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        text-align: center;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      gap: 6px;
+      border: 1px solid transparent;
     }
 
-    .badge-success {
-        background: #dcfce7;
-        color: #166534;
+    .badge.success {
+      background-color: #f0fdf4;
+      color: var(--success);
+      border-color: #bbf7d0;
     }
 
-    .badge-warning {
-        background: #fef3c7;
-        color: #92400e;
+    .badge.warning {
+      background-color: #fffbeb;
+      color: var(--warning);
+      border-color: #fef3c7;
     }
 
-    .badge-info {
-        background: #dbeafe;
-        color: #1e40af;
+    .badge.info {
+      background-color: #eff6ff;
+      color: var(--primary);
+      border-color: #dbeafe;
     }
 
-    /* Button Styles */
     .btn {
-        padding: 10px 18px;
-        font-size: 14px;
-        font-weight: 600;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        text-align: center;
-        text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 14px;
     }
 
     .btn-primary {
-        background: var(--gradient);
-        color: white;
-        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+      background: var(--gradient);
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
     }
 
     .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 15px 40px rgba(37, 99, 235, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
     }
 
-    .btn-outline {
-        background: transparent;
-        border: 2px solid var(--primary-color);
-        color: var(--primary-color);
-        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.1);
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
     }
 
-    .btn-outline:hover {
-        background: var(--primary-color);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 12px 35px rgba(37, 99, 235, 0.2);
+    .btn-secondary:hover {
+      background: #e2e8f0;
+      transform: translateY(-2px);
     }
 
     .btn-sm {
-        padding: 8px 14px;
-        font-size: 13px;
+      padding: 10px 16px;
+      font-size: 13px;
     }
 
-    /* Empty State */
     .empty-state {
-        text-align: center;
-        padding: 60px 20px;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-light);
     }
 
     .empty-state i {
-        font-size: 64px;
-        color: #cbd5e1;
-        margin-bottom: 20px;
+      font-size: 64px;
+      margin-bottom: 16px;
+      color: #d1d5db;
     }
 
     .empty-state h3 {
-        font-size: 22px;
-        color: var(--text-light);
-        margin-bottom: 12px;
-        font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: var(--text);
     }
 
     .empty-state p {
-        color: var(--text-light);
-        max-width: 400px;
-        margin: 0 auto 24px;
-        line-height: 1.6;
+      font-size: 14px;
+      margin-bottom: 20px;
     }
 
-    /* Info Jumlah Data */
     .data-count-info {
-        text-align: center;
-        margin-top: 20px;
-        color: var(--text-light);
-        font-size: 14px;
-        font-weight: 500;
-        padding: 12px;
-        background: var(--extra-light-blue);
-        border-radius: var(--border-radius);
+      text-align: center;
+      margin-top: 20px;
+      color: var(--text-light);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: var(--radius);
     }
 
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-        body {
-            padding: 90px 15px 30px;
-        }
-        
-        .card {
-            padding: 24px;
-        }
-        
-        .page-title h1 {
-            font-size: 24px;
-        }
-        
-        .page-title i {
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
-        }
-        
-        .stat-card {
-            min-width: 180px;
-            padding: 14px 20px;
-        }
-    }
-
+    /* Responsive Styles */
     @media (max-width: 768px) {
-        body {
-            padding: 80px 10px 20px;
-        }
-        
-        .page-header {
-            flex-direction: column;
-            align-items: stretch;
-            text-align: center;
-        }
-        
-        .page-title {
-            justify-content: center;
-        }
-        
-        .stats-container {
-            justify-content: center;
-        }
-        
-        .card {
-            padding: 20px;
-            border-radius: 14px;
-        }
-        
-        .table th, .table td {
-            padding: 14px 10px;
-            font-size: 14px;
-        }
+      .container {
+        padding: 90px 15px 30px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+      }
+
+      .header-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      }
+
+      .header h2 {
+        font-size: 22px;
+      }
+
+      .stats-container {
+        justify-content: center;
+      }
+
+      .stat-card {
+        flex: 1;
+        min-width: unset;
+        padding: 16px;
+      }
+
+      th, td {
+        padding: 12px 16px;
+      }
+
+      .table-container {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 80px 12px 20px;
+      }
+
+      .card {
+        padding: 20px;
+        border-radius: 14px;
+      }
+
+      .header {
+        gap: 12px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .header h2 {
+        font-size: 20px;
+      }
+
+      .header i {
+        padding: 10px;
+        min-width: 42px;
+        font-size: 16px;
+      }
+
+      .stat-card {
+        padding: 14px;
+      }
+
+      .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+
+      .stat-number {
+        font-size: 20px;
+      }
+
+      .empty-state {
+        padding: 40px 15px;
+      }
+
+      .empty-state i {
+        font-size: 48px;
+      }
+
+      /* Sembunyikan kolom tertentu di mobile */
+      th:nth-child(3),
+      td:nth-child(3) {
+        display: none;
+      }
     }
 
     @media (max-width: 480px) {
-        .page-title h1 {
-            font-size: 20px;
-        }
-        
-        .page-title i {
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
-        }
-        
-        .stat-card {
-            flex: 1;
-            min-width: unset;
-        }
-        
-        .stat-number {
-            font-size: 20px;
-        }
-        
-        .btn {
-            width: 100%;
-            justify-content: center;
-        }
-        
-        .table th:nth-child(3),
-        .table td:nth-child(3),
-        .table th:nth-child(4),
-        .table td:nth-child(4) {
-            display: none;
-        }
+      .header-content {
+        gap: 8px;
+      }
+
+      .header h2 {
+        font-size: 20px;
+      }
+
+      .header i {
+        padding: 8px;
+        min-width: 38px;
+        font-size: 14px;
+      }
+
+      .stats-container {
+        flex-direction: column;
+      }
+
+      .stat-card {
+        width: 100%;
+      }
+
+      th, td {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+
+      /* Sembunyikan lebih banyak kolom di mobile kecil */
+      th:nth-child(4),
+      td:nth-child(4) {
+        display: none;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header h2 {
+        font-size: 17px;
+        text-align: center;
+      }
+
+      .header i {
+        align-self: center;
+      }
     }
 
     /* Animation */
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .card {
-        animation: fadeIn 0.6s ease-out;
+      animation: fadeIn 0.5s ease-out;
     }
 
     .stat-card {
-        animation: fadeIn 0.6s ease-out;
+      animation: fadeIn 0.5s ease-out;
     }
 
-    .stat-card:nth-child(1) { animation-delay: 0.1s; }
-    .stat-card:nth-child(2) { animation-delay: 0.2s; }
-    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+    tbody tr {
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    /* Focus states for accessibility */
+    .btn:focus, a:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
   </style>
 </head>
 <body>
-    @include('layouts.medicare')
+  @include('layouts.medicare')
   <div class="container">
     <!-- Header dengan Statistik -->
-    <div class="page-header">
-      <div class="page-title">
-        <i class="fa-solid fa-file-medical"></i>
-        <h1>Daftar Rekam Medis</h1>
-      </div>
-      
-      <div class="stats-container">
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fa-solid fa-file-medical"></i>
-          </div>
-          <div class="stat-info">
-            <div class="stat-number">{{ $records->count() }}</div>
-            <div class="stat-label">Total Rekam Medis</div>
-          </div>
-        </div>
-        
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fa-solid fa-user-injured"></i>
-          </div>
-          <div class="stat-info">
-            <div class="stat-number">{{ $records->groupBy('patient_id')->count() }}</div>
-            <div class="stat-label">Pasien Ditangani</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="card">
+      <div class="header">
+        <div class="header-content">
+          <i class="fa-solid fa-file-medical"></i>
+          <h2>Daftar Rekam Medis</h2>
+        </div>
+        <div class="header-actions">
+          <a href="{{ route('doctor.dashboard') }}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+          </a>
+        </div>
+      </div>
+
       @if($records->isEmpty())
         <div class="empty-state">
           <i class="fa-regular fa-file-medical"></i>
@@ -447,7 +503,7 @@
         </div>
       @else
         <div class="table-container">
-          <table class="table">
+          <table>
             <thead>
               <tr>
                 <th>Tanggal</th>
@@ -474,7 +530,7 @@
                     @else
                       <span style="color: var(--text-light); font-style: italic;">Belum ada diagnosis</span>
                     @endif
-                    
+
                     @if($record->complaints)
                       <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
                         Keluhan: {{ Str::limit($record->complaints, 30) }}
@@ -486,17 +542,23 @@
                       $ongoingTreatments = $record->treatments->where('status', 'ongoing')->count();
                       $totalTreatments = $record->treatments->count();
                     @endphp
-                    
+
                     @if($ongoingTreatments > 0)
-                      <span class="badge badge-warning">Dalam Perawatan ({{ $ongoingTreatments }})</span>
+                      <span class="badge warning">
+                        <i class="fa-solid fa-clock"></i> Dalam Perawatan ({{ $ongoingTreatments }})
+                      </span>
                     @elseif($totalTreatments > 0)
-                      <span class="badge badge-success">Selesai</span>
+                      <span class="badge success">
+                        <i class="fa-solid fa-check"></i> Selesai
+                      </span>
                     @else
-                      <span class="badge badge-info">Konsultasi</span>
+                      <span class="badge info">
+                        <i class="fa-solid fa-stethoscope"></i> Konsultasi
+                      </span>
                     @endif
                   </td>
                   <td>
-                    <a class="btn btn-outline btn-sm" href="{{ route('doctor.records.show', $record) }}">
+                    <a class="btn btn-secondary btn-sm" href="{{ route('doctor.records.show', $record) }}">
                       <i class="fa-solid fa-eye"></i> Detail
                     </a>
                   </td>
