@@ -73,6 +73,144 @@
       }
     }
 
+    /* WELCOME HEADER STYLES - DIUBAH */
+    .welcome-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 30px;
+      gap: 16px;
+      padding: 20px 0;
+    }
+
+    .welcome-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .welcome-icon {
+      color: var(--primary);
+      background: #e0f2fe;
+      padding: 16px;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .welcome-text h2 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 8px 0;
+    }
+
+    .welcome-text p {
+      color: var(--text-light);
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .date-info {
+      color: var(--text-light);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid var(--border);
+    }
+
+    /* Responsive Styles untuk Welcome Header */
+    @media (max-width: 768px) {
+      .welcome-header {
+        margin-bottom: 20px;
+        gap: 12px;
+      }
+      
+      .welcome-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        padding: 14px;
+      }
+      
+      .welcome-text h2 {
+        font-size: 24px;
+      }
+      
+      .welcome-text p {
+        font-size: 14px;
+      }
+      
+      .date-info {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .welcome-header {
+        margin-bottom: 15px;
+        gap: 10px;
+      }
+      
+      .welcome-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+        padding: 12px;
+      }
+      
+      .welcome-text h2 {
+        font-size: 22px;
+      }
+      
+      .welcome-text p {
+        font-size: 13px;
+      }
+      
+      .date-info {
+        font-size: 13px;
+        padding: 8px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .welcome-header {
+        margin-bottom: 10px;
+      }
+      
+      .welcome-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        padding: 10px;
+      }
+      
+      .welcome-text h2 {
+        font-size: 20px;
+      }
+      
+      .welcome-text p {
+        font-size: 12px;
+      }
+      
+      .date-info {
+        font-size: 12px;
+        padding: 6px 14px;
+      }
+    }
+
+    /* STYLES LAINNYA TETAP SAMA */
     .header {
       display: flex;
       justify-content: space-between;
@@ -795,14 +933,19 @@
       </div>
     @endif
 
-    <!-- Welcome Header -->
+    <!-- Welcome Header - DIUBAH -->
     <div class="card" style="margin-bottom: 30px;">
-      <div class="header">
-        <div class="header-content">
-          <i class="fa-solid fa-user"></i>
-          <h2>Dashboard Pasien</h2>
+      <div class="welcome-header">
+        <div class="welcome-content">
+          <div class="welcome-icon">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="welcome-text">
+            <h2>Dashboard Pasien</h2>
+            <p>Selamat datang di MediCare Hospital</p>
+          </div>
         </div>
-        <div class="date-info" style="color: var(--text-light); font-size: 14px;">
+        <div class="date-info">
           <i class="fa-solid fa-calendar-day"></i>
           <span>{{ \Carbon\Carbon::now()->format('l, d F Y') }}</span>
         </div>
