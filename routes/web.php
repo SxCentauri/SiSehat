@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\Doctor\ProfileController; 
+use App\Http\Controllers\Doctor\ProfileController;
+use App\Http\Controllers\Admin\StatsController;
 
 // === Dokter Controllers ===
 use App\Http\Controllers\Doctor\{
@@ -60,6 +61,7 @@ use App\Http\Controllers\Admin\{
 | Public
 |--------------------------------------------------------------------------
 */
+
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
 /*
@@ -241,6 +243,7 @@ Route::middleware(['auth', 'role:admin'])
     ->group(function () {
         // Dashboard admin
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/stats', [StatsController::class, 'index'])->name('stats.index');
 
         // Kelola Emergency
         Route::resource('emergencies', AdminEmergencyController::class);

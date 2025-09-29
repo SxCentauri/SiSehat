@@ -14,8 +14,9 @@ class RoomStatusController extends Controller
 
         if ($s = $request->string('q')->toString()) {
             $q->where(function ($qq) use ($s) {
-                $qq->where('name','like',"%{$s}%")
-                   ->orWhere('status','like',"%{$s}%");
+                $qq->where('name', 'like', "%{$s}%")
+                    ->orWhere('status', 'like', "%{$s}%")
+                    ->orWhere('code', 'like', "%{$s}%");
             });
         }
 
@@ -31,14 +32,24 @@ class RoomStatusController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name'   => 'required|string|max:100|unique:room_statuses,name',
-            'status' => 'required|string|max:50', // available|occupied|maintenance (sesuaikan)
-            'notes'  => 'nullable|string',
+            'code'     => 'nullable|string|max:50|unique:room_statuses,code',
+            'name'     => 'required|string|max:100|unique:room_statuses,name',
+            'status'   => 'required|string|in:available,occupied,maintenance',
+            'capacity' => 'nullable|integer|min:0',
+            'occupied' => 'nullable|integer|min:0',
+            'notes'    => 'nullable|string',
         ]);
 
-        RoomStatus::create($data);
+        // default & clamp
+        $cap = (int)($data['capacity'] ?? 0);
+        $occ = (int)($data['occupied'] ?? 0);
+        if ($occ > $cap) $occ = $cap;
 
-        return to_route('admin.rooms.index')->with('success','Room created');
+        $data['capacity'] = $cap;
+        $data['occupied'] = $occ;
+
+        RoomStatus::create($data);
+        return to_route('admin.rooms.index')->with('success', 'Room created');
     }
 
     public function edit(RoomStatus $room)
@@ -49,19 +60,29 @@ class RoomStatusController extends Controller
     public function update(Request $request, RoomStatus $room)
     {
         $data = $request->validate([
-            'name'   => 'required|string|max:100|unique:room_statuses,name,'.$room->id,
-            'status' => 'required|string|max:50',
-            'notes'  => 'nullable|string',
+            'code'     => 'nullable|string|max:50|unique:room_statuses,code,' . $room->id,
+            'name'     => 'required|string|max:100|unique:room_statuses,name,' . $room->id,
+            'status'   => 'required|string|in:available,occupied,maintenance',
+            'capacity' => 'sometimes|nullable|integer|min:0', // only if sent
+            'occupied' => 'sometimes|nullable|integer|min:0',
+            'notes'    => 'nullable|string',
         ]);
 
-        $room->update($data);
+        // ambil nilai final (kalau tidak dikirim, pertahankan yang lama)
+        $cap = array_key_exists('capacity', $data) ? (int)($data['capacity'] ?? 0) : (int)$room->capacity;
+        $occ = array_key_exists('occupied', $data) ? (int)($data['occupied'] ?? 0) : (int)$room->occupied;
+        if ($occ > $cap) $occ = $cap;
 
-        return to_route('admin.rooms.index')->with('success','Room updated');
+        $data['capacity'] = $cap;
+        $data['occupied'] = $occ;
+
+        $room->update($data);
+        return to_route('admin.rooms.index')->with('success', 'Room updated');
     }
 
     public function destroy(RoomStatus $room)
     {
         $room->delete();
-        return back()->with('success','Room deleted');
+        return back()->with('success', 'Room deleted');
     }
 }

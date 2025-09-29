@@ -156,9 +156,9 @@
       <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
       <div class="num">{{ number_format($usersTot + $rooms + $aptToday + $bkToday) }}</div>
       <div class="label">Ringkasan Statistik</div>
-      <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-block">
-        <i class="fa-solid fa-chart-simple"></i> Lihat Statistik
-      </a>
+      <a class="btn btn-primary" href="{{ route('admin.stats.index') }}">
+  <i class="fa-solid fa-chart-line"></i> Lihat Statistik
+</a>
     </div>
 
     {{-- 5) Kelola Data Pengguna (gabung) --}}

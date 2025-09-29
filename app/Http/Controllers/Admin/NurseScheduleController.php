@@ -11,20 +11,24 @@ class NurseScheduleController extends Controller
 {
     public function index(Request $request)
     {
-        $q = NurseSchedule::query()->with('nurse');
+        $q = NurseSchedule::query()->with('nurse')->latest();
 
         if ($s = $request->string('q')->toString()) {
-            $q->where('day_of_week','like',"%{$s}%");
+            $q->where(function ($qq) use ($s) {
+                $qq->where('day_of_week', 'like', "%{$s}%")
+                    ->orWhere('notes', 'like', "%{$s}%")
+                    ->orWhereHas('nurse', fn($n) => $n->where('name', 'like', "%{$s}%"));
+            });
         }
 
-        $schedules = $q->latest()->paginate(20)->withQueryString();
-        return view('admin.nurse-schedules.index', compact('schedules'));
+        $items = $q->paginate(20)->withQueryString();   // <-- pakai $items
+        return view('admin.nurse-schedules.index', compact('items'));
     }
 
     public function create()
     {
         return view('admin.nurse-schedules.create', [
-            'nurses' => User::whereIn('role',['perawat','nurse'])->orderBy('name')->get(),
+            'nurses' => User::whereIn('role', ['perawat', 'nurse'])->orderBy('name')->get(),
         ]);
     }
 
@@ -32,22 +36,21 @@ class NurseScheduleController extends Controller
     {
         $data = $request->validate([
             'nurse_id'    => 'required|exists:users,id',
-            'day_of_week' => 'required|string|max:20', // Senin, Selasa, dst
+            'day_of_week' => 'required|string|max:20',     // Senin, Selasa, dst
             'start_time'  => 'required|date_format:H:i',
             'end_time'    => 'required|date_format:H:i|after:start_time',
             'notes'       => 'nullable|string',
         ]);
 
         NurseSchedule::create($data);
-
-        return to_route('admin.nurse-schedules.index')->with('success','Schedule created');
+        return to_route('admin.nurse-schedules.index')->with('success', 'Schedule created');
     }
 
     public function edit(NurseSchedule $nurse_schedule)
     {
         return view('admin.nurse-schedules.edit', [
             'nurse_schedule' => $nurse_schedule,
-            'nurses'         => User::whereIn('role',['perawat','nurse'])->orderBy('name')->get(),
+            'nurses'         => User::whereIn('role', ['perawat', 'nurse'])->orderBy('name')->get(),
         ]);
     }
 
@@ -62,13 +65,12 @@ class NurseScheduleController extends Controller
         ]);
 
         $nurse_schedule->update($data);
-
-        return to_route('admin.nurse-schedules.index')->with('success','Schedule updated');
+        return to_route('admin.nurse-schedules.index')->with('success', 'Schedule updated');
     }
 
     public function destroy(NurseSchedule $nurse_schedule)
     {
         $nurse_schedule->delete();
-        return back()->with('success','Schedule deleted');
+        return back()->with('success', 'Schedule deleted');
     }
 }

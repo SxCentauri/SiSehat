@@ -22,6 +22,13 @@ class RoomBooking extends Model
         'room_id',
         'nurse_id',
         'rejection_reason',
+        'start_at',
+        'end_at',
+    ];
+
+    protected $casts = [
+        'start_at' => 'datetime',
+        'end_at'   => 'datetime',
     ];
 
     /**
@@ -48,4 +55,3 @@ class RoomBooking extends Model
         return $this->belongsTo(User::class, 'nurse_id');
     }
 }
-

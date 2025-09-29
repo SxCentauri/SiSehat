@@ -10,9 +10,16 @@ class RoomStatus extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'name',
         'status',
         'capacity',
         'occupied',
+        'notes'
+    ];
+
+    protected $casts = [
+        'capacity' => 'integer',
+        'occupied' => 'integer',
     ];
 }
