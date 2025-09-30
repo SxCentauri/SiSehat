@@ -369,7 +369,7 @@
                     <div class="footer-contact-info">
                         <div class="footer-contact-item">
                             <i class="fas fa-phone"></i>
-                            <span>+62 21 1234 5678</span>
+                            <span>+62 8952 9615 638</span>
                         </div>
                         <div class="footer-contact-item">
                             <i class="fas fa-envelope"></i>
