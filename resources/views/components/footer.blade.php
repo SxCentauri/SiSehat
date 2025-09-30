@@ -27,7 +27,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
+            background:
                 radial-gradient(circle at 20% 30%, rgba(96, 165, 250, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(37, 99, 235, 0.08) 0%, transparent 50%);
             pointer-events: none;
@@ -298,7 +298,7 @@
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
-            
+
             .footer-side-content {
                 gap: 2rem;
             }
@@ -308,16 +308,16 @@
             .footer-content-wrapper {
                 padding: 6rem 1.5rem 3rem;
             }
-            
+
             .footer-logo {
                 flex-direction: column;
                 text-align: center;
             }
-            
+
             .social-links {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+
             .footer-bottom-links {
                 gap: 1.5rem;
             }
@@ -328,20 +328,20 @@
             .footer-social {
                 padding: 1.5rem;
             }
-            
+
             .footer-contact-item {
                 padding: 0.8rem 1rem;
             }
-            
+
             .social-links {
                 grid-template-columns: 1fr;
             }
-            
+
             .social-link {
                 height: 50px;
                 font-size: 1.2rem;
             }
-            
+
             .footer-bottom-links {
                 flex-direction: column;
                 gap: 1rem;
@@ -353,7 +353,7 @@
     <!-- Footer dengan posisi yang presisi -->
     <footer class="footer" id="contact">
         <div class="footer-wave"></div>
-        
+
         <div class="footer-content-wrapper">
             <div class="footer-grid">
                 <!-- Kolom Kiri: Brand, Deskripsi, Kontak -->
@@ -365,7 +365,7 @@
                         <h3>MediCare Hospital</h3>
                     </div>
                     <p>Pelayanan kesehatan terdepan dengan teknologi modern untuk memberikan perawatan terbaik bagi semua pasien. Komitmen kami adalah menjadi partner kesehatan terpercaya untuk setiap keluarga Indonesia dengan inovasi digital yang mengutamakan kualitas dan keamanan.</p>
-                    
+
                     <div class="footer-contact-info">
                         <div class="footer-contact-item">
                             <i class="fas fa-phone"></i>
@@ -385,7 +385,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Kolom Kanan: Sosial Media dan Newsletter -->
                 <div class="footer-side-content">
                     <div class="footer-social">
@@ -421,11 +421,11 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Footer Bottom yang membentang penuh -->
                 <div class="footer-bottom">
                     <div class="footer-bottom-content">
-                        <p>&copy; 2024 MediCare Hospital. All rights reserved. Built with ❤️ for better healthcare in Indonesia.</p>
+                        <p>&copy; 2025 MediCare Hospital. All rights reserved. Built with ❤️ for better healthcare in Indonesia.</p>
                         <div class="footer-bottom-links">
                             <a href="#">Privacy Policy</a>
                             <a href="#">Terms of Service</a>
@@ -444,20 +444,20 @@
     (function() {
         const newsletterForm = document.querySelector('.newsletter-form');
         if (!newsletterForm) return;
-        
+
         const newsletterInput = document.querySelector('.newsletter-input');
         const newsletterBtn = document.querySelector('.newsletter-btn');
 
         newsletterBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const email = newsletterInput.value.trim();
-            
+
             if (email && email.includes('@') && email.includes('.')) {
                 newsletterBtn.innerHTML = '<i class="fas fa-check"></i> Berhasil!';
                 newsletterBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                 newsletterInput.value = '';
                 newsletterInput.style.borderColor = '#10b981';
-                
+
                 setTimeout(() => {
                     newsletterBtn.innerHTML = 'Subscribe';
                     newsletterBtn.style.background = '';
@@ -466,7 +466,7 @@
             } else {
                 newsletterInput.style.borderColor = '#ef4444';
                 newsletterInput.style.animation = 'shake 0.5s ease-in-out';
-                
+
                 setTimeout(() => {
                     newsletterInput.style.borderColor = '';
                     newsletterInput.style.animation = '';
