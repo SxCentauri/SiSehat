@@ -377,7 +377,7 @@
                         </div>
                         <div class="footer-contact-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>Jl. Sehat Sejahtera No. 123, Jakarta Pusat 10110</span>
+                            <span>Jl. Basuki Rahmat, Padang Jati, Kec. Ratu Samban, Kota Bengkulu, Bengkulu 38222</span>
                         </div>
                         <div class="footer-contact-item">
                             <i class="fas fa-globe"></i>
