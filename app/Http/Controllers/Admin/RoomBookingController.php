@@ -49,9 +49,7 @@ class RoomBookingController extends Controller
             'room_id'    => 'required|exists:room_statuses,id',
             'patient_id' => 'required|exists:users,id',
             'nurse_id'   => 'nullable|exists:users,id',
-            'condition'  => 'required|string|max:255',          // ← WAJIB
-            'start_at'   => 'required|date',
-            'end_at'     => 'required|date|after:start_at',
+            'condition'  => 'required|string|max:255',
             'status'     => 'required|string|in:pending,approved,rejected,completed',
             'notes'      => 'nullable|string',
         ]);
@@ -77,9 +75,7 @@ class RoomBookingController extends Controller
             'room_id'    => 'required|exists:room_statuses,id',
             'patient_id' => 'required|exists:users,id',
             'nurse_id'   => 'nullable|exists:users,id',
-            'condition'  => 'required|string|max:255',          // ← WAJIB
-            'start_at'   => 'required|date',
-            'end_at'     => 'required|date|after:start_at',
+            'condition'  => 'required|string|max:255',        
             'status'     => 'required|string|in:pending,approved,rejected,completed',
             'notes'      => 'nullable|string',
         ]);

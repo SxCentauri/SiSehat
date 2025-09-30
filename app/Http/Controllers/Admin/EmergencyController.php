@@ -41,7 +41,6 @@ class EmergencyController extends Controller
             'patients'        => User::whereIn('role', ['user','patient'])->orderBy('name')->get(),
             'doctors'         => User::where('role','doctor')->orderBy('name')->get(),
             'nurses'          => User::whereIn('role', ['perawat','nurse'])->orderBy('name')->get(),
-            // hanya ruangan yang masih tersedia
             'availableRooms'  => RoomStatus::whereColumn('occupied', '<', 'capacity')
                                            ->orderBy('name')->get(),
         ]);

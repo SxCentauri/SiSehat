@@ -402,7 +402,7 @@
                 </div>
                 <div class="header-actions">
                     <a href="{{ route('admin.emergencies.index') }}" class="btn btn-secondary">
-                        <i class="fa-solid fa-arrow-left"></i> Kembali
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar
                     </a>
                 </div>
             </div>
@@ -411,7 +411,7 @@
             <div class="patient-info">
                 <h3>
                     <i class="fa-solid fa-user-injured"></i>
-                    Detail Pasien
+                    Informasi Pasien dan Laporan Darurat
                 </h3>
                 <div class="info-grid">
                     <div class="info-item">
@@ -419,27 +419,35 @@
                         <span class="info-value">{{ $emergency->patient->name ?? 'N/A' }}</span>
                     </div>
                     <div class="info-item">
-                        <span class="info-label">Level Darurat</span>
+                        <span class="info-label">ID Pasien</span>
+                        <span class="info-value">#{{ $emergency->patient->id ?? 'N/A' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Tingkat Kedaruratan</span>
                         <span class="info-value level-{{ $emergency->level }}">
                             <i class="fa-solid fa-{{ $emergency->level == 'high' ? 'fire' : ($emergency->level == 'medium' ? 'exclamation-triangle' : 'info-circle') }}"></i>
-                            {{ ucfirst($emergency->level) }}
+                            {{ strtoupper($emergency->level) }}
                         </span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Status Saat Ini</span>
                         <span class="status-badge status-pending">
                             <i class="fa-solid fa-clock"></i>
-                            Pending
+                            {{ ucfirst($emergency->status) }}
                         </span>
                     </div>
                     <div class="info-item">
-                        <span class="info-label">Waktu Permintaan</span>
+                        <span class="info-label">Waktu Dilaporkan</span>
                         <span class="info-value">{{ $emergency->created_at->format('d M Y, H:i') }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Terakhir Diperbarui</span>
+                        <span class="info-value">{{ $emergency->updated_at->format('d M Y, H:i') }}</span>
                     </div>
                 </div>
                 <div class="info-item" style="margin-top: 16px;">
-                    <span class="info-label">Deskripsi Darurat</span>
-                    <span class="info-value" style="background: white; padding: 12px; border-radius: 8px; border: 1px solid var(--border);">
+                    <span class="info-label">Deskripsi Kondisi Darurat</span>
+                    <span class="info-value" style="background: white; padding: 12px; border-radius: 8px; border: 1px solid var(--border); line-height: 1.6;">
                         {{ $emergency->description }}
                     </span>
                 </div>
@@ -453,11 +461,12 @@
                 <div class="form-group">
                     <label for="status" class="form-label">
                         <i class="fa-solid fa-list-check"></i>
-                        Tindakan yang Akan Diambil
+                        Status Penanganan
                     </label>
                     <select name="status" id="status" class="form-select" onchange="toggleActionFields(this.value)">
-                        <option value="approved">Setujui & Tugaskan</option>
-                        <option value="rejected">Tolak Permintaan</option>
+                        <option value="open" {{ $emergency->status == 'open' ? 'selected' : '' }}>Open - Belum ditangani</option>
+                        <option value="in_progress" {{ $emergency->status == 'in_progress' ? 'selected' : '' }}>In Progress - Sedang ditangani</option>
+                        <option value="resolved" {{ $emergency->status == 'resolved' ? 'selected' : '' }}>Resolved - Selesai ditangani</option>
                     </select>
                 </div>
 
@@ -465,13 +474,28 @@
                     <div class="form-group">
                         <label for="assigned_doctor_id" class="form-label">
                             <i class="fa-solid fa-user-doctor"></i>
-                            Tugaskan Dokter
+                            Dokter yang Menangani
                         </label>
-                        <select name="assigned_doctor_id" id="assigned_doctor_id" class="form-select" required>
+                        <select name="assigned_doctor_id" id="assigned_doctor_id" class="form-select">
                             <option value="">Pilih Dokter...</option>
                             @foreach($doctors as $doctor)
-                                <option value="{{ $doctor->id }}">
-                                    {{ $doctor->name }}
+                                <option value="{{ $doctor->id }}" {{ $emergency->assigned_doctor_id == $doctor->id ? 'selected' : '' }}>
+                                    {{ $doctor->name }} - {{ $doctor->specialization ?? 'Umum' }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="handled_by_nurse_id" class="form-label">
+                            <i class="fa-solid fa-user-nurse"></i>
+                            Perawat yang Menangani
+                        </label>
+                        <select name="handled_by_nurse_id" id="handled_by_nurse_id" class="form-select">
+                            <option value="">Pilih Perawat...</option>
+                            @foreach($nurses as $nurse)
+                                <option value="{{ $nurse->id }}" {{ $emergency->handled_by_nurse_id == $nurse->id ? 'selected' : '' }}>
+                                    {{ $nurse->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -480,12 +504,12 @@
                     <div class="form-group">
                         <label for="assigned_room_id" class="form-label">
                             <i class="fa-solid fa-bed"></i>
-                            Tempatkan di Ruangan
+                            Ruangan Penanganan
                         </label>
-                        <select name="assigned_room_id" id="assigned_room_id" class="form-select" required>
+                        <select name="assigned_room_id" id="assigned_room_id" class="form-select">
                             <option value="">Pilih Ruangan...</option>
                             @forelse($availableRooms as $room)
-                                <option value="{{ $room->id }}">
+                                <option value="{{ $room->id }}" {{ $emergency->assigned_room_id == $room->id ? 'selected' : '' }}>
                                     <div class="room-option">
                                         <span>{{ $room->name }}</span>
                                         <span class="room-availability">
@@ -503,8 +527,12 @@
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">
                         <i class="fa-solid fa-floppy-disk"></i>
-                        Simpan Tindakan
+                        Simpan Perubahan
                     </button>
+                    <a href="{{ route('admin.emergencies.show', $emergency->id) }}" class="btn btn-secondary">
+                        <i class="fa-solid fa-eye"></i>
+                        Lihat Detail
+                    </a>
                     <a href="{{ route('admin.emergencies.index') }}" class="btn btn-secondary">
                         <i class="fa-solid fa-xmark"></i>
                         Batal
@@ -518,30 +546,40 @@
         function toggleActionFields(status) {
             const fields = document.getElementById('action-fields');
             const doctorSelect = document.getElementById('assigned_doctor_id');
+            const nurseSelect = document.getElementById('handled_by_nurse_id');
             const roomSelect = document.getElementById('assigned_room_id');
 
-            if (status === 'approved') {
+            if (status === 'in_progress' || status === 'resolved') {
                 fields.classList.remove('hidden');
-                doctorSelect.required = true;
-                roomSelect.required = true;
+                // Make fields required only for in_progress status
+                if (status === 'in_progress') {
+                    doctorSelect.required = true;
+                    nurseSelect.required = true;
+                    roomSelect.required = true;
+                } else {
+                    doctorSelect.required = false;
+                    nurseSelect.required = false;
+                    roomSelect.required = false;
+                }
             } else {
                 fields.classList.add('hidden');
                 doctorSelect.required = false;
+                nurseSelect.required = false;
                 roomSelect.required = false;
             }
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Initial state
+            // Initial state based on current status
             toggleActionFields(document.getElementById('status').value);
 
-            // Add confirmation for rejection
+            // Add confirmation for resolved status
             const form = document.querySelector('form');
             const statusSelect = document.getElementById('status');
 
             form.addEventListener('submit', function(e) {
-                if (statusSelect.value === 'rejected') {
-                    if (!confirm('Apakah Anda yakin ingin menolak permintaan darurat ini?')) {
+                if (statusSelect.value === 'resolved') {
+                    if (!confirm('Apakah Anda yakin ingin menandai kasus ini sebagai selesai? Tindakan ini tidak dapat dibatalkan.')) {
                         e.preventDefault();
                     }
                 }

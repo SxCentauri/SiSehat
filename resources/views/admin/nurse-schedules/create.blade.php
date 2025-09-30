@@ -1,74 +1,526 @@
-@extends('layouts.admin-modern')
-@section('title','Tambah Jadwal Perawat - MediCare')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Jadwal Perawat - MediCare</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --completed: #8b5cf6;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --radius: 16px;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
 
-@section('content')
-<div class="card">
-  <div class="section-title"><i class="fa-solid fa-circle-plus"></i><h3>Tambah Jadwal</h3></div>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <form method="post" action="{{ route('admin.nurse-schedules.store') }}">
-    @csrf
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-top: 80px;
+        }
 
-    <div class="form-group">
-      <label class="form-label">Perawat</label>
-      <select class="form-select" name="nurse_id" required>
-        <option value="">- Pilih -</option>
-        @foreach($nurses as $n)
-          <option value="{{ $n->id }}" @selected(old('nurse_id')==$n->id)>{{ $n->name }}</option>
-        @endforeach
-      </select>
-      @error('nurse_id') <span class="error-message">{{ $message }}</span> @enderror
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header i {
+            color: var(--primary);
+            background: #dbeafe;
+            padding: 12px;
+            border-radius: 12px;
+            min-width: 46px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: #fff;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .form-control, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-control:hover, .form-select:hover {
+            border-color: #cbd5e1;
+        }
+
+        .error-message {
+            display: block;
+            margin-top: 6px;
+            color: var(--danger);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .help-text {
+            display: block;
+            margin-top: 6px;
+            color: var(--text-light);
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .actions .btn {
+            padding: 12px 24px;
+            font-size: 14px;
+        }
+
+        /* Form layout improvements */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px 30px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+                width: 100%;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .header-actions .btn {
+                width: auto;
+                min-width: 200px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .container {
+                padding: 0 12px 20px;
+            }
+
+            .card {
+                padding: 20px;
+                border-radius: 14px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .header-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .header i {
+                padding: 10px;
+                min-width: 40px;
+                font-size: 16px;
+            }
+
+            .form-control, .form-select, .btn {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 16px;
+                border-radius: 12px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .header i {
+                padding: 8px;
+                min-width: 36px;
+                font-size: 14px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+
+            .header-actions .btn {
+                width: 100%;
+                min-width: auto;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .header-content {
+                gap: 8px;
+            }
+
+            .header h1 {
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+
+        /* Focus states for accessibility */
+        .btn:focus, .form-control:focus, .form-select:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Date input styling */
+        input[type="date"] {
+            position: relative;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background: transparent;
+            bottom: 0;
+            color: transparent;
+            cursor: pointer;
+            height: auto;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    @extends('layouts.medicare')
+
+    <div class="container">
+        <div class="card">
+            <!-- Header Section -->
+            <div class="header">
+                <div class="header-content">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <h1>Tambah Jadwal Perawat</h1>
+                </div>
+                <div class="header-actions">
+                    <a href="{{ route('admin.nurse-schedules.index') }}" class="btn btn-secondary">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar
+                    </a>
+                </div>
+            </div>
+
+            <!-- Form Section -->
+            <form method="post" action="{{ route('admin.nurse-schedules.store') }}" id="scheduleForm">
+                @csrf
+
+                <div class="form-group">
+                    <label class="form-label">Perawat</label>
+                    <select class="form-select" name="nurse_id" required>
+                        <option value="">- Pilih Perawat -</option>
+                        @foreach($nurses as $n)
+                            <option value="{{ $n->id }}" @selected(old('nurse_id') == $n->id)>
+                                {{ $n->name }}
+                                @if($n->email)
+                                    - {{ $n->email }}
+                                @endif
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('nurse_id') <span class="error-message">{{ $message }}</span> @enderror
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Tugas / Aktivitas</label>
+                    <input class="form-control" type="text" name="task" value="{{ old('task') }}" required
+                           placeholder="Contoh: Jaga malam, Periksa pasien, Ronda, dsb.">
+                    @error('task') <span class="error-message">{{ $message }}</span> @enderror
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Tanggal Jadwal</label>
+                        <input class="form-control" type="date" name="schedule_date" value="{{ old('schedule_date') }}" required
+                               min="{{ date('Y-m-d') }}">
+                        @error('schedule_date') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Catatan Tambahan</label>
+                    <textarea class="form-control" name="notes" placeholder="Tambahkan catatan khusus tentang jadwal ini...">{{ old('notes') }}</textarea>
+                    @error('notes') <span class="error-message">{{ $message }}</span> @enderror
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-primary" type="submit" id="submitBtn">
+                        <i class="fa-solid fa-save"></i> Simpan Jadwal
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div class="form-group">
-      <label class="form-label">Hari</label>
-      <select class="form-select" name="day_of_week" required>
-        @foreach(['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'] as $d)
-          <option value="{{ $d }}" @selected(old('day_of_week')==$d)>{{ $d }}</option>
-        @endforeach
-      </select>
-      @error('day_of_week') <span class="error-message">{{ $message }}</span> @enderror
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('scheduleForm');
+            const submitBtn = document.getElementById('submitBtn');
 
-    <div class="grid grid-2">
-      <div class="form-group">
-        <label class="form-label">Mulai</label>
-        <input class="form-control" type="time" name="start_time" value="{{ old('start_time') }}" required>
-        @error('start_time') <span class="error-message">{{ $message }}</span> @enderror
-      </div>
-      <div class="form-group">
-        <label class="form-label">Selesai</label>
-        <input class="form-control" type="time" name="end_time" value="{{ old('end_time') }}" required>
-        @error('end_time') <span class="error-message">{{ $message }}</span> @enderror
-      </div>
-    </div>
+            // Add focus effects to form elements
+            const formControls = document.querySelectorAll('.form-control, .form-select');
+            formControls.forEach(control => {
+                control.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
 
-    <div class="form-group">
-      <label class="form-label">Catatan (opsional)</label>
-      <textarea class="form-control" name="notes">{{ old('notes') }}</textarea>
-      @error('notes') <span class="error-message">{{ $message }}</span> @enderror
-    </div>
+                control.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
 
-    <div class="actions">
-      <button class="btn btn-primary" type="submit">
-        <i class="fa-solid fa-save"></i> Simpan
-      </button>
-      <a class="btn btn-outline" href="{{ route('admin.nurse-schedules.index') }}">
-        <i class="fa-solid fa-arrow-left"></i> Kembali
-      </a>
-    </div>
-  </form>
-</div>
+            // Add hover effects to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
 
-{{-- Submit-safety: disable tombol hanya jika form valid --}}
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.querySelector('form[action="{{ route('admin.nurse-schedules.store') }}"]');
-  if (!form) return;
-  form.addEventListener('submit', function (e) {
-    if (!form.checkValidity()) { e.preventDefault(); e.stopPropagation(); return; }
-    const btn = form.querySelector('button[type="submit"]');
-    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...'; }
-  });
-});
-</script>
-@endsection
+            // Auto-capitalize first letter of task
+            const taskInput = document.querySelector('input[name="task"]');
+            if (taskInput) {
+                taskInput.addEventListener('input', function() {
+                    if (this.value.length === 1) {
+                        this.value = this.value.toUpperCase();
+                    }
+                });
+            }
+
+            // Form submission handling
+            if (form && submitBtn) {
+                form.addEventListener('submit', function(e) {
+                    if (!form.checkValidity()) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return;
+                    }
+
+                    // Disable button and show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+
+                    // Re-enable button after 5 seconds in case submission fails
+                    setTimeout(() => {
+                        if (submitBtn.disabled) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<i class="fa-solid fa-save"></i> Simpan Jadwal';
+                        }
+                    }, 5000);
+                });
+            }
+
+            // Set minimum date to today
+            const dateInput = document.querySelector('input[name="schedule_date"]');
+            if (dateInput && !dateInput.value) {
+                dateInput.value = new Date().toISOString().split('T')[0];
+            }
+
+            // Set default time values
+            const startTimeInput = document.querySelector('input[name="start_time"]');
+            const endTimeInput = document.querySelector('input[name="end_time"]');
+
+            if (startTimeInput && !startTimeInput.value) {
+                startTimeInput.value = '08:00';
+            }
+            if (endTimeInput && !endTimeInput.value) {
+                endTimeInput.value = '16:00';
+            }
+        });
+    </script>
+</body>
+</html>

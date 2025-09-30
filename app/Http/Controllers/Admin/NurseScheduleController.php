@@ -11,17 +11,17 @@ class NurseScheduleController extends Controller
 {
     public function index(Request $request)
     {
-        $q = NurseSchedule::query()->with('nurse')->latest();
+        $query = NurseSchedule::query()->with('nurse')->latest();
 
-        if ($s = $request->string('q')->toString()) {
-            $q->where(function ($qq) use ($s) {
-                $qq->where('day_of_week', 'like', "%{$s}%")
-                    ->orWhere('notes', 'like', "%{$s}%")
-                    ->orWhereHas('nurse', fn($n) => $n->where('name', 'like', "%{$s}%"));
+        if ($search = $request->string('q')->trim()) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nurse_name', 'like', "%{$search}%")
+                  ->orWhere('task', 'like', "%{$search}%")
+                  ->orWhere('schedule_date', 'like', "%{$search}%");
             });
         }
 
-        $items = $q->paginate(20)->withQueryString();   // <-- pakai $items
+        $items = $query->paginate(20)->withQueryString();
         return view('admin.nurse-schedules.index', compact('items'));
     }
 
@@ -34,16 +34,18 @@ class NurseScheduleController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nurse_id'    => 'required|exists:users,id',
-            'day_of_week' => 'required|string|max:20',     // Senin, Selasa, dst
-            'start_time'  => 'required|date_format:H:i',
-            'end_time'    => 'required|date_format:H:i|after:start_time',
-            'notes'       => 'nullable|string',
+        $validatedData = $request->validate([
+            'nurse_id'      => 'required|exists:users,id',
+            'task'          => 'required|string|max:255',
+            'schedule_date' => 'required|date',
         ]);
 
-        NurseSchedule::create($data);
-        return to_route('admin.nurse-schedules.index')->with('success', 'Schedule created');
+        $nurse = User::find($validatedData['nurse_id']);
+        $validatedData['nurse_name'] = $nurse->name;
+
+        NurseSchedule::create($validatedData);
+
+        return to_route('admin.nurse-schedules.index')->with('success', 'Jadwal perawat berhasil dibuat.');
     }
 
     public function edit(NurseSchedule $nurse_schedule)
@@ -56,21 +58,23 @@ class NurseScheduleController extends Controller
 
     public function update(Request $request, NurseSchedule $nurse_schedule)
     {
-        $data = $request->validate([
-            'nurse_id'    => 'required|exists:users,id',
-            'day_of_week' => 'required|string|max:20',
-            'start_time'  => 'required|date_format:H:i',
-            'end_time'    => 'required|date_format:H:i|after:start_time',
-            'notes'       => 'nullable|string',
+        $validatedData = $request->validate([
+            'nurse_id'      => 'required|exists:users,id',
+            'task'          => 'required|string|max:255',
+            'schedule_date' => 'required|date',
         ]);
 
-        $nurse_schedule->update($data);
-        return to_route('admin.nurse-schedules.index')->with('success', 'Schedule updated');
+        $nurse = User::find($validatedData['nurse_id']);
+        $validatedData['nurse_name'] = $nurse->name;
+
+        $nurse_schedule->update($validatedData);
+
+        return to_route('admin.nurse-schedules.index')->with('success', 'Jadwal perawat berhasil diperbarui.');
     }
 
     public function destroy(NurseSchedule $nurse_schedule)
     {
         $nurse_schedule->delete();
-        return back()->with('success', 'Schedule deleted');
+        return back()->with('success', 'Jadwal perawat berhasil dihapus.');
     }
 }
